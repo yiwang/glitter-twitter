@@ -18,8 +18,9 @@
 			public var tw:Twitter;
 				
 				
-			private function submitAuth()
+			private function submitAuth():void
 			{
+				// Create new Twitter instance
 				tw = new Twitter(user.text,pwd.text);
 			}
 				
@@ -43,6 +44,7 @@
 			private function loadTimeline(event:Event):void
 			{
 				
+				// demo the usage of twitter API
 				var ut:Array = tw.getUserTimeline();
 				var ft:Array = tw.getFriendsTimeline();
 				var reply:Array = tw.getReplies();
