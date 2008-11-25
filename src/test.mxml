@@ -17,10 +17,15 @@
 				
 			public var tw:Twitter;
 				
+				
+			private function submitAuth()
+			{
+				tw = new Twitter(user.text,pwd.text);
+			}
+				
 			private function onCreationComplete():void
 			{
-				//tw = new Twitter(user.text,pwd.text);
-				tw = new Twitter("yiw","ui1115t");				
+							
 			}
 			
 			private function refresh():void
@@ -31,22 +36,24 @@
 				myTimer.addEventListener("timer", loadTimeline);
 				myTimer.start();
 				*/
+				
+				tw.refreshAll();
 			}
 			
 			private function loadTimeline(event:Event):void
 			{
 				
-				//var a:Array = tw.getFriendsTimeline();
 				var ut:Array = tw.getUserTimeline();
 				var ft:Array = tw.getFriendsTimeline();
 				var reply:Array = tw.getReplies();
 				
 				var rl:Number = tw.getRateLimit();
-				tw.setLocation("NYC");
 				
-				timeline = new ArrayCollection(ut);
-				 //tw.refresh();
-				 
+				// setlocation doesn't work right now.
+				// 	tw.setLocation("NYC");
+				
+				timeline = new ArrayCollection(ft);
+				
 			}
 
 			private function getFormattedDate( item:Object, column:DataGridColumn ):String
@@ -76,6 +83,7 @@
 		<mx:Button label="Refresh" width="100" height="30" click="refresh()" />
 		<mx:TextInput id="user"/>
 		<mx:TextInput id="pwd" displayAsPassword="true"/>
+		<mx:Button label="Submit Auth" click="submitAuth();"/>
 	</mx:VBox>
 	
 </mx:WindowedApplication>
