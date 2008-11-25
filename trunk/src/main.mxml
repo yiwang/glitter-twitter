@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" cornerRadius="15">
+	<mx:Canvas x="10" y="10" width="123" height="483" cornerRadius="15">
+	</mx:Canvas>
+	<mx:Canvas x="141" y="10" width="200" height="483" cornerRadius="15">
+	</mx:Canvas>
+	<mx:Canvas x="349" y="10" width="474" height="483" cornerRadius="15">
+	</mx:Canvas>
 	
 </mx:WindowedApplication>
