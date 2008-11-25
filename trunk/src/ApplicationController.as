@@ -6,5 +6,9 @@ package
 		{
 		}
 
+		static public function startTwitterLoop()
+		{
+			
+		}
 	}
 }
