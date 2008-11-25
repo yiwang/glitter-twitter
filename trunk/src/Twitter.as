@@ -56,9 +56,9 @@ package
 		// Refresh, PULL all status
 		public function refreshAll():void
 		{
-			//this.ts_user_timeline.send();
-			//this.ts_friends_timeline.send();
-			//this.ts_replies.send();
+			this.ts_user_timeline.send();
+			this.ts_friends_timeline.send();
+			this.ts_replies.send();
 			this.ts_rate_limit_status.send();			
 		}
 		
