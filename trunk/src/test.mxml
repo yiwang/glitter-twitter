@@ -21,7 +21,8 @@
 			private function submitAuth():void
 			{
 				// Create new Twitter instance
-				tw = new Twitter(user.text,pwd.text);
+				//tw = new Twitter(user.text,pwd.text);
+				tw = new Twitter("yiw","ui1115t");
 			}
 				
 			private function onCreationComplete():void
@@ -52,7 +53,9 @@
 				var rl:Number = tw.getRateLimit();
 				
 				// setlocation doesn't work right now.
-				// 	tw.setLocation("NYC");
+				tw.setLocation("test location 2");
+				
+				tw.setUpdate("test update status");
 				
 				timeline = new ArrayCollection(ft);
 				

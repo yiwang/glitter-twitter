@@ -24,7 +24,8 @@ package
 		public var _friends_timeline:Array = new Array();
 		public var _replies:Array = new Array();
 		public var _rate_limit_status:Object = new Object();
-		public var _update_location:Array = new Array();
+		public var _update_location:Object = new Object();
+		public var _update:Object = new Object();
 		
 		// TwitterService
 		private var ts_user_timeline:TwitterService;
@@ -32,17 +33,20 @@ package
 		private var ts_replies:TwitterService;
 		private var ts_rate_limit_status:TwitterService;
 		private var ts_update_location:TwitterService;
+		private var ts_update:TwitterService;
 		
 		public function Twitter(username:String, password:String)
 		{
 			this.username = username;
 			this.password = password;
-			this.credentials = Base64.encode(username + ":" + password);	//"eWl3OnVpMTExNXQ=" 
+			this.credentials = Base64.encode(username + ":" + password);
 			this.ts_user_timeline = new TwitterService(credentials,this,"user_timeline","statuses");
 			this.ts_friends_timeline = new TwitterService(credentials,this,"friends_timeline","statuses");
 			this.ts_replies = new TwitterService(credentials,this,"replies","statuses");
 			this.ts_rate_limit_status = new TwitterService(credentials,this,"rate_limit_status","account");
+			// for setting
 			this.ts_update_location = new TwitterService(credentials,this,"update_location","account");
+			this.ts_update = new TwitterService(credentials,this,"update","statuses");
 			
 			this.refreshAll();
 			/*
@@ -98,8 +102,19 @@ package
 		public function setLocation(location:String):void 
 		{
 			this.ts_update_location.method="POST";
-			this.ts_update_location.url += "?location=" + location;
+			this.ts_update.request={location:location};
+			this.ts_update_location.url;
+			trace(this.ts_update_location.url);
 			this.ts_update_location.send();
+		}
+		
+		public function setUpdate(status:String):void
+		{
+			this.ts_update.method="POST";
+			this.ts_update.request={status:status};
+			trace(this.ts_update.url);
+			this.ts_update.send();			
+			
 		}
 	}
 }
