@@ -3,7 +3,7 @@
 
 == Introduction ==
 
-*test.xmxl* is the test application to demo the public functions in *Twitter.as*, which is dependended on *com.twitter.TwitterService.as*.
+*test.xmxl* is the test application to demo the public functions in class *Twitter*, which is dependended on *com.twitter.TwitterService*.
 
 == Details ==
 
