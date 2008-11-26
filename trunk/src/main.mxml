@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" cornerRadius="15">
-	<mx:Canvas x="10" y="10" width="123" height="483" cornerRadius="15">
-	</mx:Canvas>
-	<mx:Canvas x="141" y="10" width="200" height="483" cornerRadius="15">
-	</mx:Canvas>
-	<mx:Canvas x="349" y="10" width="474" height="483" cornerRadius="15">
-	</mx:Canvas>
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" cornerRadius="15" title="Glitter">
+	<mx:ApplicationControlBar y="214" x="417" dock="true" height="25" autoLayout="false" paddingTop="2" fillAlphas="[1.0, 1.0]" fillColors="[#050505, #050505]">
+		<mx:Label text="Glitter" width="60" height="20" id="nameLabel" fontFamily="Verdana" fontSize="12" fontWeight="bold" color="#BBB517"/>
+		<mx:Spacer width="100%" />
+		<mx:Button height="16" icon="@Embed(source='../images/Settings-16x16.png')" width="16"/>
+	</mx:ApplicationControlBar>
 	
 </mx:WindowedApplication>
