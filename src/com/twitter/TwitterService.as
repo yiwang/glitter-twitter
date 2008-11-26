@@ -13,10 +13,11 @@ package com.twitter
 		
 		public function TwitterService(credentials:String, tw:Twitter, dest:String, type:String)
 		{
-			this.tw = tw;
-			this.dest = "_"+dest;
 			//super("http://twitter.com/statuses/", dest+ ".json");
 			super();
+			this.tw = tw;
+			this.dest = "_"+dest;
+			
 			this.url = "http://twitter.com/"+ type + "/"+ dest+ ".json";
 			//this.url = "http://twitter.com/statuses/user_timeline.json";
 			this.headers = {Authorization: "Basic " + credentials};	
@@ -29,7 +30,7 @@ package com.twitter
 		
 		private function onFault(event:FaultEvent):void
 		{
-			trace("TwitterService fault: " + event.headers + " _" + dest);
+			trace("TwitterService fault: " + event.headers + " " + dest);
 		}
 					
 		private function onResult(event:ResultEvent):void
@@ -37,7 +38,7 @@ package com.twitter
 			var rawData:String = String( event.result );
 			var a:Array = JSON.decode( rawData ) as Array; 
 			var obj:Object = JSON.decode( rawData ) as Object;
-			if (dest=="_rate_limit_status") 
+			if (dest=="_rate_limit_status"||dest=="_update_location") 
 			{
 				tw[dest] = obj;
 			}
