@@ -3,8 +3,7 @@
 
 = Introduction =
 
-Add your content here.
-
+*test.xmxl* is the test application to demo the public functions in *Twitter.as*, which is dependended on *com.twitter.TwitterService.as*.
 
 = Details =
 
@@ -12,3 +11,8 @@ Add your content here.  Format your content with:
   * Text in *bold* or _italic_
   * Headings, paragraphs, and lists
   * Automatic links to other wiki pages
+
+
+*test.xmxl*
+*Twitter.as*
+*com.twitter.TwitterService.as*
