@@ -11,6 +11,7 @@
 			import mx.rpc.events.FaultEvent;
 			import mx.formatters.DateFormatter;
 			import com.adobe.serialization.json.JSON;
+			import glitter.*;
 			
 			[Bindable]
 			private var timeline:ArrayCollection;
