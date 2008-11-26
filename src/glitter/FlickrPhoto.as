@@ -1,4 +1,4 @@
-package
+package glitter
 {
 	public class FlickrPhoto
 	{
