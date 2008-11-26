@@ -1,7 +1,7 @@
 <mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" xmlns="*"
 	layout="absolute"
 	creationComplete="onCreationComplete()" 
-	viewSourceURL="srcview/index.html" width="800" height="800">
+	viewSourceURL="srcview/index.html" width="900" height="900">
 	
 	<mx:Script>
 		<![CDATA[
@@ -14,6 +14,11 @@
 			
 			[Bindable]
 			private var timeline:ArrayCollection;
+			[Bindable]
+			private var boxData:ArrayCollection = new ArrayCollection(
+				[{label:"getUserTimeline"},
+				{label:"getFriendsTimeline"},
+				{label:"getReplies"} ]);
 				
 			public var tw:Twitter;
 				
@@ -21,8 +26,8 @@
 			private function submitAuth():void
 			{
 				// Create new Twitter instance
-				//tw = new Twitter(user.text,pwd.text);
-				tw = new Twitter("yiw","ui1115t");
+				tw = new Twitter(user.text,pwd.text);
+				
 			}
 				
 			private function onCreationComplete():void
@@ -32,33 +37,7 @@
 			
 			private function refresh():void
 			{
-				loadTimeline(new Event("test"));
-				/*
-				var myTimer:Timer = new Timer(1000, 1);
-				myTimer.addEventListener("timer", loadTimeline);
-				myTimer.start();
-				*/
-				
-				tw.refreshAll();
-			}
-			
-			private function loadTimeline(event:Event):void
-			{
-				
-				// demo the usage of twitter API
-				var ut:Array = tw.getUserTimeline();
-				var ft:Array = tw.getFriendsTimeline();
-				var reply:Array = tw.getReplies();
-				
-				var rl:Number = tw.getRateLimit();
-				
-				// setlocation doesn't work right now.
-				tw.setLocation("test location 2");
-				
-				tw.setUpdate("test update status");
-				
-				timeline = new ArrayCollection(ft);
-				
+				timeline = new ArrayCollection(tw[list.selectedItem.label]());
 			}
 
 			private function getFormattedDate( item:Object, column:DataGridColumn ):String
@@ -71,24 +50,60 @@
 			private function getScreenName( item:Object, column:DataGridColumn ):String
          	{   
           		return item.user.screen_name;
-         	}  
+         	} 
+         	
+         	private function getLocation( item:Object, column:DataGridColumn ):String
+         	{
+         		return item.user.location;
+         	}
+         	
+         	private function onChange(event:Event):void
+         	{
+         		timeline = new ArrayCollection(tw[event.target.selectedItem.label]());
+         	}
 
 		]]>
 	</mx:Script>
 	
 	<mx:VBox width="100%" height="100%" paddingBottom="20" paddingLeft="20" paddingRight="20" paddingTop="20">		
-		<mx:Label text="Twitter Debug" fontSize="20" fontWeight="bold" />
-		<mx:DataGrid dataProvider="{ timeline }" width="100%" rowCount="20">
+		<mx:Label text="Debug" fontSize="20" fontWeight="bold" />
+		<mx:DataGrid dataProvider="{ timeline }" width="760" rowCount="20">
 			<mx:columns>
 				<mx:DataGridColumn width="200" headerText="Created" labelFunction="getFormattedDate" />
-				<mx:DataGridColumn width="200" headerText="Screen Name" labelFunction="getScreenName" />
+				<mx:DataGridColumn width="100" headerText="Screen Name" labelFunction="getScreenName" />
+				<mx:DataGridColumn width="100" headerText="Location" labelFunction="getLocation" />
 				<mx:DataGridColumn headerText="Tweet" dataField="text" />
 			</mx:columns>
 		</mx:DataGrid>
-		<mx:Button label="Refresh" width="100" height="30" click="refresh()" />
-		<mx:TextInput id="user"/>
-		<mx:TextInput id="pwd" displayAsPassword="true"/>
-		<mx:Button label="Submit Auth" click="submitAuth();"/>
+		<mx:HBox width="100%" height="252">
+			<mx:Form width="282" height="151">
+				<mx:FormHeading label="Authentication"/>
+				<mx:FormItem label="username">
+                	<mx:TextInput id="user"/>
+            	</mx:FormItem>
+				<mx:FormItem label="password">
+                	<mx:TextInput id="pwd" displayAsPassword="true"/>
+            	</mx:FormItem>
+				<mx:Button label="Submit Auth" click="submitAuth();"/>
+			</mx:Form>
+			<mx:VBox height="100%">
+				<mx:Button label="Refresh" width="87" height="21" click="refresh();" />
+				<mx:List dataProvider="{boxData}" width="129" change="onChange(event);" id="list" selectedIndex="0" height="105"></mx:List>
+				<mx:Button label="getRateLimit" click="rate.text=String(tw.getRateLimit());"/>
+				<mx:TextInput width="131" id="rate"/>
+			</mx:VBox>
+			<mx:Form width="282" height="203">
+				<mx:FormHeading label="Update"/>
+				<mx:FormItem label="status">
+				         	<mx:TextInput id="stat"/>
+				     	</mx:FormItem>
+				<mx:Button label="send" click="tw.setUpdate(stat.text);"/>
+				<mx:FormItem label="location">
+				         	<mx:TextInput id="loc"/>
+				     	</mx:FormItem>
+				<mx:Button label="send" click="tw.setLocation(loc.text);"/>
+			</mx:Form>
+		</mx:HBox>
 	</mx:VBox>
 	
 </mx:WindowedApplication>
