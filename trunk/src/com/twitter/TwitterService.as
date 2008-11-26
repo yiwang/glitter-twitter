@@ -5,6 +5,7 @@ package com.twitter
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.mxml.HTTPService;
+	import glitter.Twitter;
 	
 	public class TwitterService extends HTTPService
 	{

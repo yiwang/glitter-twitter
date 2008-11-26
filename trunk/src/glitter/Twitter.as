@@ -1,4 +1,4 @@
-package
+package glitter
 {
 	import com.hurlant.util.Base64;
 	import com.twitter.TwitterService;
