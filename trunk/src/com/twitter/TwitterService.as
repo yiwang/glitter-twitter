@@ -36,8 +36,10 @@ package com.twitter
 		private function onResult(event:ResultEvent):void
 		{
 			var rawData:String = String( event.result );
-			var a:Array = JSON.decode( rawData ) as Array; 
+			//var a:Array = JSON.decode( rawData ) as Array; 
 			var obj:Object = JSON.decode( rawData ) as Object;
+			tw[dest] = obj;
+			/*
 			if (dest=="_rate_limit_status"||dest=="_update_location") 
 			{
 				tw[dest] = obj;
@@ -46,7 +48,7 @@ package com.twitter
 			{
 				tw[dest] = a;
 			}
-			
+			*/
 		}		
 	}
 }

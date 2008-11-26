@@ -48,6 +48,7 @@ package
 			this.ts_update_location = new TwitterService(credentials,this,"update_location","account");
 			this.ts_update = new TwitterService(credentials,this,"update","statuses");
 			
+			// 1st time pull data
 			this.refreshAll();
 			/*
 			var myTimer:Timer = new Timer(10000, 0);
@@ -94,7 +95,7 @@ package
 		public function getRateLimit():Number 
 		{
 			this.ts_rate_limit_status.send();
-			trace(_rate_limit_status);
+			//trace(_rate_limit_status);
 			return _rate_limit_status.remaining_hits;
 		}
 		
@@ -102,9 +103,8 @@ package
 		public function setLocation(location:String):void 
 		{
 			this.ts_update_location.method="POST";
-			this.ts_update.request={location:location};
-			this.ts_update_location.url;
-			trace(this.ts_update_location.url);
+			this.ts_update_location.request={location:location};
+			//trace(this.ts_update_location.url);
 			this.ts_update_location.send();
 		}
 		
@@ -112,7 +112,7 @@ package
 		{
 			this.ts_update.method="POST";
 			this.ts_update.request={status:status};
-			trace(this.ts_update.url);
+			//trace(this.ts_update.url);
 			this.ts_update.send();			
 			
 		}
