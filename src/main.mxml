@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" cornerRadius="15" title="Glitter">
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" cornerRadius="15">
 	<mx:Script>
 		<![CDATA[
 			import glitter.*;
@@ -10,5 +10,12 @@
 		<mx:Spacer width="100%" />
 		<mx:Button height="16" icon="@Embed(source='../images/Settings-16x16.png')" width="16"/>
 	</mx:ApplicationControlBar>
-	
+	<mx:Canvas x="0" y="0" width="100%" height="100%" cornerRadius="20">
+		<mx:Canvas x="151" width="190" cornerRadius="15" backgroundColor="#B97272" top="10" bottom="10" id="tweets" label="tweets">
+		</mx:Canvas>
+		<mx:Canvas width="143" cornerRadius="15" backgroundColor="#C9BD6C" top="10" bottom="10" id="folders" label="folders" x="0">
+		</mx:Canvas>
+		<mx:Canvas cornerRadius="15" backgroundColor="#6485AE" top="10" bottom="10" width="100%" x="349" id="photos" label="photos">
+		</mx:Canvas>
+	</mx:Canvas>
 </mx:WindowedApplication>
