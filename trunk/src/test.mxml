@@ -12,6 +12,7 @@
 			import mx.formatters.DateFormatter;
 			import com.adobe.serialization.json.JSON;
 			import glitter.*;
+			import glitter.twitter.*;
 			
 			[Bindable]
 			private var timeline:ArrayCollection;
