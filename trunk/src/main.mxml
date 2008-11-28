@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" cornerRadius="15" title="Glitter" creationComplete="init();">
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" cornerRadius="15" title="Glitter" creationComplete="init();" height="500">
 	<mx:Script>
 		<![CDATA[
 			import glitter.*;
@@ -7,14 +7,14 @@
 			private var controller:ApplicationController;
 			
 			private function init():void {
-				controller = new ApplicationController;
+				controller = new ApplicationController(this);
 			}
 		]]>
 	</mx:Script>
-	<mx:ApplicationControlBar y="214" x="417" dock="true" height="25" autoLayout="false" paddingTop="2" fillAlphas="[1.0, 1.0]" fillColors="[#050505, #050505]">
+	<mx:ApplicationControlBar dock="true" height="25" paddingTop="2" fillAlphas="[1.0, 1.0]" fillColors="[#050505, #050505]" width="100%">
 		<mx:Label text="Glitter" width="60" height="20" id="nameLabel" fontFamily="Verdana" fontSize="12" fontWeight="bold" color="#BBB517"/>
 		<mx:Spacer width="100%" />
-		<mx:Button height="16" icon="@Embed(source='../images/Settings-16x16.png')" width="16"/>
+		<mx:Button height="16" icon="@Embed(source='../images/Settings-16x16.png')" width="16" click="controller.settingsButtonClick();"/>
 	</mx:ApplicationControlBar>
 	<mx:Canvas x="0" y="0" width="100%" height="100%" cornerRadius="20">
 		<mx:Canvas x="151" width="190" cornerRadius="15" backgroundColor="#B97272" top="10" bottom="10" id="tweets" label="tweets">
