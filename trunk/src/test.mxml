@@ -91,7 +91,7 @@
 			<mx:VBox height="100%">
 				<mx:Button label="Refresh" width="87" height="21" click="refresh();" />
 				<mx:List dataProvider="{boxData}" width="129" change="onChange(event);" id="list" selectedIndex="0" height="105"></mx:List>
-				<mx:Button label="getRateLimit" click="rate.text=String(tw.getRateLimit());"/>
+				<mx:Button label="getRateLimit" click="//rate.text=String(tw.getRateLimit());"/>
 				<mx:TextInput width="131" id="rate"/>
 			</mx:VBox>
 			<mx:Form width="282" height="203">
@@ -99,11 +99,11 @@
 				<mx:FormItem label="status">
 				         	<mx:TextInput id="stat"/>
 				     	</mx:FormItem>
-				<mx:Button label="send" click="tw.setUpdate(stat.text);"/>
+				<mx:Button label="send" click="//tw.setUpdate(stat.text);"/>
 				<mx:FormItem label="location">
 				         	<mx:TextInput id="loc"/>
 				     	</mx:FormItem>
-				<mx:Button label="send" click="tw.setLocation(loc.text);"/>
+				<mx:Button label="send" click="//tw.setLocation(loc.text);"/>
 			</mx:Form>
 		</mx:HBox>
 	</mx:VBox>
