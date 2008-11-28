@@ -38,6 +38,7 @@ package glitter.twitter
 		// callback functions
 		private var userCallback:Function;
 		private var rateLimitCallback:Function;
+		private var verifyCredentialsCallback:Function;
 		
 		public function Twitter(username:String, password:String)
 		{
@@ -62,9 +63,20 @@ package glitter.twitter
 			
 		}
 		
+		public function verifyCredentials(callback:Function):void {
+			this.verifyCredentialsCallback = callback;
+			var ts:TwitterService = new TwitterService(credentials, parseVerifyCredentials, "account", "verify_credentials");
+			ts.performGet();
+		}
+		
+		private function parseVerifyCredentials(o:Object):void {
+			this.verifyCredentialsCallback.apply(this);
+		}
+		
 		public function getRateLimit(callback:Function):void {
 			this.rateLimitCallback = callback;
-			new TwitterService(credentials, parseRateLimit, "account", "rate_limit_status");
+			var ts:TwitterService = new TwitterService(credentials, parseRateLimit, "account", "rate_limit_status");
+			ts.performGet();
 		}
 		
 		private function parseRateLimit(rateLimit:Object):void {
@@ -74,11 +86,21 @@ package glitter.twitter
 		public function getTwitterUser(userCallback:Function, u:String = ""):void {
 			this.userCallback = userCallback;
 			u = u == "" ? this.username : u;
-			new TwitterService(credentials, parseTwitterUser, "users", "show", u);
+			var ts:TwitterService = new TwitterService(credentials, parseTwitterUser, "users", "show", u);
+			ts.performGet();
 		}
 		
 		private function parseTwitterUser(user:Object):void {
 			userCallback.apply(this, [user]);
+		}
+		
+		public function setLocation(location:String):void {
+			var ts:TwitterService = new TwitterService(credentials, parseLocationUpdate, "account", "update_location");
+			ts.performPost({location:location});
+		}
+		
+		private function parseLocationUpdate(o:Object):void {
+			// do nothing for now
 		}
 
 		// Refresh, PULL all status
