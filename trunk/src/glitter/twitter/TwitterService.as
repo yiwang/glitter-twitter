@@ -25,6 +25,15 @@ package glitter.twitter
 			this.showBusyCursor = false;
 			this.addEventListener(ResultEvent.RESULT, onResult);
 			this.addEventListener(FaultEvent.FAULT, onFault);
+		}
+		
+		public function performPost(params):void {
+			this.method = "POST";
+			this.request = params;
+			this.send();
+		}
+		
+		public function performGet():void {
 			this.send();
 		}
 		

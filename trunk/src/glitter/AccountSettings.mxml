@@ -2,14 +2,18 @@
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="280" height="400" backgroundColor="#4A4242" backgroundAlpha="0.9" creationComplete="fillFields();">
 	<mx:Script>
 		<![CDATA[
+			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
 			import glitter.twitter.Twitter;
+			
+			private var twitterLocationFieldUpdated:Boolean;
 			
 			private function close():void {
 				PopUpManager.removePopUp(this);
 			}
 			
 			private function fillFields():void {
+				twitterLocationFieldUpdated = false;
 				twitterUserNameInput.text = Twitter.getStoredUserName();
 				twitterPasswordInput.text = Twitter.getStoredPassword();
 				if (twitterUserNameInput.text != "") {
@@ -35,7 +39,26 @@
 			private function save():void {
 				Twitter.setStoredUserName(twitterUserNameInput.text);
 				Twitter.setStoredPassword(twitterPasswordInput.text);
+				if (twitterLocationFieldUpdated) {
+					var t:Twitter = new Twitter(twitterUserNameInput.text, twitterPasswordInput.text);
+					t.setLocation(twitterLocationInput.text);
+				}
 				close();
+			}
+			
+			private function verifyCredentials():void {
+				var t:Twitter = new Twitter(twitterUserNameInput.text, twitterPasswordInput.text);
+				t.verifyCredentials(verified);
+			}
+			
+			private function verified():void {
+				trace("verified");
+				Alert.show("credentials verified");				
+			}
+			
+			private function twitterLocationUpdated():void {
+				this.twitterLocationFieldUpdated = true;
+				saveButton.enabled = true;
 			}
 		]]>
 	</mx:Script>	
@@ -52,8 +75,8 @@
 			<mx:Label x="10" y="165" text="Description" color="#CCF1F9"/>
 			<mx:TextInput x="84" y="10" id="twitterUserNameInput" change="enableSave();"/>
 			<mx:TextInput x="84" y="40" id="twitterPasswordInput" displayAsPassword="true" change="enableSave();"/>
-			<mx:Button x="116" y="70" label="Verify Credentials" id="verifyButton"/>
-			<mx:TextInput x="84" y="100" id="twitterLocationInput"/>
+			<mx:Button x="116" y="70" label="Verify Credentials" id="verifyButton" click="verifyCredentials();"/>
+			<mx:TextInput x="84" y="100" id="twitterLocationInput" change="twitterLocationUpdated();"/>
 			<mx:Text x="80" y="220" text="60" color="#FFFFFF" fontWeight="bold" textDecoration="underline" id="rateLimitText"/>
 			<mx:TextArea x="84" y="130" editable="false" wordWrap="true" enabled="false" id="twitterDescriptionInput" text="user desc..." height="82"/>
 			</mx:Canvas>
