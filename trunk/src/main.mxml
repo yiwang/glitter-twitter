@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" cornerRadius="15">
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" cornerRadius="15" title="Glitter" creationComplete="init();">
 	<mx:Script>
 		<![CDATA[
 			import glitter.*;
+			
+			private var controller:ApplicationController;
+			
+			private function init():void {
+				controller = new ApplicationController;
+			}
 		]]>
 	</mx:Script>
 	<mx:ApplicationControlBar y="214" x="417" dock="true" height="25" autoLayout="false" paddingTop="2" fillAlphas="[1.0, 1.0]" fillColors="[#050505, #050505]">
