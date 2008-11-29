@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Help.mxml -->
+<mx:Canvas id="help" xmlns:mx="http://www.adobe.com/2006/mxml" width="680" height="480" backgroundColor="#ABD7A8">
+	<mx:VBox x="10" y="10" width="200" height="460" backgroundColor="#CAEAC7">
+		<mx:LinkButton label="LinkButton" textAlign="left"/>
+		<mx:LinkButton label="LinkButton" textAlign="left"/>
+	</mx:VBox>
+	<mx:Label x="577" y="10" text="Help!" textAlign="right" fontSize="30" fontWeight="bold"/>
+	<mx:Canvas x="218" y="60" width="452" height="410" backgroundColor="#CAEAC7">
+		<mx:Text text="Text" width="432" height="390" x="10" y="10"/>
+	</mx:Canvas>
+</mx:Canvas>
