@@ -14,7 +14,7 @@
 -->
 
 	<!-- The application identifier string, unique to this application. Required. -->
-	<id>main</id>
+	<id>Glitter</id>
 
 	<!-- Used as the filename for the application. Required. -->
 	<filename>glitter</filename>
