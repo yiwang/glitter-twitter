@@ -7,7 +7,9 @@ package glitter
 	
 	public class TweetDisplay extends Canvas
 	{
-		public var disp:Canvas;
+		private var disp:Canvas;
+		private var username:String;
+		private var password:String;
 		
 		public function TweetDisplay()
 		{
@@ -23,18 +25,30 @@ package glitter
 		public function getFriendsTimeline(name:String, pw:String):void {
 			var t:Twitter = new Twitter(name, pw);
 			t.getFriendsTimeline(showTweets);
+			this.username = name;
+			this.password = pw;
 		}
 		
 		public function getUserTimeline(name:String, pw:String): void {
 			var t:Twitter = new Twitter(name, pw);
-			t.getUserTimeline(showTweets);				
+			t.getUserTimeline(showTweets);			
+			this.username = name;
+			this.password = pw;
 		}
 			
 		public function getReplies(name:String, pw:String): void {
 			var t:Twitter = new Twitter(name, pw);
 			t.getReplies(showTweets);				
+			this.username = name;
+			this.password = pw;
 		}
-			
+		
+		public function getUserUpdates(n:String):void {
+			var t:Twitter = new Twitter(username, password);
+			t.getUserTimeline(showTweets, n);
+		}
+		
+		private var nm:String;	
 		private function showTweets(tw:Array):void {
 			disp.removeAllChildren();
 			disp.graphics.clear();
@@ -49,12 +63,10 @@ package glitter
 			else{
 					var item:Object = tweets.getItemAt(i);
 					var st:Status = new Status(item);
-					var t:Tweet = new Tweet(st);
+					var t:Tweet = new Tweet(st, this);
+					nm = st.getUserName();
 					t.x = 2;
-					t.y = counter;			
-				/* 	 with(t){		// display one user's all updates
-						t.userName.addEventListener(MouseEvent.CLICK, getUserUpdates);
-					}	 */	 
+					t.y = counter;		
 					disp.addChild(t);
 					counter += 73;
 				}
