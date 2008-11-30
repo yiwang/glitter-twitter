@@ -18,7 +18,7 @@ package glitter.twitter
 		private var username:String;
 		private var password:String;
 		private var credentials:String;
-   				
+
 //		private static var logger:ILogger = Log.getLogger("Twitter.as");
 //		public var _user_timeline:Array = new Array();
 //		public var _friends_timeline:Array = new Array();
@@ -39,6 +39,7 @@ package glitter.twitter
 		private var userCallback:Function;
 		private var rateLimitCallback:Function;
 		private var verifyCredentialsCallback:Function;
+		private var timelineCallback:Function;
 		
 		public function Twitter(username:String, password:String)
 		{
@@ -60,14 +61,13 @@ package glitter.twitter
             myTimer.addEventListener("timer", timerHandler);
             myTimer.start();
             */
-			
 		}
 		
 		public function verifyCredentials(callback:Function):void {
 			this.verifyCredentialsCallback = callback;
 			var ts:TwitterService = new TwitterService(credentials, parseVerifyCredentials, "account", "verify_credentials");
 			ts.performGet();
-		}
+		}		
 		
 		private function parseVerifyCredentials(o:Object):void {
 			this.verifyCredentialsCallback.apply(this);
@@ -78,7 +78,6 @@ package glitter.twitter
 			var ts:TwitterService = new TwitterService(credentials, parseRateLimit, "account", "rate_limit_status");
 			ts.performGet();
 		}
-		
 		private function parseRateLimit(rateLimit:Object):void {
 			rateLimitCallback.apply(this, [String(rateLimit.remaining_hits)]);
 		}
@@ -92,6 +91,28 @@ package glitter.twitter
 		
 		private function parseTwitterUser(user:Object):void {
 			userCallback.apply(this, [user]);
+		}
+		
+		public function getFriendsTimeline(callback:Function):void {
+			this.timelineCallback = callback;
+			var ts:TwitterService = new TwitterService(credentials, parseGetTimeline, "statuses", "friends_timeline");
+			ts.performGet();
+		} 
+		
+		public function getUserTimeline(callback:Function):void {
+			this.timelineCallback = callback;
+			var ts:TwitterService = new TwitterService(credentials, parseGetTimeline, "statuses", "user_timeline");
+			ts.performGet();
+		}
+		
+		public function getReplies(callback:Function):void {
+			this.timelineCallback = callback;
+			var ts:TwitterService = new TwitterService(credentials, parseGetTimeline, "statuses", "replies");
+			ts.performGet();
+		} 
+	
+		private function parseGetTimeline(statuses:Array):void{
+			this.timelineCallback.apply(this, [statuses]);
 		}
 		
 		public function setLocation(location:String):void {
@@ -160,8 +181,7 @@ package glitter.twitter
 //			//trace(this.ts_update.url);
 //			this.ts_update.send();			
 //			
-//		}
-		
+//		}		
 		public static function getStoredUserName():String {
 			var storedValue:ByteArray = EncryptedLocalStore.getItem("twitterUserName");
 			return storedValue == null ? "" : storedValue.readUTFBytes(storedValue.length);
@@ -185,5 +205,6 @@ package glitter.twitter
 			EncryptedLocalStore.removeItem("twitterPassword");
 			EncryptedLocalStore.setItem("twitterPassword", bytes);			
 		}
+		
 	}
 }

@@ -1,4 +1,4 @@
-package kaori.glitter
+package glitter
 {
 	import flash.events.MouseEvent;
 	import flash.filters.*;
@@ -18,7 +18,7 @@ package kaori.glitter
 		public function Tweet(status:Status)
 		{
 			cvs = new Canvas();
-			cvs.width = 279;
+			cvs.width = 260;
 			cvs.height = 72;
 			setColor(0x91e4f3);
 			
