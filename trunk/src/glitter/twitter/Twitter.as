@@ -99,9 +99,10 @@ package glitter.twitter
 			ts.performGet();
 		} 
 		
-		public function getUserTimeline(callback:Function):void {
+		public function getUserTimeline(callback:Function, u:String = ""):void {
 			this.timelineCallback = callback;
-			var ts:TwitterService = new TwitterService(credentials, parseGetTimeline, "statuses", "user_timeline");
+			u = u == "" ? this.username : u;
+			var ts:TwitterService = new TwitterService(credentials, parseGetTimeline, "statuses", "user_timeline", u);
 			ts.performGet();
 		}
 		

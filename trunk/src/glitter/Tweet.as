@@ -14,9 +14,12 @@ package glitter
 		private var profileImage:Image;
 		private var text:Text;
 		private var createdAt:Text;
+		private var display:TweetDisplay;
 			
-		public function Tweet(status:Status)
+		public function Tweet(status:Status, display:TweetDisplay)
 		{
+			this.display = display;
+			
 			cvs = new Canvas();
 			cvs.width = 260;
 			cvs.height = 72;
@@ -31,7 +34,7 @@ package glitter
 			userName.setStyle("color", 0xEE5815);
 			userName.addEventListener(MouseEvent.ROLL_OVER, rollOver);
 			userName.addEventListener(MouseEvent.ROLL_OUT, rollOut);
-			//userName.addEventListener(MouseEvent.CLICK, "click");
+			userName.addEventListener(MouseEvent.CLICK, getUserUpdates);
 			
 			profileImage = new Image();
 			profileImage.x = 10;
@@ -100,5 +103,8 @@ package glitter
 		public function rollOut(e:MouseEvent):void{
 			userName.setStyle("textDecoration", "none");
 		}
+	 	public function getUserUpdates(e:MouseEvent):void {
+			display.getUserUpdates(userName.text);
+		} 
 	}
 }
