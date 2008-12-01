@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="280" height="100" backgroundColor="#9BD3F6">
+	<mx:Script>
+		<![CDATA[
+			import glitter.twitter.Twitter;         	
+         	// Update status - does not update for now
+         	private function update():void{
+         		var t:Twitter = new Twitter(Twitter.getStoredUserName(), Twitter.getStoredPassword());
+         		t.setUpdate(textInput.text);
+         		textInput.text = null;
+         	}
+		]]>
+	</mx:Script>
+		<mx:Button label="send" click="update()" bottom="7" right="10"/>
+		<mx:TextInput id="textInput" height="55" left="10" right="10" top="10"/>
+</mx:Canvas>
