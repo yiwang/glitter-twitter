@@ -2,19 +2,28 @@ package glitter
 {
 	import flash.events.MouseEvent;
 	import flash.filters.*;
+	import flash.net.URLRequest;
+	import flash.net.navigateToURL;
+	//import flash.display.Bitmap;
+	//import flash.display.BitmapData;
 	
 	import mx.containers.Canvas;
 	import mx.controls.*;
+	//import mx.core.DragSource;
+	//import mx.core.UIComponent;
 	import mx.styles.StyleManager;
+	//import mx.managers.DragManager;
 	
 	public class Tweet extends Canvas
 	{
 		private var cvs:Canvas;
-		public var userName:Label;
+		private var userName:Label;
 		private var profileImage:Image;
 		private var text:Text;
-		private var createdAt:Text;
+		private var createdAt:Label;
 		private var display:TweetDisplay;
+		private var isLinked:Boolean = false;
+		private var status:String;
 			
 		public function Tweet(status:Status, display:TweetDisplay)
 		{
@@ -29,8 +38,9 @@ package glitter
 			setUserName(status.getUserName());
 			userName.x = 68;
 			userName.y = 10;
-			userName.width=153;
 			userName.height=20;
+			userName.setStyle("left", 65);
+			userName.setStyle("top", 10);
 			userName.setStyle("color", 0xEE5815);
 			userName.addEventListener(MouseEvent.ROLL_OVER, rollOver);
 			userName.addEventListener(MouseEvent.ROLL_OUT, rollOut);
@@ -41,6 +51,7 @@ package glitter
 			profileImage.y = 10;
 			profileImage.width = 48;
 			profileImage.height = 48;
+			profileImage.setStyle("verticalCenter", 0);
 			setSource(status.getSource());
 			
 			var glow:GlowFilter = new GlowFilter();
@@ -56,14 +67,21 @@ package glitter
 			text.x = 68;
 			text.y = 10;
 			text.width = 153;
-			text.height = 40;
+			text.height = 44;
+			text.setStyle("right", 3);
+			text.setStyle("left", 65);
+			text.setStyle("top", 10);
+			text.addEventListener(MouseEvent.ROLL_OVER, rollOver);
+			text.addEventListener(MouseEvent.ROLL_OUT, rollOut);
+			text.addEventListener(MouseEvent.CLICK, link);
 			setText(status.getText());
-			
-			createdAt = new Text();
-			createdAt.x = 68;
-			createdAt.y = 44;
-			createdAt.width = 191;
+
+			createdAt = new Label();
 			createdAt.height = 18;
+			createdAt.setStyle("left", 65);
+			createdAt.setStyle("right", 3);
+			createdAt.setStyle("bottom", 3);
+			createdAt.setStyle("color", 0x3b71d4);
 			setTime(status.getFormattedDate());
 			
 			cvs.addChild(profileImage);
@@ -71,8 +89,10 @@ package glitter
 			cvs.addChild(userName);
 			cvs.addChild(createdAt);
 			addChild(cvs);
+			
+			//cvs.addEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler);
 		}
-		
+
 		public function setUserName(name:String):void{
 			userName.text = name;
 		}
@@ -80,17 +100,34 @@ package glitter
 			profileImage.source = src;
 		}
 		public function setText(st:String):void{
+			status = st;
 			var x:int = userName.text.length;
 			var i:int = 0;
 			var space:String = "       ";
-			for(i=0; i<=x; i++){
+			
+			 for(i=0; i<=x; i++){
 				space = space + " ";
 			}
-			text.text = space + st;
+			text.text = space + status;
 			
-			if(st.charAt(0)=='@')
-				setColor(0x82f2d4);
+			if(status.charAt(0)=='@')
+				setColor(0x82f2d4);		
+			
+			if(status.match(/http:\/\/*/)){
+			  text.setStyle("color", 0xEE5815);
+			  isLinked = true;
+			}
 		}
+		
+		public function link(e:MouseEvent):void{
+			if(isLinked){
+			text.setStyle("color", 0x1931c4);
+			var url:String = status;
+			var urlRequest:URLRequest = new URLRequest(url);
+			navigateToURL(urlRequest, null);
+			}
+		}
+		
         public function setTime(tm:String):void{
         	createdAt.text = tm;
         }
@@ -98,13 +135,34 @@ package glitter
 			cvs.setStyle("backgroundColor", color);
 		}
 		public function rollOver(e:MouseEvent):void{
-			userName.setStyle("textDecoration", "underline");
+			if (e.target == userName)
+				userName.setStyle("textDecoration", "underline");
+			else if (e.target==text && isLinked)
+				text.setStyle("color", 0x1931c4);
 		}
 		public function rollOut(e:MouseEvent):void{
-			userName.setStyle("textDecoration", "none");
+			if (e.target == userName)
+				userName.setStyle("textDecoration", "none");
+			else if (e.target==text && isLinked)
+				text.setStyle("color", 0xEE5815);
 		}
 	 	public function getUserUpdates(e:MouseEvent):void {
 			display.getUserUpdates(userName.text);
 		} 
+		
+		/* private function mouseDownHandler(event:MouseEvent):void{
+
+            var dragSource:DragSource = new DragSource();
+			dragSource.addData(cvs, "Canvas");
+			
+			var imageProxy:UIComponent = new UIComponent();
+			var bitmap:Bitmap = new Bitmap();
+			var bitmapData:BitmapData = new BitmapData(cvs.width, cvs.height);
+			bitmapData.draw(cvs);
+			bitmap.bitmapData = bitmapData;
+            imageProxy.addChild(bitmap);
+			
+			DragManager.doDrag(cvs, dragSource, event, imageProxy);
+        }  */
 	}
 }
