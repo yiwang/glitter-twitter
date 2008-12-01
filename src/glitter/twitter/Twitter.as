@@ -120,6 +120,11 @@ package glitter.twitter
 			var ts:TwitterService = new TwitterService(credentials, parseLocationUpdate, "account", "update_location");
 			ts.performPost({location:location});
 		}
+
+		public function setUpdate(status:String):void {
+			var ts:TwitterService = new TwitterService(credentials, parseLocationUpdate, "statuses", "update");
+			ts.performPost({status:status});
+		}
 		
 		private function parseLocationUpdate(o:Object):void {
 			// do nothing for now
