@@ -8,3 +8,12 @@ Labels/Bins API Saving Items
 Upload new Photo
 Photos Fisheye
 Select Photo from Flickr
+
+
+Some notes and bugs from 12/1
+
+@replies should have special highlighting in tweet panel
+scroll bar in tweet panel is messed up
+we should be polling the service to pull back updates automatically
+longer tweets are getting cut off. We need to display full message.
+main.xml and main2.xml have to be merged

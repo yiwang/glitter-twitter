@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="280" height="400" backgroundColor="#4A4242" backgroundAlpha="0.9" creationComplete="fillFields();">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="280" height="356" backgroundColor="#4A4242" backgroundAlpha="0.9" creationComplete="fillFields();">
 	<mx:Script>
 		<![CDATA[
 			import mx.controls.Alert;
@@ -62,28 +62,20 @@
 			}
 		]]>
 	</mx:Script>	
-	<mx:TabBar x="10" y="41" dataProvider="viewstack1">
-	</mx:TabBar>
 	<mx:Text x="10" y="10" text="User Settings" fontSize="14" fontWeight="bold" textDecoration="underline" color="#17C6EB"/>
 	<mx:Canvas x="10" y="61" width="255" height="250" borderStyle="solid">
-		<mx:ViewStack x="0" y="0" id="viewstack1" width="253" height="248">
-			<mx:Canvas label="Twitter" width="100%" height="100%">
-			<mx:Label x="10" y="12" text="User Name" color="#CCF1F9"/>
-			<mx:Label x="10" y="42" text="Password" color="#CCF1F9"/>
-			<mx:Label x="10" y="102" text="Location" color="#CCF1F9"/>
-			<mx:Label x="10" y="220" text="Rate Limit" color="#CCF1F9"/>
-			<mx:Label x="10" y="165" text="Description" color="#CCF1F9"/>
-			<mx:TextInput x="84" y="10" id="twitterUserNameInput" change="enableSave();"/>
-			<mx:TextInput x="84" y="40" id="twitterPasswordInput" displayAsPassword="true" change="enableSave();"/>
-			<mx:Button x="116" y="70" label="Verify Credentials" id="verifyButton" click="verifyCredentials();"/>
-			<mx:TextInput x="84" y="100" id="twitterLocationInput" change="twitterLocationUpdated();"/>
-			<mx:Text x="80" y="220" text="60" color="#FFFFFF" fontWeight="bold" textDecoration="underline" id="rateLimitText"/>
-			<mx:TextArea x="84" y="130" editable="false" wordWrap="true" enabled="false" id="twitterDescriptionInput" text="user desc..." height="82"/>
-			</mx:Canvas>
-			<mx:Canvas label="Flickr" width="100%" height="100%">
-			</mx:Canvas>
-		</mx:ViewStack>
+		<mx:Label x="10" y="12" text="User Name" color="#CCF1F9"/>
+		<mx:Label x="10" y="42" text="Password" color="#CCF1F9"/>
+		<mx:Label x="10" y="102" text="Location" color="#CCF1F9"/>
+		<mx:Label x="10" y="220" text="Rate Limit" color="#CCF1F9"/>
+		<mx:Label x="10" y="165" text="Description" color="#CCF1F9"/>
+		<mx:TextInput x="84" y="10" id="twitterUserNameInput" change="enableSave();"/>
+		<mx:TextInput x="84" y="40" id="twitterPasswordInput" displayAsPassword="true" change="enableSave();"/>
+		<mx:Button x="116" y="70" label="Verify Credentials" id="verifyButton" click="verifyCredentials();"/>
+		<mx:TextInput x="84" y="100" id="twitterLocationInput" change="twitterLocationUpdated();"/>
+		<mx:Text x="80" y="220" text="60" color="#FFFFFF" fontWeight="bold" textDecoration="underline" id="rateLimitText"/>
+		<mx:TextArea x="84" y="130" editable="false" wordWrap="true" enabled="false" id="twitterDescriptionInput" text="user desc..." height="82"/>
 	</mx:Canvas>
-	<mx:Button x="200" y="369" label="Cancel" click="close();" id="cancelButton"/>
-	<mx:Button x="138" y="369" label="Save" id="saveButton" enabled="false" click="save();"/>
+	<mx:Button x="202" y="319" label="Cancel" click="close();" id="cancelButton"/>
+	<mx:Button x="140" y="319" label="Save" id="saveButton" enabled="false" click="save();"/>
 </mx:Canvas>
