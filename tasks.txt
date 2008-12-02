@@ -12,8 +12,18 @@ Select Photo from Flickr
 
 Some notes and bugs from 12/1
 
-@replies should have special highlighting in tweet panel
-scroll bar in tweet panel is messed up
-we should be polling the service to pull back updates automatically
-longer tweets are getting cut off. We need to display full message.
+@replies should have special highlighting in tweet panel - kaori
+scroll bar in tweet panel is messed up 
+we should be polling the service to pull back updates automatically - yi
+longer tweets are getting cut off. We need to display full message. - kaori
 main.xml and main2.xml have to be merged
+fix the dates in tweets
+move lightbox over to left, switch navagation
+enable creation of new containers - colin
+enable drag-drop of tweets into containers - colin
+enable view of photos (all tweets in current timeline that have a twitpic url should have those photos displayed in the photos section) - colin
+enable upload of photos (button to bring up file chooser or drag photo from explorer/finder to send area) - paul
+if it is a twitpic tweet, have an icon to click on that displays the photo (not the link, should be something like a camera) - paul
+add button for user to user? (highlight a reply tweet, click the user-to-user button)
+
+system for storing user created containers, all tweets, and pictures locally - yi
