@@ -45,9 +45,9 @@
 		<mx:Button height="16" icon="@Embed(source='../images/Settings-16x16.png')" width="16" click="controller.settingsButtonClick();"/>
 	</mx:ApplicationControlBar>
 	<mx:Canvas x="0" y="0" width="100%" height="100%" cornerRadius="20" id="mainCanvas">
-		<mx:Canvas x="10" width="300" cornerRadius="15" backgroundColor="#B97272" top="10" bottom="10" id="tweets" label="tweets">
+		<mx:Canvas x="173" width="300" cornerRadius="15" backgroundColor="#B97272" top="10" bottom="10" id="tweets" label="tweets">
 			<mx:Label y="2" text="tweets" color="#FFFFFF" fontWeight="bold" left="10" right="10"/>
-			<ns1:TweetDisplay id="display" left="10" right="10" bottom="110" top="20">				
+			<ns1:TweetDisplay id="display" left="10" right="10" bottom="110" top="20" width="100%" height="100%">				
 			</ns1:TweetDisplay>
 			<ns1:Navi x="10" bottom="10">
 			</ns1:Navi>
@@ -57,7 +57,7 @@
 			</mx:VBox>
 			<mx:Label y="2" text="photos" color="#FFFFFF" fontWeight="bold" right="10" left="10"/>
 		</mx:Canvas>
-		<mx:Canvas width="157" cornerRadius="15" backgroundColor="#C9BD6C" id="folders" label="folders" x="318" top="10" bottom="10">
+		<mx:Canvas width="157" cornerRadius="15" backgroundColor="#C9BD6C" id="folders" label="folders" x="10" height="654" y="10">
 			<mx:VBox id="foldersVBox" backgroundColor="#D1D089" right="10" left="10" top="20" bottom="10" horizontalAlign="center">
 				<mx:Spacer height="10" />
 				<mx:Canvas width="110" height="78" id="image1canvas" label="friend's thread" mouseDownEffect="{glowImage}">
