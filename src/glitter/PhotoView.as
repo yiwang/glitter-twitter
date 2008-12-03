@@ -24,7 +24,7 @@ package glitter
 			disp.setStyle("backgroundColor", 0xCCCCCC);
  */			addChild(disp);
 			photoArray = new ArrayCollection;
-			loadPhotosFromDirectory();
+//			loadPhotosFromDirectory();
 		}
 		
 		private function loadPhotosFromDirectory():void {
