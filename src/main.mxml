@@ -42,7 +42,14 @@
 			<mx:Label y="2" text="tweets" color="#FFFFFF" fontWeight="bold" left="10" right="10"/>
 		</mx:Canvas>
 		<mx:Canvas cornerRadius="15" backgroundColor="#6485AE" top="10" bottom="10" id="photos" label="photos" right="10" left="379">
-			<mx:VBox backgroundColor="#8EA4BE" top="20" left="10" bottom="10" right="10">
+			<mx:VBox backgroundColor="#8EA4BE" top="20" left="10" bottom="10" right="10" id="photoBox">
+				<mx:Image source="@Embed(&quot;../images/lightbox.png&quot;)"/>
+		<mx:Script>
+			<![CDATA[
+				var photoView:glitter.PhotoView = new glitter.PhotoView();
+//				photos.addChild(photoView);
+			]]>
+		</mx:Script>
 			</mx:VBox>
 			<mx:Label y="2" text="photos" color="#FFFFFF" fontWeight="bold" right="10" left="10"/>
 		</mx:Canvas>
