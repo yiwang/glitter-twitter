@@ -1,6 +1,7 @@
 package glitter
 {
 	import mx.formatters.DateFormatter;
+	import mx.controls.Alert;
 	
 	public class Status
 	{
@@ -18,6 +19,7 @@ package glitter
 			id = item.user.id;
 			userName = item.user.screen_name;
 			source = item.user.profile_image_url;
+//			Alert.show(source);
 			text = item.text;
 			createdAt = item.created_at;
 			inReplyToStatusId = item.in_reply_to_status_id;
