@@ -25,6 +25,7 @@ package glitter
 		private var isLinked:Boolean = false;
 		private var url:String;
 		private var replyTo:Label;
+		public var isReply:Boolean = false;
 			
 		public function Tweet(status:Status, display:TweetDisplay)
 		{
@@ -127,6 +128,7 @@ package glitter
 			if(fst.charAt(0) == '@'){
 				setColor(0x82f2d4);
 				replyTo.text = fst;
+				isReply = true;
 				var sp:String = "";
 				for(i=0; i<=fst.length; i++){
 					sp = sp + "  ";
