@@ -14,8 +14,10 @@ package glitter
 		public function TweetDisplay()
 		{
 			disp = new Canvas();
-			disp.width = 280;
-			disp.height = 600;
+			disp.setStyle("left", 10);
+			disp.setStyle("right", 10);
+			disp.setStyle("bottom", 110);
+			disp.setStyle("top", 20);
 			disp.setStyle("backgroundColor", 0x6aaec7);
 			disp.verticalScrollPolicy = "on";
 			
@@ -47,10 +49,9 @@ package glitter
 			var t:Twitter = new Twitter(username, password);
 			t.getUserTimeline(showTweets, n);
 		}
-		
-		private var nm:String;	
+
 		private function showTweets(tw:Array):void {
-			disp.removeAllChildren();
+		 	disp.removeAllChildren();
 			disp.graphics.clear();
 				
 			var tweets:ArrayCollection = new ArrayCollection(tw);
@@ -60,15 +61,15 @@ package glitter
 				
 			for(i =0; i<20; i++){
 				if(tweets.length <= i) break;
-			else{
+				else{
 					var item:Object = tweets.getItemAt(i);
 					var st:Status = new Status(item);
 					var t:Tweet = new Tweet(st, this);
-					nm = st.getUserName();
-					t.x = 2;
+					t.setStyle("left", 0);
+					t.setStyle("right", 0);
 					t.y = counter;		
 					disp.addChild(t);
-					counter += 73;
+					counter += t.getHeight() + 2;
 				}
 			}
 		}
