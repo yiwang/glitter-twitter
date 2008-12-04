@@ -23,22 +23,22 @@ package glitter
 		private var createdAt:Label;
 		private var display:TweetDisplay;
 		private var isLinked:Boolean = false;
-		private var status:String;
+		private var url:String;
+		private var replyTo:Label;
 			
 		public function Tweet(status:Status, display:TweetDisplay)
 		{
 			this.display = display;
 			
 			cvs = new Canvas();
-			cvs.width = 260;
+			cvs.setStyle("left", 2);
+			cvs.setStyle("right", 2);
 			cvs.height = 72;
 			setColor(0x91e4f3);
 			
 			userName = new Label();
 			setUserName(status.getUserName());
-			userName.x = 68;
-			userName.y = 10;
-			userName.height=20;
+			userName.height = 18;
 			userName.setStyle("left", 65);
 			userName.setStyle("top", 10);
 			userName.setStyle("color", 0xEE5815);
@@ -46,11 +46,19 @@ package glitter
 			userName.addEventListener(MouseEvent.ROLL_OUT, rollOut);
 			userName.addEventListener(MouseEvent.CLICK, getUserUpdates);
 			
+			replyTo = new Label();
+			replyTo.height = 18;
+			replyTo.setStyle("left", 120);
+			replyTo.setStyle("top", 10);
+			replyTo.setStyle("color", 0xEE5815);
+			replyTo.addEventListener(MouseEvent.ROLL_OVER, rollOver);
+			replyTo.addEventListener(MouseEvent.ROLL_OUT, rollOut);
+			replyTo.addEventListener(MouseEvent.CLICK, getUserUpdates);
+			
 			profileImage = new Image();
-			profileImage.x = 10;
-			profileImage.y = 10;
 			profileImage.width = 48;
 			profileImage.height = 48;
+			profileImage.setStyle("left", 10);
 			profileImage.setStyle("verticalCenter", 0);
 			setSource(status.getSource());
 			
@@ -64,13 +72,10 @@ package glitter
             profileImage.filters = [glow];
 	
 			text = new Text();
-			text.x = 68;
-			text.y = 10;
-			text.width = 153;
-			text.height = 44;
 			text.setStyle("right", 3);
 			text.setStyle("left", 65);
 			text.setStyle("top", 10);
+			text.setStyle("bottom", 18);
 			text.addEventListener(MouseEvent.ROLL_OVER, rollOver);
 			text.addEventListener(MouseEvent.ROLL_OUT, rollOut);
 			text.addEventListener(MouseEvent.CLICK, link);
@@ -86,10 +91,11 @@ package glitter
 			
 			cvs.addChild(profileImage);
 			cvs.addChild(text);
+			cvs.addChild(replyTo);
 			cvs.addChild(userName);
 			cvs.addChild(createdAt);
+
 			addChild(cvs);
-			
 			//cvs.addEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler);
 		}
 
@@ -99,30 +105,56 @@ package glitter
 		public function setSource(src:String):void{
 			profileImage.source = src;
 		}
-		public function setText(st:String):void{
-			status = st;
+		public function setText(status:String):void{
 			var x:int = userName.text.length;
 			var i:int = 0;
-			var space:String = "       ";
+
+			var a:Array = status.split(" ");
+			a.reverse();
 			
-			 for(i=0; i<=x; i++){
+			// change color for url links
+			for each(var s:String in a){
+				if(s.match("http://")){
+					url = s;
+					isLinked = true;
+					text.setStyle("color", 0xEE5815);
+					break;
+				}
+			}	
+			
+			// change color for replies
+			var fst:String = a.pop().toString();
+			if(fst.charAt(0) == '@'){
+				setColor(0x82f2d4);
+				replyTo.text = fst;
+				var sp:String = "";
+				for(i=0; i<=fst.length; i++){
+					sp = sp + "  ";
+				}
+				status = status.replace(fst, sp);
+				replyTo.setStyle("left", 100+(x*3));
+			}
+			
+			var space:String = "       ";
+			for(i=0; i<=x; i++){
 				space = space + " ";
 			}
-			text.text = space + status;
+			status = space + status;
+			text.text = status;
+
+			// adjust tweet height
+			if (status.length > 80)
+			  cvs.height += (status.length - 80)/28*20;
 			
-			if(status.charAt(0)=='@')
-				setColor(0x82f2d4);		
-			
-			if(status.match(/http:\/\/*/)){
-			  text.setStyle("color", 0xEE5815);
-			  isLinked = true;
-			}
+		}
+		
+		public function getHeight():int {
+			return cvs.height;
 		}
 		
 		public function link(e:MouseEvent):void{
 			if(isLinked){
 			text.setStyle("color", 0x1931c4);
-			var url:String = status;
 			var urlRequest:URLRequest = new URLRequest(url);
 			navigateToURL(urlRequest, null);
 			}
@@ -137,17 +169,26 @@ package glitter
 		public function rollOver(e:MouseEvent):void{
 			if (e.target == userName)
 				userName.setStyle("textDecoration", "underline");
+			else if (e.target == replyTo)
+				replyTo.setStyle("textDecoration", "underline");
 			else if (e.target==text && isLinked)
 				text.setStyle("color", 0x1931c4);
 		}
 		public function rollOut(e:MouseEvent):void{
 			if (e.target == userName)
 				userName.setStyle("textDecoration", "none");
+			else if (e.target == replyTo)
+				replyTo.setStyle("textDecoration", "none");
 			else if (e.target==text && isLinked)
 				text.setStyle("color", 0xEE5815);
 		}
 	 	public function getUserUpdates(e:MouseEvent):void {
-			display.getUserUpdates(userName.text);
+	 		if (e.currentTarget == userName)
+	 			display.getUserUpdates(userName.text);
+	 		else if (e.currentTarget == replyTo) {
+				var name:String = replyTo.text.substr(1, replyTo.text.length-1);
+				display.getUserUpdates(name);
+	 		}
 		} 
 		
 		/* private function mouseDownHandler(event:MouseEvent):void{

@@ -13,6 +13,8 @@ package glitter
 		private var inReplyToStatusId:String;
 		private var inReplyToUserId:String;
 		private var flickrPhoto:FlickrPhoto; // not all will have this
+		private var hasPic:Boolean = false;
+		private var photoUrl:String;
 		
 		public function Status(item:Object)
 		{
@@ -50,7 +52,10 @@ package glitter
        	{
 			var dateFormatter:DateFormatter = new DateFormatter();
     		dateFormatter.formatString = "MMMM D, YYYY, J:NN:SS";    
- 			return dateFormatter.format( createdAt );
+    		var a:Array = createdAt.split(" ");
+    		var date:String = dateFormatter.format( createdAt );
+    		date = date.replace("2000", a.pop());
+ 			return date;
        	}	
        	
        	public function getInReplyToStatusId():String
@@ -65,6 +70,25 @@ package glitter
 
 		// returns true if this tweet has a photo attached.
 		// figures this out by parsing the text of the update
-		public function hasPhoto():Boolean { return false; }		
+		public function hasPhoto():Boolean
+		{
+			var a:Array = text.split(" ");
+			a.reverse();
+			
+			for each(var s:String in a){
+				if(s.match("http://twitpic.com/")){
+					hasPic = true;
+					photoUrl = s;
+					break;
+				}
+			}	
+			return hasPic;			
+		}	
+		
+		// twitpic URL
+		public function getPhotoUrl():String
+		{
+			return photoUrl;
+		}	
 	}
 }
