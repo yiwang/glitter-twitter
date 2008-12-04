@@ -55,6 +55,10 @@ package glitter
 			t.getUserTimeline(showTweets, n);
 		}
 
+		public function call_showTweets(tw:Array):void{
+			showTweets(tw);
+		}
+		
 		private function showTweets(tw:Array):void {
 		 	disp.removeAllChildren();
 			disp.graphics.clear();
