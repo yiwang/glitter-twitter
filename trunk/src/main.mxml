@@ -31,6 +31,10 @@
 			private function launchHelpWindow():void {
 				helpWindow = new HelpWindow(mainCanvas);//theWindow;//
 			}
+			
+			public function getController():ApplicationController{
+				return controller;
+			}
 		]]>
 	</mx:Script>
     <mx:Glow id="glowImage" duration="1000"

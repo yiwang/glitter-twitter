@@ -4,7 +4,10 @@ package glitter.twitter
 	
 	import flash.data.EncryptedLocalStore;
 	import flash.utils.ByteArray;
-
+	
+	import mx.collections.ArrayCollection;
+	import mx.core.Application;
+	import glitter.ApplicationController;
 //	import flash.events.TimerEvent;
 //	
 //	import mx.logging.ILogger;
@@ -41,8 +44,17 @@ package glitter.twitter
 		private var verifyCredentialsCallback:Function;
 		private var timelineCallback:Function;
 		
+		private var ctl:ApplicationController;
+		/**
+		 * This public var is the the current array of tweets displayed.  
+		 */
+		public var currentTimeLine:ArrayCollection;
+		
 		public function Twitter(username:String, password:String)
 		{
+			// obtain the controller
+			ctl = Application.application.getController();
+			
 			this.username = username;
 			this.password = password;
 			this.credentials = Base64.encode(username + ":" + password);
@@ -93,27 +105,41 @@ package glitter.twitter
 			userCallback.apply(this, [user]);
 		}
 		
+		/**
+		 * timeline operations
+		 */
 		public function getFriendsTimeline(callback:Function):void {
 			this.timelineCallback = callback;
 			var ts:TwitterService = new TwitterService(credentials, parseGetTimeline, "statuses", "friends_timeline");
-			ts.performGet();
+			ctl.set_key_timeline("getFriendsTimeline");
+			ts.performGet({since_id:ctl.get_lastid()});
 		} 
 		
 		public function getUserTimeline(callback:Function, u:String = ""):void {
 			this.timelineCallback = callback;
 			u = u == "" ? this.username : u;
 			var ts:TwitterService = new TwitterService(credentials, parseGetTimeline, "statuses", "user_timeline", u);
-			ts.performGet();
+			if(u == this.username) {
+				ctl.set_key_timeline("getUserTimeline");
+			}else{
+				ctl.set_key_timeline("getUserUpdates",u);
+			}
+			ts.performGet({since_id:ctl.get_lastid()});
 		}
 		
 		public function getReplies(callback:Function):void {
 			this.timelineCallback = callback;
 			var ts:TwitterService = new TwitterService(credentials, parseGetTimeline, "statuses", "replies");
-			ts.performGet();
+			ctl.set_key_timeline("getReplies");
+			ts.performGet({since_id:ctl.get_lastid()});
 		} 
 	
+		/**
+		 * update the data
+		 */
 		private function parseGetTimeline(statuses:Array):void{
-			this.timelineCallback.apply(this, [statuses]);
+			//this.timelineCallback.apply(this, [statuses]);
+			this.timelineCallback.apply(this, [ctl.get_new_timeline(statuses)]);
 		}
 		
 		public function setLocation(location:String):void {

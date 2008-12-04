@@ -27,13 +27,14 @@ package glitter.twitter
 			this.addEventListener(FaultEvent.FAULT, onFault);
 		}
 		
-		public function performPost(params):void {
+		public function performPost(params:Object):void {
 			this.method = "POST";
 			this.request = params;
 			this.send();
 		}
 		
-		public function performGet():void {
+		public function performGet(params:Object=null):void {
+			this.request = params;
 			this.send();
 		}
 		
