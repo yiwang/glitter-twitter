@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication name="glitterApp" resizing="true" dropShadowEnabled="true" height="700" width="1000" xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:GlitterComp="*" layout="absolute" cornerRadius="15" xmlns:ns1="glitter.*">
+	<mx:Script>
+		<![CDATA[
+			import mx.containers.TitleWindow;
+			import glitter.*;
+			import flash.filters.DropShadowFilter;
+
+			private var controller:ApplicationController;
+			private var helpWindow:HelpWindow;
+			
+			private function init():void {
+				controller = new ApplicationController(this);
+			}
+
+			private function launchHelpWindow():void {
+				helpWindow = new HelpWindow(mainCanvas);//theWindow;//
+			}
+		]]>
+	</mx:Script>
+    <mx:Glow id="glowImage" duration="1000"
+        alphaFrom="1.0" alphaTo="0.3" 
+        blurXFrom="0.0" blurXTo="50.0" 
+        blurYFrom="0.0" blurYTo="50.0" 
+        color="0xFFFFFF"/>
+	<mx:ApplicationControlBar dock="true" height="25" paddingTop="2" fillAlphas="[1.0, 1.0]" fillColors="[#050505, #050505]" width="100%">
+		<mx:Label text="Glitter" width="60" height="20" id="nameLabel" fontFamily="Verdana" fontSize="12" fontWeight="bold" color="#BBB517"/>
+		<mx:Spacer width="100%" />
+		<mx:LinkButton label="?" color="#C9BD6C" fontSize="10" id="helpLink" enabled="true" click="launchHelpWindow();"/>
+		<mx:Button height="16" icon="@Embed(source='../images/Settings-16x16.png')" width="16" click="controller.settingsButtonClick();"/>
+	</mx:ApplicationControlBar>
+<!--	<mx:ApplicationControlBar y="214" x="417" dock="true" height="25" autoLayout="false" paddingTop="2" fillAlphas="[1.0, 1.0]" fillColors="[#050505, #050505]">
+		<mx:Label text="Glitter" width="60" height="20" id="nameLabel" fontFamily="Verdana" fontSize="12" fontWeight="bold" color="#BBB517"/>
+		<mx:Spacer resize="true" width="100%" />
+		<mx:LinkButton label="?" color="#C9BD6C" fontSize="10" id="helpLink" enabled="true" click="launchHelpWindow();"/>
+		<mx:Button height="16" icon="@Embed(source='../images/Settings-16x16.png')" width="16"/>
+	</mx:ApplicationControlBar>
+-->	<mx:Canvas x="0" y="0" width="100%" height="100%" cornerRadius="20" id="mainCanvas">
+		<mx:Canvas x="10" width="196" cornerRadius="15" backgroundColor="#B97272" top="10" bottom="10" id="tweets" label="tweets">
+			<mx:VBox backgroundColor="#C38C8C" left="10" right="10" top="20" bottom="10">
+			</mx:VBox>
+			<mx:Label y="2" text="tweets" color="#FFFFFF" fontWeight="bold" left="10" right="10"/>
+		</mx:Canvas>
+		<mx:Canvas cornerRadius="15" backgroundColor="#6485AE" top="10" bottom="10" id="photos" label="photos" right="10" left="379">
+			<mx:VBox name="photoBox" backgroundColor="#8EA4BE" top="20" left="10" bottom="10" right="10" id="photoBox">
+				<mx:Image source="@Embed(&quot;../images/lightbox.png&quot;)"/>
+		<mx:Script>
+			<![CDATA[
+				var photoView:glitter.PhotoView = new glitter.PhotoView();
+//				photos.addChild(photoView);
+			]]>
+		</mx:Script>
+			</mx:VBox>
+			<mx:Label y="2" text="photos" color="#FFFFFF" fontWeight="bold" right="10" left="10"/>
+		</mx:Canvas>
+		<mx:Canvas width="157" cornerRadius="15" backgroundColor="#C9BD6C" id="folders" label="folders" x="214" top="10" bottom="10">
+			<mx:VBox id="foldersVBox" backgroundColor="#D1D089" right="10" left="10" top="20" bottom="10" horizontalAlign="center">
+				<mx:Spacer height="10" />
+				<mx:Canvas width="110" height="78" id="image1canvas" label="friend's thread" mouseDownEffect="{glowImage}">
+					<mx:Image source="@Embed('../images/lightbox2.png')"/>
+				</mx:Canvas>
+				<mx:Label text="friend's thread" />
+				<mx:Script>
+					<![CDATA[
+ 			/* 			var shadow:DropShadowFilter = new DropShadowFilter();
+						shadow.distance = 10;
+						shadow.angle = 25;
+						{image1canvas}.filters = [shadow];
+			 */		]]>
+				</mx:Script>
+				<mx:Spacer height="10" />
+				<mx:Canvas width="110" height="78" id="image2canvas" label="friend's thread" mouseDownEffect="{glowImage}">
+					<mx:Image source="@Embed('../images/lightbox2.png')"/>
+				</mx:Canvas>
+				<mx:Label text="personal collection" />
+<!--				<mx:Image source="@Embed('../images/lightbox.png')"/>
+-->							</mx:VBox>
+			<mx:Label y="2" text="lightboxes" color="#FFFFFF" fontWeight="bold" left="10" right="10"/>
+		</mx:Canvas>
+	</mx:Canvas>
+</mx:WindowedApplication>
