@@ -1,15 +1,20 @@
 package glitter
 {
+	import flash.events.MouseEvent;
+	import flash.filters.*;
+	
 	import glitter.twitter.Twitter;
 	
 	import mx.collections.ArrayCollection;
 	import mx.containers.Canvas;
+	import mx.styles.StyleManager;
 	
 	public class TweetDisplay extends Canvas
 	{
 		private var disp:Canvas;
 		private var username:String;
 		private var password:String;
+		private var selected:Object;
 		
 		public function TweetDisplay()
 		{
@@ -70,7 +75,25 @@ package glitter
 					t.y = counter;		
 					disp.addChild(t);
 					counter += t.getHeight() + 2;
+					t.addEventListener(MouseEvent.CLICK, clicked);
 				}
+			}
+		}
+		
+		private function clicked(e:MouseEvent):void {
+			var glow:GlowFilter = new GlowFilter();
+            glow.color = StyleManager.getColorName("lime");
+            glow.alpha = 0.8;
+            glow.blurX = 4;
+            glow.blurY = 4;
+            glow.strength = 4;
+            glow.quality = BitmapFilterQuality.HIGH;
+            
+			if(e.currentTarget.isReply){
+				if(selected!=null)
+					selected.filters = null;
+				e.currentTarget.filters = [glow];
+				selected = e.currentTarget;
 			}
 		}
 	}
