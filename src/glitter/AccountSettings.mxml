@@ -53,7 +53,8 @@
 			
 			private function verified():void {
 				trace("verified");
-				Alert.show("credentials verified");				
+				Alert.show("credentials verified");	
+							
 			}
 			
 			private function twitterLocationUpdated():void {
