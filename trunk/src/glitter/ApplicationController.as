@@ -25,41 +25,62 @@ package glitter
 		private var key_func:String;
 		private var key_uid:String;
 		private var key_filter:String;
-		private var key:String; // current key
+		private var __key__:String; // current key
 		/**
 		 * key_current_timeline can ONLY be one of the Strings bellow
 		 * getUserTimeline
 		 * getFriendsTimeline
 		 * getReplies
 		 * getUserUpdates - used with key_current_timeline_u
-		 */
+		 */		
+
+		public function insert_tweet(key:String,tw:Object):void{
+			if(a_timelines[key]==null){
+				a_timelines[key] = new Array(tw);	
+			}else{
+				var a:Array = a_timelines[key] as Array;
+				var b_new:Boolean =  false;
+				for each (var i_tw:Object in a){
+					b_new = (i_tw.id == tw.id);
+				} 
+				if(b_new){ 
+					a.push(tw);
+					a.sortOn("id",Array.DESCENDING | Array.NUMERIC);
+				}
+			}
+		}
+		
+		public function update_view(key:String):void{
+			 this.appWindow["display"].call_showTweets(a_timelines[key]);
+		}
+				 
 		public function set_key_timeline(key1:String, key2:String="", key3:String =""):void
 		{
 			key_func = key1;
 			key_uid = key2;
 			key_filter = key3;
-			key = key1 + "&"+ key2 + "&" + key3;
-			if(a_timelines[key]==null){
-				a_lastids[key] = "1000000000";//"1032736924";
+			__key__ = key1 + "&"+ key2 + "&" + key3;
+			if(a_timelines[__key__]==null){
+				a_lastids[__key__] = "1000000000";//"1032736924";
 				//a_timelines[key] = new Array();
 			}else{
-				a_lastids[key] = String(a_timelines[key][0].id);
+				a_lastids[__key__] = String(a_timelines[__key__][0].id);
 			}
 		}
 		
 		public function get_lastid():Number
 		{
-			return a_lastids[key];
+			return a_lastids[__key__];
 		}
 		
 		public function get_new_timeline(new_a:Array):Array
 		{
-			if(a_timelines[key]==null){
-				a_timelines[key] = new_a;
+			if(a_timelines[__key__]==null){
+				a_timelines[__key__] = new_a;
 			}else{
-				a_timelines[key] = new_a.concat(a_timelines[key]);
+				a_timelines[__key__] = new_a.concat(a_timelines[__key__]);
 			}
-			return a_timelines[key];
+			return a_timelines[__key__];
 		}
 		
 		public function ApplicationController(appWindow:WindowedApplication)
