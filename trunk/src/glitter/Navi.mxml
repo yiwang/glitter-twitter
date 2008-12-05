@@ -2,15 +2,42 @@
 <mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="280" height="100" backgroundColor="#9BD3F6">
 	<mx:Script>
 		<![CDATA[
-			import glitter.twitter.Twitter;         	
+			import glitter.twitter.Twitter;
+			import flash.events.DataEvent;
+		    import flash.events.Event;
+    		import flash.filesystem.File;
+    		import flash.net.FileFilter;
+         	
+         	private var image:File;
+         	
          	// Update status - does not update for now
          	private function update():void{
          		var t:Twitter = new Twitter(Twitter.getStoredUserName(), Twitter.getStoredPassword());
          		t.setUpdate(textInput.text);
          		textInput.text = null;
          	}
+         	
+         	private function addImage():void {
+         		image = new File();
+            	image.addEventListener(DataEvent.UPLOAD_COMPLETE_DATA,uploadComplete);
+            	image.addEventListener(Event.SELECT, fileSelected);
+				image.browse([new FileFilter( "Images (*.jpg, *.jpeg, *.gif, *.png)", "*.jpg;*.jpeg;*.gif;*.png")]);
+         	}
+         	
+        	private function fileSelected(event:Event):void {
+        		TwitPic.upload(image);
+	        }
+        
+	        private function uploadComplete(event:DataEvent):void {
+	        	var url:String = TwitPic.urlFromResponse(event.text);
+	        	if (textInput.text != "" && textInput.text.search(/\s$/) == -1) {
+	        		url = " " + url;
+	        	}
+	        	textInput.text = textInput.text + url;
+        	}
 		]]>
 	</mx:Script>
+		<mx:Button bottom="7" x="119" y="68" label="Add Image" click="addImage()" />
 		<mx:Button label="send" click="update()" bottom="7" right="10"/>
 		<mx:TextInput id="textInput" height="55" left="10" right="10" top="10"/>
 </mx:Canvas>
