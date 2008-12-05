@@ -25,6 +25,7 @@
          	}
          	
         	private function fileSelected(event:Event):void {
+        		showLoading();
         		TwitPic.upload(image);
 	        }
         
@@ -34,10 +35,30 @@
 	        		url = " " + url;
 	        	}
 	        	textInput.text = textInput.text + url;
+	        	hideLoading();
         	}
+        	
+        	private function showLoading():void {
+        		addImageButton.label = "uploading..."
+        		addImageButton.enabled = false;
+				glowImage.play([addImageButton]);
+        	}
+        	
+        	private function hideLoading():void {
+        		glowImage.end();
+        		addImageButton.filters = [];
+        		addImageButton.label = "Add Image"
+        		addImageButton.enabled = true;
+        	} 
 		]]>
 	</mx:Script>
-		<mx:Button bottom="7" x="119" y="68" label="Add Image" click="addImage()" />
+		<mx:Button id="addImageButton" bottom="7" x="119" y="68" label="Add Image" click="addImage()" />
 		<mx:Button label="send" click="update()" bottom="7" right="10"/>
 		<mx:TextInput id="textInput" height="55" left="10" right="10" top="10"/>
+    <mx:Glow id="glowImage" duration="1000"
+        alphaFrom="0.0" alphaTo=".7" 
+        blurXFrom="0.0" blurXTo="10.0" 
+        blurYFrom="0.0" blurYTo="10.0" 
+        color="0xFFFFFF"
+        repeatCount="50"/>
 </mx:Canvas>
