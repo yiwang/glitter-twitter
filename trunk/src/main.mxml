@@ -35,6 +35,11 @@
 			public function getController():ApplicationController{
 				return controller;
 			}
+			
+			// for testing a_twit
+			private function ShowAll():void{
+				controller.showall();
+			}
 		]]>
 	</mx:Script>
     <mx:Glow id="glowImage" duration="1000"
@@ -64,6 +69,7 @@
 				<mx:Button label="Home" id="home" mouseDown="currentState='getFriendsTimeline'"/>
 				<mx:Button label="@Replies" id="replies" mouseDown="currentState='getReplies'"/>
 				<mx:Button label="Updates" id="updates" mouseDown="currentState='getUserTimeline'"/>
+				<mx:Button label="ShowAll" click="ShowAll();"/>
 					</mx:VBox>
 			<mx:Label y="2" text="lightboxes" color="#FFFFFF" fontWeight="bold" left="10" right="10"/>
 		</mx:Canvas>

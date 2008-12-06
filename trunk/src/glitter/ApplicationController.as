@@ -3,6 +3,7 @@ package glitter
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	
+	import glitter.data.Session;
 	import glitter.twitter.Twitter;
 	
 	import mx.core.WindowedApplication;
@@ -13,86 +14,67 @@ package glitter
 		private var appWindow:WindowedApplication;
 		static private var INTERVAL:Number = 8; // seconds to refresh
 		private var timer:Timer;
+		private var se:Session = new Session();
 		
-		/** 
-		 * the inventory of timelines / category.
-		 * used directly by Twitter.as
-		 * for retrieving newer data, filtering and user customized tweets
-		 */  
-		private var a_timelines:Object = new Object();
-		private var a_lastids:Object = new Object();
-		
-		private var key_func:String;
-		private var key_uid:String;
-		private var key_filter:String;
-		private var __key__:String; // current key
 		/**
-		 * key_current_timeline can ONLY be one of the Strings bellow
+		 * key_func can ONLY be one of below
 		 * getUserTimeline
 		 * getFriendsTimeline
 		 * getReplies
-		 * getUserUpdates - used with key_current_timeline_u
-		 */		
+		 * getUserUpdates - used with key_uid required
+		 */	
+		private var key_func:String;
+		private var key_uid:String;
+		private var __key__:String; // current key
 
-		public function insert_tweet(key:String,tw:Object):void{
-			if(a_timelines[key]==null){
-				a_timelines[key] = new Array(tw);	
-			}else{
-				var a:Array = a_timelines[key] as Array;
-				var b_new:Boolean =  false;
-				for each (var i_tw:Object in a){
-					b_new = (i_tw.id == tw.id);
-				} 
-				if(b_new){ 
-					a.push(tw);
-					a.sortOn("id",Array.DESCENDING | Array.NUMERIC);
-				}
-			}
-		}
-		
-		public function update_view(key:String):void{
-			 this.appWindow["display"].call_showTweets(a_timelines[key]);
-		}
-				 
-		public function set_key_timeline(key1:String, key2:String="", key3:String =""):void
-		{
-			key_func = key1;
-			key_uid = key2;
-			key_filter = key3;
-			__key__ = key1 + "&"+ key2 + "&" + key3;
-			if(a_timelines[__key__]==null){
-				a_lastids[__key__] = "1000000000";//"1032736924";
-				//a_timelines[key] = new Array();
-			}else{
-				a_lastids[__key__] = String(a_timelines[__key__][0].id);
-			}
-		}
-		
-		public function get_lastid():Number
-		{
-			return a_lastids[__key__];
-		}
-		
-		public function get_new_timeline(new_a:Array):Array
-		{
-			if(a_timelines[__key__]==null){
-				a_timelines[__key__] = new_a;
-			}else{
-				a_timelines[__key__] = new_a.concat(a_timelines[__key__]);
-			}
-			return a_timelines[__key__];
-		}
-		
+		// constructor
 		public function ApplicationController(appWindow:WindowedApplication)
 		{
 			this.appWindow = appWindow;
-			
+			this.load_session();
 			// timer for twitterloop
 			timer = new Timer(INTERVAL*1000, 0);
             timer.addEventListener("timer", startTwitterLoop);
             timer.start();
 		}
+				 		
+		public function testUserVerified():Boolean{
+			return (Twitter.getStoredUserName()!=""&&Twitter.getStoredPassword());
+		}
 
+		public function getTwitById(__id__:String):Object{
+			return se.getTwitById(__id__);
+		}
+		public function showall():void{
+			var a:Array = se.getAllTwits();
+			key_func = "";
+			this.appWindow["display"].call_showTweets(a);
+		}
+		
+		// called from Twitter.as	 
+		public function set_key_timeline(key1:String, key2:String=""):void
+		{
+			key_func = key1;
+			key_uid = key2;
+			/**
+			 *  __key__ is set here first
+			 */
+			__key__ = key1 + "&"+ key2;
+		}
+		
+		public function get_lastid():String
+		{
+			return String(se.get_lastid(__key__));
+		}
+		
+		public function get_new_timeline(new_a:Array):Array
+		{
+			return se.get_new_timeline(new_a,__key__);
+		}
+
+		/**
+		 * do nothing if key_func is not in the specific ones
+		 */
 		private function startTwitterLoop(e:TimerEvent):void
 		{
 			if(key_func == "getUserTimeline" ||
@@ -104,12 +86,25 @@ package glitter
 			if(key_func == "getUserUpdates"){
 				this.appWindow["display"][key_func](key_uid);
 			}
+			this.save_session();
 		}
 		
 		public function settingsButtonClick():void {
 			var settingsWindow:AccountSettings = new AccountSettings();
 			PopUpManager.addPopUp(settingsWindow, appWindow, true);
 			PopUpManager.centerPopUp(settingsWindow);			
+		}
+		
+		// save and load a_twit, a_key_id of current user
+		private function save_session():void{
+			if(!testUserVerified()) return;
+			var u:String = Twitter.getStoredUserName();
+			se.save(u);	
+		}
+		private function load_session():void{
+			if(!testUserVerified()) return;
+			var u:String = Twitter.getStoredUserName();
+			se.load(u);
 		}
 	}
 }
