@@ -62,9 +62,5 @@ package glitter
 			})
 			http.send();
 		}
-		
-		private static function processTwitPicPage(callbackFunction:Function):void {
-			
-		}
 	}
 }
