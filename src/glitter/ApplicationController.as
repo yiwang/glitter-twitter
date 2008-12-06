@@ -43,7 +43,7 @@ package glitter
 		}
 
 		public function getTwitById(__id__:String):Object{
-			return se.getTwitById(__id__);
+			return se.get_twit_by_id(__id__);
 		}
 		public function showall():void{
 			var a:Array = se.getAllTwits();
@@ -69,7 +69,8 @@ package glitter
 		
 		public function get_new_timeline(new_a:Array):Array
 		{
-			return se.get_new_timeline(new_a,__key__);
+			se.update_timeline_by_key(__key__,new_a);
+			return se.get_timeline_by_key(__key__);
 		}
 
 		/**
