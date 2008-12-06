@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="280" height="100" backgroundColor="#9BD3F6">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="280" height="100" backgroundColor="#9BD3F6" creationComplete="init()">
 	<mx:Script>
 		<![CDATA[
 			import glitter.twitter.Twitter;
@@ -7,21 +7,72 @@
 		    import flash.events.Event;
     		import flash.filesystem.File;
     		import flash.net.FileFilter;
-         	
+ 			import flash.events.NativeDragEvent;
+			import flash.desktop.ClipboardFormats;
+			import mx.controls.Alert;
+			          	
          	private var image:File;
          	
-         	// Update status - does not update for now
+         	private function init():void {
+         		textInput.addEventListener(NativeDragEvent.NATIVE_DRAG_DROP, onDrop);
+         		textInput.addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER,onDragEnter);
+         	}
+         	
+         	private function onDragEnter(event:NativeDragEvent):void {
+				if(event.clipboard.hasFormat(ClipboardFormats.FILE_LIST_FORMAT))	{
+					var dropFiles:Array = event.clipboard.getData(ClipboardFormats.FILE_LIST_FORMAT) as Array;
+
+					var enableDrop:Boolean = true;
+					for each (var file:File in dropFiles) {
+						if (file.extension.search(/png|jpg|jpeg|gif/) == -1) {
+							if (enableDrop) {
+								Alert.show("You can only send images!");
+							}
+							enableDrop = false;
+						}
+					}
+					if (enableDrop) {
+	         			NativeDragManager.acceptDragDrop(textInput);
+	    			}
+	   			}
+         	}
+         	
+         	private function onDrop(event:NativeDragEvent):void {
+				if(event.clipboard.hasFormat(ClipboardFormats.FILE_LIST_FORMAT))	{
+					var dropFiles:Array = event.clipboard.getData(ClipboardFormats.FILE_LIST_FORMAT) as Array;
+
+					for each (var file:File in dropFiles) {
+						if (file.extension.search(/png|jpg|jpeg|gif/) == -1) {
+							Alert.show("You can only send images!");
+						}
+						else {
+							addImage(file);
+						}
+					}
+				}         		
+         	}
+         	
          	private function update():void{
          		var t:Twitter = new Twitter(Twitter.getStoredUserName(), Twitter.getStoredPassword());
          		t.setUpdate(textInput.text);
          		textInput.text = null;
          	}
          	
-         	private function addImage():void {
+         	private function addImage(file:File):void {
+         		image = file;
+            	image.addEventListener(DataEvent.UPLOAD_COMPLETE_DATA,uploadComplete);
+            	showLoading();
+            	TwitPic.upload(image);
+         	}
+         	
+         	private function addImageClicked():void {
          		image = new File();
             	image.addEventListener(DataEvent.UPLOAD_COMPLETE_DATA,uploadComplete);
             	image.addEventListener(Event.SELECT, fileSelected);
-				image.browse([new FileFilter( "Images (*.jpg, *.jpeg, *.gif, *.png)", "*.jpg;*.jpeg;*.gif;*.png")]);
+				image.browse([new FileFilter( "Images (*.jpg, *.jpeg, *.gif, *.png)", "*.jpg;*.jpeg;*.gif;*.png")]);         		
+         	}
+         	
+         	private function hideBorder():void {
          	}
          	
         	private function fileSelected(event:Event):void {
@@ -52,9 +103,9 @@
         	} 
 		]]>
 	</mx:Script>
-		<mx:Button id="addImageButton" bottom="7" x="119" y="68" label="Add Image" click="addImage()" />
+		<mx:Button id="addImageButton" bottom="7" x="119" y="68" label="Add Image" click="addImageClicked()" toolTip="Add a TwitPic image. You can also add by dragging an image to the send text area." />
 		<mx:Button label="send" click="update()" bottom="7" right="10"/>
-		<mx:TextInput id="textInput" height="55" left="10" right="10" top="10"/>
+		<mx:TextInput id="textInput" height="55" left="10" right="10" top="10" />
     <mx:Glow id="glowImage" duration="1000"
         alphaFrom="0.0" alphaTo=".7" 
         blurXFrom="0.0" blurXTo="10.0" 
