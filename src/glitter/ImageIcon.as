@@ -30,6 +30,7 @@ package glitter
 		private function makeIcon( path:String ):void {
 			this.percentWidth = 100;
 			this.percentHeight = 100;
+			this.minHeight = 300;
 			this.setStyle("verticalCenter", 0);
 			this.setStyle("horizontalCenter", 0);
 			this.source = path;

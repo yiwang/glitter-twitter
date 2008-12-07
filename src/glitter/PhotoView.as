@@ -24,6 +24,7 @@ package glitter
 			photoIconsVBox = new VBox();
 			photoIconsVBox.percentWidth=100;
 			photoIconsVBox.percentHeight=100;
+//			photoIconsVBox.verticalScrollBar = true;
 			this.addChild(photoIconsVBox);
 //			photoZoomCanvas = new Canvas();
 //			photoZoomCanvas.setStyle("backgroundColor",0xFFFFCC);
