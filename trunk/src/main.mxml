@@ -86,13 +86,6 @@
 			</mx:VBox>
 -->			<ns1:PhotoView id="photoView" backgroundColor="#8EA4BE" width="100%" height="100%" top="20" left="10" bottom="10" right="10">
 			</ns1:PhotoView>
-			<mx:Script>
-				<![CDATA[
-// NEXT LINE DOESN'T WORK, BUT THAT'S THE WAY I ENVISION MY PHOTOVIEW TO BE CALLED WITH DATA FROM OUR TWEETS.
-// HOW DO I CALL A PUBLIC METHOD OF AN INSTANTIATED CLASS FROM WITHIN THIS MXML FILE?!
-//					photoView.loadPhotosFromArray( ArrayCollectionOfImages );
-				]]>
-			</mx:Script>
 			<mx:Label y="2" text="photos" color="#FFFFFF" fontWeight="bold" right="10" left="10"/>
 		</mx:Canvas>
 	</mx:Canvas>

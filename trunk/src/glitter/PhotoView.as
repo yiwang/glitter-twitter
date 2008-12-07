@@ -13,6 +13,7 @@ package glitter
 	{
 		private var photoAreasHBox:HBox;
 		private var photoIconsVBox:VBox;
+		private var photoZoomCanvas:Canvas;
 		private var photoArray:ArrayCollection;
 		private var directory:File = File.documentsDirectory;
 
@@ -20,11 +21,34 @@ package glitter
 		{
 			photoAreasHBox = new HBox();
 			photoIconsVBox = new VBox();
+			photoZoomCanvas = new Canvas();
+			photoZoomCanvas.setStyle("backgroundColor",0xFFFFCC);
+//			photoZoomCanvas.width = 500;
+//			photoZoomCanvas.height = 500;
+			var image:ImageZoom = new ImageZoom( "file:///Users/colin/Documents/dl/Nikhil birth 013.JPG" );// + files[i].nativePath );
+			image.height = 300;
+			image.width = 300;
+			photoZoomCanvas.addChild(image);
+
+
 			addChild(photoAreasHBox);
 			photoAreasHBox.addChild(photoIconsVBox);
+			photoAreasHBox.addChild(photoZoomCanvas);
 			photoArray = new ArrayCollection;
 			//loadPhotosFromDirectory();
+			loadTestPhotos();
 		}
+
+		public function loadTestPhotos():void {
+			var image:ImageIcon = new ImageIcon( "file:///Users/colin/Documents/dl/Nikhil birth 013.JPG" );// + files[i].nativePath );
+			photoArray.addItem(image);
+			var image:ImageIcon = new ImageIcon( "file:///Users/colin/Documents/dl/Nikhil birth 015.JPG" );// + files[i].nativePath );
+			photoArray.addItem(image);
+			var image:ImageIcon = new ImageIcon( "file:///Users/colin/Documents/dl/Nikhil birth 020.JPG" );// + files[i].nativePath );
+			photoArray.addItem(image);
+			displayPhotos( photoArray );
+		}
+
 		
 		public function loadPhotosFromDirectory():void {
 			var myFile:File = new File();
@@ -55,16 +79,15 @@ package glitter
 						photoArray.addItem(image);
 			     }
 		    }
-			displayIcons();
+			displayPhotos( photoArray );
 		}
 		
-		private function displayIcons():void {
+		public function displayPhotos( thePhotoArray:ArrayCollection ):void {
 			photoIconsVBox.removeAllChildren();
 			photoIconsVBox.graphics.clear();
-			for(var i:uint=0; i<photoArray.length; i++) {
-				photoIconsVBox.addChild( photoArray[i] );
+			for(var i:uint=0; i<thePhotoArray.length; i++) {
+				photoIconsVBox.addChild( thePhotoArray[i] );
 			}
 		}
-				
 	}
 }
