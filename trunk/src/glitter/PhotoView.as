@@ -45,11 +45,11 @@ package glitter
 
 
 		public function loadTestPhotos():void {
-			var image:ImageIcon = new ImageIcon( "file:///Users/colin/Documents/dl/Nikhil birth 013.JPG",0,new String("linusconcepcion"),new Date("2008-12-04"));// + files[i].nativePath );
+			var image:ImageIcon = new ImageIcon( "file:///Users/colin/Documents/dl/Nikhil birth 013.JPG",0,new String("linusconcepcion"),new String("2008-12-04"));// + files[i].nativePath );
 			photoArray.addItem(image);
-			var image1:ImageIcon = new ImageIcon( "file:///Users/colin/Documents/dl/Nikhil birth 015.JPG",1,new String("linusconcepcion"),new Date("2008-12-04"));// + files[i].nativePath );
+			var image1:ImageIcon = new ImageIcon( "file:///Users/colin/Documents/dl/Nikhil birth 015.JPG",1,new String("linusconcepcion"),new String("2008-12-04"));// + files[i].nativePath );
 			photoArray.addItem(image1);
-			var image2:ImageIcon = new ImageIcon( "file:///Users/colin/Documents/dl/Nikhil birth 020.JPG",2,new String("linusconcepcion"),new Date("2008-12-04"));// + files[i].nativePath );
+			var image2:ImageIcon = new ImageIcon( "file:///Users/colin/Documents/dl/Nikhil birth 020.JPG",2,new String("linusconcepcion"),new String("2008-12-04"));// + files[i].nativePath );
 			photoArray.addItem(image2);
 			displayPhotos( photoArray );
 		}
