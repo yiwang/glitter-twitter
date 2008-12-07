@@ -21,6 +21,7 @@
 			import mx.containers.TitleWindow;
 			import flash.filters.DropShadowFilter;
 
+			[Bindable]
 			private var controller:ApplicationController;
 			private var helpWindow:HelpWindow;
 			
@@ -73,8 +74,8 @@
 					</mx:VBox>
 			<mx:Label y="2" text="lightboxes" color="#FFFFFF" fontWeight="bold" left="10" right="10"/>
 		</mx:Canvas>
-		<mx:Canvas x="177" width="300" cornerRadius="15" backgroundColor="#B97272" top="10" bottom="10" id="tweets" label="tweets">
-			<mx:Label y="2" text="tweets" color="#FFFFFF" fontWeight="bold" left="10" right="10"/>
+		<mx:Canvas x="177" width="300" cornerRadius="15" backgroundColor="#B97272" top="10" bottom="10" id="tweets">
+			<mx:Label y="2" text="{controller.key_desc} ({controller.num_desc})" color="#FFFFFF" fontWeight="bold" left="10" right="10"/>
 			<ns1:TweetDisplay id="display" width="100%" height="100%">				
 			</ns1:TweetDisplay>
 			<ns1:Navi x="10" bottom="10">

@@ -11,6 +11,7 @@ package glitter
 	
 	public class TweetDisplay extends Canvas
 	{
+		static private var MAX_TWEET:Number = 200;
 		private var disp:Canvas;
 		private var username:String;
 		private var password:String;
@@ -68,7 +69,7 @@ package glitter
 			var i:int;
 			var j:int = 19;
 				
-			for(i =0; i<20; i++){
+			for(i =0; i<MAX_TWEET; i++){
 				if(tweets.length <= i) break;
 				else{
 					var item:Object = tweets.getItemAt(i);

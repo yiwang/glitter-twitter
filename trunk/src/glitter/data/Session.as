@@ -37,16 +37,7 @@ package glitter.data
 		public function get_twit_by_id(__id__:String):Object{
 			return a_id_twits[__id__];
 		}
-
-		public function getAllTwits():Array{
-			var a:Array = new Array();
-			for each (var twit:Object in this.a_id_twits){
-				a.push(twit);
-			}
-			a.sortOn("id",Array.DESCENDING | Array.NUMERIC);
-			return a;
-		}
-		
+	
 		public function get_lastid(__key__:String):Number
 		{
 			if(a_timelines[__key__]==null){
@@ -56,7 +47,9 @@ package glitter.data
 				return a_timelines[__key__][0].id;
 			}
 		}
-		
+		public function get_num( __key__:String):Number{
+			return (a_timelines[__key__] as Array).length;
+		}
 		public function get_timeline(__key__:String):Array{
 			return a_timelines[__key__];
 		}
@@ -69,11 +62,14 @@ package glitter.data
 		
 		public function insert_timeline(__key__:String,t:Object):void{
 			this.a_id_twits[String(t.id)] = t;
+			a_timelines["&&All"].push(t);
+			a_timelines["&&All"].sortOn("id",Array.DESCENDING | Array.NUMERIC);
 			var timeline:Array = a_timelines[__key__];
 			if (timeline==null){
 				a_timelines[__key__] = new Array(t);
 				return;
 			}
+			// avoid duplicate
 			for each (var twit:Object in timeline){
 				if(t.id==twit.id) return;
 			}
@@ -98,11 +94,19 @@ package glitter.data
 			}
 			return ids;
 		}
+		
 		private function construct_a_timelines():void{
 			for ( var key:String in this.a_key_ids){
 				this.a_timelines[key] = extract_twits(this.a_key_ids[key]) as Array;
-			}			
+			}
+			// construct All
+			a_timelines["&&All"] = new Array();
+			 for each (var twit:Object in this.a_id_twits){
+				a_timelines["&&All"].push(twit);
+			}
+			a_timelines["&&All"].sortOn("id",Array.DESCENDING | Array.NUMERIC);
 		}
+				
 		private function extract_twits(ids:Array):Array{
 			var twits:Array = new Array();
 			for each (var id:Number in ids){
