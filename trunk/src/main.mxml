@@ -56,23 +56,15 @@
 	</mx:ApplicationControlBar>
 	<mx:Canvas x="0" y="0" width="100%" height="100%" cornerRadius="20" id="mainCanvas">
 		<mx:Canvas width="157" cornerRadius="15" backgroundColor="#C9BD6C" id="folders" label="folders" left="10" top="10" bottom="10">
-			<mx:VBox id="foldersVBox" backgroundColor="#D1D089" right="10" left="10" top="20" bottom="10" horizontalAlign="center">
+			<mx:VBox id="foldersVBox" backgroundColor="#D1D089" right="10" left="10" top="10" bottom="10" horizontalAlign="center">
 				<mx:Spacer height="10" />
-				<mx:Canvas width="110" height="78" id="image1canvas" label="friend's thread" mouseDownEffect="{glowImage}">
-					<mx:Image source="@Embed('../images/lightbox2.png')"/>
-				</mx:Canvas>
-				<mx:Label text="friend's thread" />
-				<mx:Spacer height="10" />
-				<mx:Canvas width="110" height="78" id="image2canvas" label="friend's thread" mouseDownEffect="{glowImage}">
-					<mx:Image source="@Embed('../images/lightbox2.png')"/>
-				</mx:Canvas>
-				<mx:Label text="personal collection" />
 				<mx:Button label="Home" id="home" mouseDown="currentState='getFriendsTimeline'"/>
 				<mx:Button label="@Replies" id="replies" mouseDown="currentState='getReplies'"/>
+				<mx:Button label="Directs" id="directsButton" />
 				<mx:Button label="Updates" id="updates" mouseDown="currentState='getUserTimeline'"/>
-				<mx:Button label="ShowAll" click="ShowAll();"/>
-					</mx:VBox>
-			<mx:Label y="2" text="lightboxes" color="#FFFFFF" fontWeight="bold" left="10" right="10"/>
+				<mx:Button label="User to User" id="userToUserButton" />
+				<mx:Button label="Search" id="searchButton" />
+			</mx:VBox>
 		</mx:Canvas>
 		<mx:Canvas x="177" width="300" cornerRadius="15" backgroundColor="#B97272" top="10" bottom="10" id="tweets">
 			<mx:Label y="2" text="{controller.key_desc} ({controller.num_desc})" color="#FFFFFF" fontWeight="bold" left="10" right="10"/>

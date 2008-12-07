@@ -11,14 +11,14 @@ package glitter
 	public class Tweet extends Canvas
 	{
 		private var cvs:Canvas;
-		private var userName:Label;
+		private var userName:mx.controls.Label;
 		private var profileImage:Image;
 		private var htmlLabel:HTML;
-		private var createdAt:Label;
+		private var createdAt:mx.controls.Label;
 		private var display:TweetDisplay;
 		private var isLinked:Boolean = false;
 		private var url:String;
-		private var replyTo:Label;
+		private var replyTo:mx.controls.Label;
 		public var isReply:Boolean = false;
 		private var sss:String;
 		private var cs:Status;
