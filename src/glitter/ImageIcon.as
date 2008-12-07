@@ -1,5 +1,7 @@
 package glitter
 {
+	import flash.events.*;
+	import flash.filters.GlowFilter;
 	import mx.controls.Image;
 
 	public class ImageIcon extends Image
@@ -11,6 +13,13 @@ package glitter
 			super();
 //			this.path = path;
 			makeIcon( path );
+			this.addEventListener(MouseEvent.CLICK,hndlMouseClick);
+			
+		}
+		
+		private function hndlMouseClick ( event:Event ) {
+			var myGlowFilter:GlowFilter = new GlowFilter (0xFFFFFF,.8,5,5,4,4);
+			event.target.filters = [myGlowFilter];
 		}
 		
 		private function makeIcon( path:String ):void {
