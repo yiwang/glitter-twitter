@@ -1,6 +1,8 @@
 package glitter
 {
 	import mx.collections.ArrayCollection;
+	import mx.collections.Sort;
+	import mx.collections.SortField;
 	
 	public class Label
 	{
@@ -19,7 +21,14 @@ package glitter
 		}
 		
 		public function getStatuses():ArrayCollection {
-			return statuses.sort();
+			var sortField:SortField = new SortField();
+			sortField.name = "getId";
+			sortField.numeric = true;
+			var sort:Sort = new Sort();
+			sort.fields = [sortField];
+			statuses.sort = sort;
+			statuses.refresh();
+			return statuses;
 		}
 		
 		public function getName():String {
