@@ -37,12 +37,13 @@ package glitter
 			this.display = display;
 			this.cs = status;
 			
-			cvs = new Canvas();
-			cvs.setStyle("left", 2);
+			 cvs = new Canvas();
+			/* cvs.setStyle("left", 2);
 			cvs.setStyle("right", 2);
 			cvs.percentHeight = 100;
-			cvs.height = 72;
-			setColor(0x91e4f3);
+			cvs.height = 100; */ 
+			//cvs.percentHeight = 100;
+			//setColor(0x91e4f3);
 			
 			htmlLabel = new HTML();
 			htmlLabel.setStyle("right", 3);
@@ -50,7 +51,7 @@ package glitter
 			htmlLabel.setStyle("top", 3);
 			htmlLabel.setStyle("bottom", 3);
 			htmlLabel.addEventListener(Event.HTML_DOM_INITIALIZE, domInitialized);
-			sss = "<p>";	
+			sss = "<body style='background-color: #91e4f3'><p>";	
 			setSource(status.getSource());
 			setUserName(status.getUserName());
 			setText(status.getText());
@@ -74,10 +75,20 @@ package glitter
 			//text.setStyle("backgroundColor", 0x91e4f3);
 			/* text.addEventListener(MouseEvent.CLICK, link); */
 
-			sss += "</p>";
+			sss += "</p></body>";
 			htmlLabel.htmlText = sss;
-			cvs.addChild(htmlLabel);
-			addChild(cvs);
+			//htmlLabel.verticalScrollPolicy = "off";
+			//htmlLabel.minHeight = 72;
+			//htmlLabel.percentHeight = 100;
+			//cvs.addChild(htmlLabel);
+			//addChild(cvs);
+			//htmlLabel.height = 72;
+			htmlLabel.height = 72;
+			htmlLabel.setStyle("left", 2);
+			htmlLabel.setStyle("right", 2);
+			//htmlLabel.percentHeight = 100;
+			//cvs.height = 72;
+			addChild(htmlLabel);
 			//cvs.addEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler);
 		}
 /* 		public function linkHandler(event:TextEvent):void {
@@ -112,7 +123,7 @@ package glitter
 		}
 		
 		public function getHeight():int {
-			return cvs.height;
+			return htmlLabel.height;
 		}
 		
 		public function link(e:MouseEvent):void{
