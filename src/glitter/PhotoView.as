@@ -31,8 +31,7 @@ package glitter
 			image.width = 300;
 			photoZoomCanvas.addChild(image);
 
-
-			addChild(photoAreasHBox);
+			this.addChild(photoAreasHBox);
 			photoAreasHBox.addChild(photoIconsVBox);
 			photoAreasHBox.addChild(photoZoomCanvas);
 			photoArray = new ArrayCollection;
@@ -40,8 +39,12 @@ package glitter
 			loadTestPhotos();
 		}
 
-		public function setCurrentImage( curIndex:int ) {
+		public function setCurrentIndex( curIndex:int ) {
 			this.curIndex = curIndex;
+		}
+
+		public function getCurrentIndex( ):int {
+			return curIndex;
 		}
 
 		public function loadTestPhotos():void {
