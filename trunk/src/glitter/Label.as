@@ -38,7 +38,7 @@ package glitter
 		public function insertStatusesThatMatchFilters(statuses:ArrayCollection):void {
 			for each (var status:Status in statuses) {
 				for each (var filter:Filter in filters) {
-					if (filter.statusMatchesFilter(status) {
+					if (filter.statusMatchesFilter(status)) {
 						addStatus(status);
 					}
 				}
