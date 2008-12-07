@@ -1,5 +1,6 @@
 package glitter
 {
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.filters.*;
 	import flash.net.URLRequest;
@@ -22,6 +23,14 @@ package glitter
 		public var isReply:Boolean = false;
 		private var sss:String;
 		private var cs:Status;
+		
+		public function foo(s:String):void {
+			Alert.show(s);
+		}
+		
+		public function domInitialized(event:Event):void {
+			htmlLabel.htmlLoader.window.showUserStatuses = foo;
+		}
 			
 		public function Tweet(status:Status, display:TweetDisplay)
 		{
@@ -40,7 +49,7 @@ package glitter
 			htmlLabel.setStyle("left", 3);
 			htmlLabel.setStyle("top", 3);
 			htmlLabel.setStyle("bottom", 3);
-			
+			htmlLabel.addEventListener(Event.HTML_DOM_INITIALIZE, domInitialized);
 			sss = "<p>";	
 			setSource(status.getSource());
 			setUserName(status.getUserName());
@@ -76,7 +85,7 @@ package glitter
         }
  */
 		public function setUserName(name:String):void{
-			sss += "<a class='user-link' href='getUserUpdates'><font color='#EE5815'>"+ name + "</font></a>&nbsp;&nbsp;&nbsp;";			
+			sss += "<a class='user-link' href=\"#\" onClick=\"showUserStatuses('" + name + "');\"><font color='#EE5815'>"+ name + "</font></a>&nbsp;&nbsp;&nbsp;";			
 		}
 		public function setSource(src:String):void{
 			sss += "<img src='" + src + "' style='float:left; margin-right:5px;' />";
