@@ -20,26 +20,25 @@ package glitter
 
 		public function PhotoView()
 		{
-			photoAreasHBox = new HBox();
+//			photoAreasHBox = new HBox();
 			photoIconsVBox = new VBox();
-			photoZoomCanvas = new Canvas();
-			photoZoomCanvas.setStyle("backgroundColor",0xFFFFCC);
-//			photoZoomCanvas.width = 500;
-//			photoZoomCanvas.height = 500;
-			var image:ImageZoom = new ImageZoom( "file:///Users/colin/Documents/dl/Nikhil birth 013.JPG" );// + files[i].nativePath );
-			image.height = 300;
-			image.width = 300;
-			photoZoomCanvas.addChild(image);
-
-			this.addChild(photoAreasHBox);
-			photoAreasHBox.addChild(photoIconsVBox);
-			photoAreasHBox.addChild(photoZoomCanvas);
+			this.addChild(photoIconsVBox);
+//			photoZoomCanvas = new Canvas();
+//			photoZoomCanvas.setStyle("backgroundColor",0xFFFFCC);
+//			var image:ImageZoom = new ImageZoom( "file:///Users/colin/Documents/dl/Nikhil birth 013.JPG" );// + files[i].nativePath );
+//			image.height = 300;
+//			image.width = 300;
+//			photoZoomCanvas.addChild(image);
+//
+//			this.addChild(photoAreasHBox);
+//			photoAreasHBox.addChild(photoIconsVBox);
+//			photoAreasHBox.addChild(photoZoomCanvas);
 			photoArray = new ArrayCollection;
 			//loadPhotosFromDirectory();
 			loadTestPhotos();
 		}
 
-		public function setCurrentIndex( curIndex:int ) {
+		public function setCurrentIndex( curIndex:int ):void {
 			this.curIndex = curIndex;
 		}
 
@@ -92,11 +91,14 @@ package glitter
 		
 		
 		public function displayPhotos( thePhotoArray:ArrayCollection ):void {
-			photoIconsVBox.removeAllChildren();
+/* 			photoIconsVBox.removeAllChildren();
 			photoIconsVBox.graphics.clear();
 			for(var i:uint=0; i<thePhotoArray.length; i++) {
 				photoIconsVBox.addChild( thePhotoArray[i] );
-			}
+			} */
+			for(var i:uint=0; i<thePhotoArray.length; i++) {
+				photoIconsVBox.addChild( thePhotoArray[i] );
+			} 			
 		}
 	}
 }
