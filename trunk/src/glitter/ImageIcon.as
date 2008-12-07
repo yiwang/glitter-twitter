@@ -2,24 +2,27 @@ package glitter
 {
 	import flash.events.*;
 	import flash.filters.GlowFilter;
+	
 	import mx.controls.Image;
 
 	public class ImageIcon extends Image
 	{
 //		protected var path:String;
+		protected var index:int;
 		
-		public function ImageIcon( path:String )
+		public function ImageIcon( path:String, index:int )
 		{
 			super();
+			this.index = index;
 //			this.path = path;
 			makeIcon( path );
 			this.addEventListener(MouseEvent.CLICK,hndlMouseClick);
-			
 		}
 		
 		private function hndlMouseClick ( event:Event ) {
 			var myGlowFilter:GlowFilter = new GlowFilter (0xFFFFFF,.8,5,5,4,4);
 			event.target.filters = [myGlowFilter];
+			
 		}
 		
 		private function makeIcon( path:String ):void {
