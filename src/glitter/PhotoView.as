@@ -29,7 +29,7 @@ package glitter
 			photoIconsTile.tileWidth=150;
 			this.addChild(photoIconsTile);
 			photoArray = new ArrayCollection;
-			loadPhotosFromDirectory();
+			//loadPhotosFromDirectory();
 			//loadTestPhotos();
 		}
 
