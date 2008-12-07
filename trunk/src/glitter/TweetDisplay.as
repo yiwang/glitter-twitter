@@ -3,10 +3,9 @@ package glitter
 	import flash.events.MouseEvent;
 	import flash.filters.*;
 	
-	import glitter.twitter.Twitter;
-	
 	import mx.collections.ArrayCollection;
 	import mx.containers.Canvas;
+	import mx.core.Application;
 	import mx.styles.StyleManager;
 	
 	public class TweetDisplay extends Canvas
@@ -16,9 +15,13 @@ package glitter
 		private var username:String;
 		private var password:String;
 		private var selected:Object;
+		private var controller:ApplicationController;
 		
 		public function TweetDisplay()
 		{
+			// obtain the controller
+			controller = Application.application.getController();
+			
 			disp = new Canvas();
 			disp.setStyle("left", 10);
 			disp.setStyle("right", 10);
@@ -30,41 +33,16 @@ package glitter
 			addChild(disp);
 		}
 		
-		public function getFriendsTimeline(name:String, pw:String):void {
-			var t:Twitter = new Twitter(name, pw);
-			t.getFriendsTimeline(showTweets);
-			this.username = name;
-			this.password = pw;
-		}
-		
-		public function getUserTimeline(name:String, pw:String): void {
-			var t:Twitter = new Twitter(name, pw);
-			t.getUserTimeline(showTweets);			
-			this.username = name;
-			this.password = pw;
-		}
+		public function getUserUpdates(username:String):void {
+			controller.getUserUpdates(username);
 			
-		public function getReplies(name:String, pw:String): void {
-			var t:Twitter = new Twitter(name, pw);
-			t.getReplies(showTweets);				
-			this.username = name;
-			this.password = pw;
 		}
 		
-		public function getUserUpdates(n:String):void {
-			var t:Twitter = new Twitter(username, password);
-			t.getUserTimeline(showTweets, n);
-		}
-
-		public function call_showTweets(tw:Array):void{
-			showTweets(tw);
-		}
-		
-		private function showTweets(tw:Array):void {
+		public function showTweets(statuses:ArrayCollection):void {
 		 	disp.removeAllChildren();
 			disp.graphics.clear();
 				
-			var tweets:ArrayCollection = new ArrayCollection(tw);
+			var tweets:ArrayCollection = statuses;
 			var counter:uint = 2;
 			var i:int;
 			var j:int = 19;
@@ -72,8 +50,8 @@ package glitter
 			for(i =0; i<MAX_TWEET; i++){
 				if(tweets.length <= i) break;
 				else{
-					var item:Object = tweets.getItemAt(i);
-					var st:Status = new Status(item);
+					//var item:Object = tweets.getItemAt(i);
+					var st:Status = tweets.getItemAt(i) as Status;
 					var t:Tweet = new Tweet(st, this);
 					t.setStyle("left", 0);
 					t.setStyle("right", 0);
