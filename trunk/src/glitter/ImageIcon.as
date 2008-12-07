@@ -28,11 +28,8 @@ package glitter
 		}
 		
 		private function makeIcon( path:String ):void {
-// 			image.x = 10;
-//			image.y = 10;
-//			var image:Image = new Image();
-			this.width = this.parent.parent.width;
-			this.height = this.parent.parent.height;
+			this.percentWidth = 100;
+			this.percentHeight = 100;
 			this.setStyle("verticalCenter", 0);
 			this.setStyle("horizontalCenter", 0);
 			this.source = path;
