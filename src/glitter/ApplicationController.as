@@ -58,6 +58,7 @@ package glitter
 		public function showall():void{
 			set_key_timeline("","","All");
 			var a:Array = se.get_timeline(__key__);
+			if(a==null) return;
 			num_desc = a.length;
 			this.appWindow["display"].call_showTweets(a);
 		}
