@@ -17,14 +17,14 @@ package glitter
 	public class Tweet extends Canvas
 	{
 		private var cvs:Canvas;
-		private var userName:Label;
+		private var userName:mx.controls.Label;
 		private var profileImage:Image;
 		private var text:Text;
-		private var createdAt:Label;
+		private var createdAt:mx.controls.Label;
 		private var display:TweetDisplay;
 		private var isLinked:Boolean = false;
 		private var url:String;
-		private var replyTo:Label;
+		private var replyTo:mx.controls.Label;
 		public var isReply:Boolean = false;
 			
 		public function Tweet(status:Status, display:TweetDisplay)
@@ -37,7 +37,7 @@ package glitter
 			cvs.height = 72;
 			setColor(0x91e4f3);
 			
-			userName = new Label();
+			userName = new mx.controls.Label();
 			setUserName(status.getUserName());
 			userName.height = 18;
 			userName.setStyle("left", 65);
@@ -47,7 +47,7 @@ package glitter
 			userName.addEventListener(MouseEvent.ROLL_OUT, rollOut);
 			userName.addEventListener(MouseEvent.CLICK, getUserUpdates);
 			
-			replyTo = new Label();
+			replyTo = new mx.controls.Label();
 			replyTo.height = 18;
 			replyTo.setStyle("left", 120);
 			replyTo.setStyle("top", 10);
@@ -82,7 +82,7 @@ package glitter
 			text.addEventListener(MouseEvent.CLICK, link);
 			setText(status.getText());
 
-			createdAt = new Label();
+			createdAt = new mx.controls.Label();
 			createdAt.height = 18;
 			createdAt.setStyle("left", 65);
 			createdAt.setStyle("right", 3);
