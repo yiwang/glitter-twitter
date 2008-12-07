@@ -6,56 +6,51 @@ package glitter
 	import mx.collections.ArrayCollection;
 	import mx.containers.Canvas;
 	import mx.containers.HBox;
-	import mx.containers.VBox;
+	import mx.containers.Tile;
 	import mx.events.*;
+
 
 	public class PhotoView extends Canvas
 	{
 		private var photoAreasHBox:HBox;
-		private var photoIconsVBox:VBox;
+		private var photoIconsTile:Tile;
 		private var photoZoomCanvas:Canvas;
 		private var photoArray:ArrayCollection;
 		private var directory:File = File.documentsDirectory;
 		private var curIndex:int;
 
+
 		public function PhotoView()
 		{
-//			photoAreasHBox = new HBox();
-			photoIconsVBox = new VBox();
-			photoIconsVBox.percentWidth=100;
-			photoIconsVBox.percentHeight=100;
-//			photoIconsVBox.verticalScrollBar = true;
-			this.addChild(photoIconsVBox);
-//			photoZoomCanvas = new Canvas();
-//			photoZoomCanvas.setStyle("backgroundColor",0xFFFFCC);
-//			var image:ImageZoom = new ImageZoom( "file:///Users/colin/Documents/dl/Nikhil birth 013.JPG" );// + files[i].nativePath );
-//			image.height = 300;
-//			image.width = 300;
-//			photoZoomCanvas.addChild(image);
-//
-//			this.addChild(photoAreasHBox);
-//			photoAreasHBox.addChild(photoIconsVBox);
-//			photoAreasHBox.addChild(photoZoomCanvas);
+			photoIconsTile = new Tile();
+			photoIconsTile.percentWidth=95;
+			photoIconsTile.percentHeight=100;
+			photoIconsTile.tileHeight=150;
+			photoIconsTile.tileWidth=150;
+			this.addChild(photoIconsTile);
 			photoArray = new ArrayCollection;
-			//loadPhotosFromDirectory();
-			loadTestPhotos();
+			loadPhotosFromDirectory();
+			//loadTestPhotos();
 		}
+
 
 		public function setCurrentIndex( curIndex:int ):void {
 			this.curIndex = curIndex;
 		}
 
+
 		public function getCurrentIndex( ):int {
 			return curIndex;
 		}
 
+
 		public function loadTestPhotos():void {
-			var image:ImageIcon = new ImageIcon( "file:///Users/colin/Documents/dl/Nikhil birth 013.JPG",0 );// + files[i].nativePath );
+			var image:ImageIcon = new ImageIcon( "file:///Users/colin/Documents/dl/Nikhil birth 013.JPG",0,new String("linusconcepcion"),new Date("2008-12-04"));// + files[i].nativePath );
 			photoArray.addItem(image);
-			var image:ImageIcon = new ImageIcon( "file:///Users/colin/Documents/dl/Nikhil birth 015.JPG",1 );// + files[i].nativePath );
-			photoArray.addItem(image);
-			var image:ImageIcon = new ImageIcon( "file:///Users/colin/Documents/dl/Nikhil birth 020.JPG",2 );// + files[i].nativePath );
-			photoArray.addItem(image);
+			var image1:ImageIcon = new ImageIcon( "file:///Users/colin/Documents/dl/Nikhil birth 015.JPG",1,new String("linusconcepcion"),new Date("2008-12-04"));// + files[i].nativePath );
+			photoArray.addItem(image1);
+			var image2:ImageIcon = new ImageIcon( "file:///Users/colin/Documents/dl/Nikhil birth 020.JPG",2,new String("linusconcepcion"),new Date("2008-12-04"));// + files[i].nativePath );
+			photoArray.addItem(image2);
 			displayPhotos( photoArray );
 		}
 
@@ -85,22 +80,16 @@ package glitter
 		    	if ( lcpath.indexOf("jpg") > 0
 		    		|| lcpath.indexOf("gif") > 0 
 		    		|| lcpath.indexOf("png") > 0 ) {
-		    			var image:ImageIcon = new ImageIcon( "file://" + files[i].nativePath, i );
+		    			var image:ImageIcon = new ImageIcon( "file://" + files[i].nativePath, i,"test","2008-12-04" );
 						photoArray.addItem(image);
 			     }
 		    }
 			displayPhotos( photoArray );
 		}
-		
-		
+				
 		public function displayPhotos( thePhotoArray:ArrayCollection ):void {
-/* 			photoIconsVBox.removeAllChildren();
-			photoIconsVBox.graphics.clear();
 			for(var i:uint=0; i<thePhotoArray.length; i++) {
-				photoIconsVBox.addChild( thePhotoArray[i] );
-			} */
-			for(var i:uint=0; i<thePhotoArray.length; i++) {
-				photoIconsVBox.addChild( thePhotoArray[i] );
+				photoIconsTile.addChild( thePhotoArray[i] );
 			} 			
 		}
 	}
