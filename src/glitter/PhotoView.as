@@ -16,6 +16,7 @@ package glitter
 		private var photoZoomCanvas:Canvas;
 		private var photoArray:ArrayCollection;
 		private var directory:File = File.documentsDirectory;
+		private var curIndex:int;
 
 		public function PhotoView()
 		{
@@ -39,12 +40,16 @@ package glitter
 			loadTestPhotos();
 		}
 
+		public function setCurrentImage( curIndex:int ) {
+			this.curIndex = curIndex;
+		}
+
 		public function loadTestPhotos():void {
-			var image:ImageIcon = new ImageIcon( "file:///Users/colin/Documents/dl/Nikhil birth 013.JPG" );// + files[i].nativePath );
+			var image:ImageIcon = new ImageIcon( "file:///Users/colin/Documents/dl/Nikhil birth 013.JPG",0 );// + files[i].nativePath );
 			photoArray.addItem(image);
-			var image:ImageIcon = new ImageIcon( "file:///Users/colin/Documents/dl/Nikhil birth 015.JPG" );// + files[i].nativePath );
+			var image:ImageIcon = new ImageIcon( "file:///Users/colin/Documents/dl/Nikhil birth 015.JPG",1 );// + files[i].nativePath );
 			photoArray.addItem(image);
-			var image:ImageIcon = new ImageIcon( "file:///Users/colin/Documents/dl/Nikhil birth 020.JPG" );// + files[i].nativePath );
+			var image:ImageIcon = new ImageIcon( "file:///Users/colin/Documents/dl/Nikhil birth 020.JPG",2 );// + files[i].nativePath );
 			photoArray.addItem(image);
 			displayPhotos( photoArray );
 		}
@@ -75,12 +80,13 @@ package glitter
 		    	if ( lcpath.indexOf("jpg") > 0
 		    		|| lcpath.indexOf("gif") > 0 
 		    		|| lcpath.indexOf("png") > 0 ) {
-		    			var image:ImageIcon = new ImageIcon( "file://" + files[i].nativePath );
+		    			var image:ImageIcon = new ImageIcon( "file://" + files[i].nativePath, i );
 						photoArray.addItem(image);
 			     }
 		    }
 			displayPhotos( photoArray );
 		}
+		
 		
 		public function displayPhotos( thePhotoArray:ArrayCollection ):void {
 			photoIconsVBox.removeAllChildren();
