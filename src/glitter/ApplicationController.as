@@ -39,6 +39,9 @@ package glitter
 		}
 				 		
 		public function testUserVerified():Boolean{
+			var u:String = Twitter.getStoredUserName();
+			var p:String = Twitter.getStoredPassword();
+			var b:Boolean = u&&p;
 			return (Twitter.getStoredUserName()!=""&&Twitter.getStoredPassword());
 		}
 
@@ -69,8 +72,8 @@ package glitter
 		
 		public function get_new_timeline(new_a:Array):Array
 		{
-			se.update_timeline_by_key(__key__,new_a);
-			return se.get_timeline_by_key(__key__);
+			se.update_timeline(__key__,new_a);
+			return se.get_timeline(__key__);
 		}
 
 		/**
@@ -96,7 +99,7 @@ package glitter
 			PopUpManager.centerPopUp(settingsWindow);			
 		}
 		
-		// save and load a_twit, a_key_id of current user
+		// save and load session data of current user
 		private function save_session():void{
 			if(!testUserVerified()) return;
 			var u:String = Twitter.getStoredUserName();

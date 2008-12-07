@@ -5,10 +5,10 @@ package glitter.data
 	public class Session
 	{
 		/**
-		 * a_twit stores all twit, indexed by id
-		 * a_key_id stores twit ids categorized by key
+		 * a_id_twits stores all twit, indexed by id
+		 * a_key_ids stores twit ids categorized by key
 		 */
-		private var a_twits:Object = new Object();
+		private var a_id_twits:Object = new Object();
 		private var a_key_ids:Object = new Object();
 		/** 
 		 * the inventory of timelines
@@ -22,25 +22,25 @@ package glitter.data
 		}
 
 		public function save(u:String):void{
-			JsonFile.write(u + "_a_twit",this.a_twits);
 			construct_a_key_ids();
-			JsonFile.write(u + "_a_key_id",this.a_key_ids);			
+			JsonFile.write(u + "_a_id_twits",this.a_id_twits);
+			JsonFile.write(u + "_a_key_ids",this.a_key_ids);			
 		}
 		public function load(u:String):void{
-			var obj:Object = JsonFile.read(u + "_a_twit");
-			this.a_twits = obj==null ? new Object() : obj;
-			obj = JsonFile.read(u + "_a_key_id");
+			var obj:Object = JsonFile.read(u + "_a_id_twits");
+			this.a_id_twits = obj==null ? new Object() : obj;
+			obj = JsonFile.read(u + "_a_key_ids");
 			this.a_key_ids = obj==null ? new Object() : obj;
 			construct_a_timelines();
 		}
 		
 		public function get_twit_by_id(__id__:String):Object{
-			return a_twits[__id__];
+			return a_id_twits[__id__];
 		}
 
 		public function getAllTwits():Array{
 			var a:Array = new Array();
-			for each (var twit:Object in this.a_twits){
+			for each (var twit:Object in this.a_id_twits){
 				a.push(twit);
 			}
 			a.sortOn("id",Array.DESCENDING | Array.NUMERIC);
@@ -57,17 +57,18 @@ package glitter.data
 			}
 		}
 		
-		public function get_timeline_by_key(__key__:String):Array{
+		public function get_timeline(__key__:String):Array{
 			return a_timelines[__key__];
 		}
 		
-		public function update_timeline_by_key(__key__:String,twits:Array):void{
+		public function update_timeline(__key__:String,twits:Array):void{
 			for each(var t:Object in twits){
-				insert_timeline_by_key(__key__,t);
+				insert_timeline(__key__,t);
 			}
 		}
 		
-		private function insert_timeline_by_key(__key__:String,t:Object):void{
+		public function insert_timeline(__key__:String,t:Object):void{
+			this.a_id_twits[String(t.id)] = t;
 			var timeline:Array = a_timelines[__key__];
 			if (timeline==null){
 				a_timelines[__key__] = new Array(t);
