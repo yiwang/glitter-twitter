@@ -67,7 +67,7 @@ package glitter
 		}
 
 
-		private function linkButtonHandler ( event:Event ) {
+		private function linkButtonHandler ( event:Event ):void {
 			bodyCanvas.removeAllChildren();
 			bodyCanvas.addChild(event.target.targetText);
 		}

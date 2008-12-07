@@ -3,18 +3,21 @@ package glitter
 	import flash.events.*;
 	import flash.filters.GlowFilter;
 	
-	import mx.controls.Alert;
 	import mx.controls.Image;
 
 	public class ImageIcon extends Image
 	{
 //		protected var path:String;
 		protected var index:int;
+		protected var sender:String;
+		protected var date:String;
 		
-		public function ImageIcon( path:String, index:int )
+		public function ImageIcon( path:String, index:int, sender:String, date:String )
 		{
 			super();
 			this.index = index;
+			this.sender = sender;
+			this.date = date;
 //			this.path = path;
 			makeIcon( path );
 			this.addEventListener(MouseEvent.CLICK,hndlMouseClick);
