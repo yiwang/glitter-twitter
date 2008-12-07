@@ -73,7 +73,7 @@ package glitter.twitter
 		public function getFriendsTimeline(callback:Function):void {
 			this.timelineCallback = callback;
 			var ts:TwitterService = new TwitterService(credentials, parseGetTimeline, "statuses", "friends_timeline");
-			ctl.set_key_timeline("getFriendsTimeline");
+			ctl.set_key_timeline("getFriendsTimeline",this.username,"Home");
 			ts.performGet({since_id:ctl.get_lastid()});
 		} 
 		
@@ -82,9 +82,9 @@ package glitter.twitter
 			u = u == "" ? this.username : u;
 			var ts:TwitterService = new TwitterService(credentials, parseGetTimeline, "statuses", "user_timeline", u);
 			if(u == this.username) {
-				ctl.set_key_timeline("getUserTimeline");
+				ctl.set_key_timeline("getUserTimeline",this.username,"My Updates");
 			}else{
-				ctl.set_key_timeline("getUserUpdates",u);
+				ctl.set_key_timeline("getUserUpdates",u,u+"'s Updates");
 			}
 			ts.performGet({since_id:ctl.get_lastid()});
 		}
@@ -92,7 +92,7 @@ package glitter.twitter
 		public function getReplies(callback:Function):void {
 			this.timelineCallback = callback;
 			var ts:TwitterService = new TwitterService(credentials, parseGetTimeline, "statuses", "replies");
-			ctl.set_key_timeline("getReplies");
+			ctl.set_key_timeline("getReplies",this.username,"@Replies");
 			ts.performGet({since_id:ctl.get_lastid()});
 		} 
 	

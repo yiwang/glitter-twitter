@@ -27,6 +27,11 @@ package glitter
 		private var key_uid:String;
 		private var __key__:String; // current key
 
+		[Bindable]
+		public var key_desc:String = "";
+		[Bindable]
+		public var num_desc:Number = 0;
+		
 		// constructor
 		public function ApplicationController(appWindow:WindowedApplication)
 		{
@@ -37,32 +42,41 @@ package glitter
             timer.addEventListener("timer", startTwitterLoop);
             timer.start();
 		}
-				 		
+		
+		// checking based on appearace of stored user name and pwd may not be reliable
 		public function testUserVerified():Boolean{
 			var u:String = Twitter.getStoredUserName();
 			var p:String = Twitter.getStoredPassword();
-			var b:Boolean = u&&p;
-			return (Twitter.getStoredUserName()!=""&&Twitter.getStoredPassword());
+			var b:Boolean = u && p && (u!="") && (p!="");
+			return (b);
 		}
 
 		public function getTwitById(__id__:String):Object{
 			return se.get_twit_by_id(__id__);
 		}
+		
 		public function showall():void{
-			var a:Array = se.getAllTwits();
-			key_func = "";
+			set_key_timeline("","","All");
+			var a:Array = se.get_timeline(__key__);
+			num_desc = a.length;
 			this.appWindow["display"].call_showTweets(a);
 		}
 		
+		// called from containers		
+		public function insert_timeline(t:Object):void{
+			this.se.insert_timeline(__key__,t);
+		}
+		
 		// called from Twitter.as	 
-		public function set_key_timeline(key1:String, key2:String=""):void
+		public function set_key_timeline(key1:String, key2:String="", key3:String=""):void
 		{
 			key_func = key1;
 			key_uid = key2;
+			key_desc =  key3;
 			/**
 			 *  __key__ is set here first
 			 */
-			__key__ = key1 + "&"+ key2;
+			__key__ = key1 + "&"+ key2 + "&" + key3;
 		}
 		
 		public function get_lastid():String
@@ -73,6 +87,7 @@ package glitter
 		public function get_new_timeline(new_a:Array):Array
 		{
 			se.update_timeline(__key__,new_a);
+			num_desc = se.get_num(__key__);
 			return se.get_timeline(__key__);
 		}
 
