@@ -1,7 +1,6 @@
 package glitter.data
 {
-	import com.hurlant.crypto.symmetric.NullPad;
-	
+		
 	public class Session
 	{
 		/**

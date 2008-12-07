@@ -21,16 +21,16 @@ package glitter.twitter
 		private var verifyCredentialsCallback:Function;
 		private var timelineCallback:Function;
 		
-		private var ctl:ApplicationController;
+		private var controller:ApplicationController;
 		/**
 		 * This public var is the the current array of tweets displayed.  
 		 */
 		public var currentTimeLine:ArrayCollection;
 		
-		public function Twitter(username:String, password:String)
+		public function Twitter(username:String, password:String, controller:ApplicationController=null)
 		{
 			// obtain the controller
-			ctl = Application.application.getController();
+			this.controller = controller;
 			
 			this.username = username;
 			this.password = password;
@@ -73,27 +73,20 @@ package glitter.twitter
 		public function getFriendsTimeline(callback:Function):void {
 			this.timelineCallback = callback;
 			var ts:TwitterService = new TwitterService(credentials, parseGetTimeline, "statuses", "friends_timeline");
-			ctl.set_key_timeline("getFriendsTimeline",this.username,"Home");
-			ts.performGet({since_id:ctl.get_lastid()});
+			ts.performGet({since_id:controller.get_lastid()});
 		} 
 		
 		public function getUserTimeline(callback:Function, u:String = ""):void {
 			this.timelineCallback = callback;
 			u = u == "" ? this.username : u;
 			var ts:TwitterService = new TwitterService(credentials, parseGetTimeline, "statuses", "user_timeline", u);
-			if(u == this.username) {
-				ctl.set_key_timeline("getUserTimeline",this.username,"My Updates");
-			}else{
-				ctl.set_key_timeline("getUserUpdates",u,u+"'s Updates");
-			}
-			ts.performGet({since_id:ctl.get_lastid()});
+			ts.performGet({since_id:controller.get_lastid()});
 		}
 		
 		public function getReplies(callback:Function):void {
 			this.timelineCallback = callback;
 			var ts:TwitterService = new TwitterService(credentials, parseGetTimeline, "statuses", "replies");
-			ctl.set_key_timeline("getReplies",this.username,"@Replies");
-			ts.performGet({since_id:ctl.get_lastid()});
+			ts.performGet({since_id:controller.get_lastid()});
 		} 
 	
 		/**
@@ -101,7 +94,7 @@ package glitter.twitter
 		 */
 		private function parseGetTimeline(statuses:Array):void{
 			//this.timelineCallback.apply(this, [statuses]);
-			this.timelineCallback.apply(this, [ctl.get_new_timeline(statuses)]);
+			this.timelineCallback.apply(this, [statuses]);
 		}
 		
 		public function setLocation(location:String):void {

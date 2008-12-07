@@ -28,7 +28,7 @@
 			private function submitAuth():void
 			{
 				// Create new Twitter instance
-				tw = new Twitter(user.text,pwd.text);
+				//tw = new Twitter(user.text,pwd.text);
 				
 			}
 				

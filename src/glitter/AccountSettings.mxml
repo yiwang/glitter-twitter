@@ -5,8 +5,10 @@
 			import mx.controls.Alert;
 			import mx.managers.PopUpManager;
 			import glitter.twitter.Twitter;
+			import mx.core.Application;
 			
 			private var twitterLocationFieldUpdated:Boolean;
+			private var controller:ApplicationController;
 			
 			private function close():void {
 				PopUpManager.removePopUp(this);
@@ -54,7 +56,8 @@
 			private function verified():void {
 				trace("verified");
 				Alert.show("credentials verified");	
-							
+				controller = Application.application.getController();
+				controller.confirmVerifiedCredentials();
 			}
 			
 			private function twitterLocationUpdated():void {

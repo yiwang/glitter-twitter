@@ -6,6 +6,7 @@ package glitter
 	import glitter.data.Session;
 	import glitter.twitter.Twitter;
 	
+	import mx.collections.ArrayCollection;
 	import mx.core.WindowedApplication;
 	import mx.managers.PopUpManager;
 
@@ -14,33 +15,32 @@ package glitter
 		private var appWindow:WindowedApplication;
 		static private var INTERVAL:Number = 8; // seconds to refresh
 		private var timer:Timer;
-		private var se:Session = new Session();
-		
-		/**
-		 * key_func can ONLY be one of below
-		 * getUserTimeline
-		 * getFriendsTimeline
-		 * getReplies
-		 * getUserUpdates - used with key_uid required
-		 */	
-		private var key_func:String;
-		private var key_uid:String;
-		private var __key__:String; // current key
+		private var session:Session = new Session();
+		private var twitter:Twitter;
+		private var isVerifiedCredentials:Boolean = false;
+		private var tweetDisplay:TweetDisplay;
+				
+		private var labelsData:Object = new Object();
 
 		[Bindable]
-		public var key_desc:String = "";
+		public var currentTimelineName:String = "";
 		[Bindable]
-		public var num_desc:Number = 0;
-		
+		public var currentTimeLineNum:Number = 0;
+				
 		// constructor
 		public function ApplicationController(appWindow:WindowedApplication)
 		{
+			this.twitter = new Twitter(Twitter.getStoredUserName(),Twitter.getStoredPassword(),this);
 			this.appWindow = appWindow;
-			this.load_session();
+			this.tweetDisplay = appWindow["display"];
+			//this.load_session();
 			// timer for twitterloop
 			timer = new Timer(INTERVAL*1000, 0);
             timer.addEventListener("timer", startTwitterLoop);
             timer.start();
+		}
+		public function confirmVerifiedCredentials():void{
+			isVerifiedCredentials = true;
 		}
 		
 		// checking based on appearace of stored user name and pwd may not be reliable
@@ -48,65 +48,82 @@ package glitter
 			var u:String = Twitter.getStoredUserName();
 			var p:String = Twitter.getStoredPassword();
 			var b:Boolean = u && p && (u!="") && (p!="");
-			return (b);
+			return b && isVerifiedCredentials;
 		}
 
-		public function getTwitById(__id__:String):Object{
-			return se.get_twit_by_id(__id__);
+		// insertion of fetched data
+		private function insertStatusesToLabel(statuses:Array,labelname:String):void{
+			if(labelsData[labelname]==null){
+				labelsData[labelname] = new Label(labelname);
+			}
+			var label:Label = labelsData[labelname];
+			for each (var item:Object in statuses){
+				label.addStatus(new Status(item));
+			}
 		}
 		
+		private function getStatusesFromLabel(labelname:String):ArrayCollection{
+			var label:Label = labelsData[labelname];
+			return label.getStatuses();
+		}
+		
+		// Home
+		public function getFriendsTimeline():void {
+			this.currentTimelineName = "Home";
+			this.twitter.getFriendsTimeline(getTimelineCallback);
+		}
+		
+		// Update
+		public function getUserTimeline(): void {
+			this.currentTimelineName = "My Updates";
+			this.twitter.getUserTimeline(getTimelineCallback);
+		}
+		
+		// @Replies	
+		public function getReplies():void{
+			this.currentTimelineName = "@Replies";
+			this.twitter.getReplies(getTimelineCallback);
+		}
+		
+		// Update
+		public function getUserUpdates(username:String):void {
+			this.currentTimelineName = username + "'s Update";
+			this.twitter.getUserTimeline(getTimelineCallback, username);	
+		}
+
+		// callback
+		private function getTimelineCallback(statuses:Array):void{
+			insertStatusesToLabel(statuses,this.currentTimelineName);
+			this.tweetDisplay.showTweets(getStatusesFromLabel(this.currentTimelineName));
+		}
+				
+		// All
 		public function showall():void{
-			set_key_timeline("","","All");
-			var a:Array = se.get_timeline(__key__);
-			if(a==null) return;
-			num_desc = a.length;
-			this.appWindow["display"].call_showTweets(a);
-		}
-		
-		// called from containers		
-		public function insert_timeline(t:Object):void{
-			this.se.insert_timeline(__key__,t);
-		}
-		
-		// called from Twitter.as	 
-		public function set_key_timeline(key1:String, key2:String="", key3:String=""):void
-		{
-			key_func = key1;
-			key_uid = key2;
-			key_desc =  key3;
-			/**
-			 *  __key__ is set here first
-			 */
-			__key__ = key1 + "&"+ key2 + "&" + key3;
+			//this.tweetDisplay.showTweets(statuses);
+			
 		}
 		
 		public function get_lastid():String
 		{
-			return String(se.get_lastid(__key__));
+			var label:Label = labelsData[this.currentTimelineName];
+			if(label==null) return "1000000000";
+			var statuses:ArrayCollection = (labelsData[this.currentTimelineName]as Label).getStatuses();
+			if(statuses.length==0) return "1000000000";
+			return statuses.getItemAt(0).getId();
 		}
 		
-		public function get_new_timeline(new_a:Array):Array
-		{
-			se.update_timeline(__key__,new_a);
-			num_desc = se.get_num(__key__);
-			return se.get_timeline(__key__);
-		}
 
 		/**
 		 * do nothing if key_func is not in the specific ones
 		 */
 		private function startTwitterLoop(e:TimerEvent):void
 		{
-			if(key_func == "getUserTimeline" ||
-			 key_func == "getFriendsTimeline" || 
-			 key_func == "getReplies")
-			{
-				this.appWindow["display"][key_func](Twitter.getStoredUserName(),Twitter.getStoredPassword());
+			testUserVerified();
+			if(testUserVerified() && twitter == null){
+				this.twitter = new Twitter(Twitter.getStoredUserName(),Twitter.getStoredPassword());
 			}
-			if(key_func == "getUserUpdates"){
-				this.appWindow["display"][key_func](key_uid);
-			}
-			this.save_session();
+			getFriendsTimeline();
+			//this.save_session();
 		}
 		
 		public function settingsButtonClick():void {
@@ -117,14 +134,16 @@ package glitter
 		
 		// save and load session data of current user
 		private function save_session():void{
-			if(!testUserVerified()) return;
-			var u:String = Twitter.getStoredUserName();
-			se.save(u);	
+			if(testUserVerified()){
+				var username:String = Twitter.getStoredUserName();
+				this.session.save(username);
+			}	
 		}
 		private function load_session():void{
-			if(!testUserVerified()) return;
-			var u:String = Twitter.getStoredUserName();
-			se.load(u);
+			if(testUserVerified()){
+				var username:String = Twitter.getStoredUserName();
+				this.session.load(username);
+			}
 		}
 	}
 }

@@ -14,7 +14,7 @@ package glitter
 		}
 		
 		public function statusMatchesFilter(status:Status):Boolean {
-			
+			return true;
 		}
 	}
 }
