@@ -7,7 +7,6 @@ package glitter
 	import mx.containers.Canvas;
 	import mx.containers.HBox;
 	import mx.containers.VBox;
-	import mx.containers.VBox;
 	import mx.controls.Label;
 	import mx.events.*;
 
@@ -44,6 +43,30 @@ package glitter
 		}
 
 
+		public function loadPhotosFromStatuses( statusArray:ArrayCollection ):void {
+			var hasAtLeastOnePhoto:Boolean = new Boolean();
+			hasAtLeastOnePhoto = false;
+			for ( var i:uint = 0; i<statusArray.length; i++ ) {
+				if ( statusArray[i].hasPhoto() ) {
+					hasAtLeastOnePhoto = true;
+					var url:String = new String();
+					url = statusArray[i].getPhotoUrl();
+					var sender:String = new String();
+					sender = statusArray[i].getUserName();
+					var date:String = new String();
+					date = statusArray[i].getFormattedDate();
+	//				var text:String = new String();
+	//				text = statusArray[i].get				
+					var image:ImageIcon = new ImageIcon( url, i, sender, date );
+					photoArray.addItem( image );
+				}
+			}
+			if ( hasAtLeastOnePhoto ) {
+				displayPhotos( photoArray );
+			}
+		}
+
+
 		public function loadTestPhotos():void {
 			var image:ImageIcon = new ImageIcon( "file:///Users/colin/Documents/dl/Nikhil birth 013.JPG",0,new String("linusconcepcion"),new String("2008-12-04"));// + files[i].nativePath );
 			photoArray.addItem(image);
@@ -59,7 +82,7 @@ package glitter
 			var myFile:File = new File();
 			try
 			{
-			    directory.browseForDirectory("Select directory of photos (for testing)");
+			    directory.browseForDirectory("Select directory of photos");
 			    directory.addEventListener(Event.SELECT, hndlFileSelect);
 			}
 			catch (error:Error)
