@@ -70,7 +70,7 @@
 		<mx:Canvas cornerRadius="15" backgroundColor="#6485AE" top="10" bottom="10" id="photos" label="photos" right="10" left="487">
 <!--			<mx:VBox backgroundColor="#8EA4BE" top="20" left="10" bottom="10" right="10">
 			</mx:VBox>
--->			<ns1:PhotoView id="photoView" backgroundColor="#8EA4BE" width="100%" height="100%" top="20" left="10" bottom="10" right="10">
+-->			<ns1:PhotoView id="photoView" backgroundColor="#6485AE" width="100%" height="100%" top="20" left="10" bottom="10" right="10">
 			</ns1:PhotoView>
 			<mx:Label y="2" text="photos" color="#FFFFFF" fontWeight="bold" right="10" left="10"/>
 		</mx:Canvas>

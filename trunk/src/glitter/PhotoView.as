@@ -6,14 +6,16 @@ package glitter
 	import mx.collections.ArrayCollection;
 	import mx.containers.Canvas;
 	import mx.containers.HBox;
-	import mx.containers.Tile;
+	import mx.containers.VBox;
+	import mx.containers.VBox;
+	import mx.controls.Label;
 	import mx.events.*;
 
 
 	public class PhotoView extends Canvas
 	{
 		private var photoAreasHBox:HBox;
-		private var photoIconsTile:Tile;
+		private var photoIconsVBox:VBox;
 		private var photoZoomCanvas:Canvas;
 		private var photoArray:ArrayCollection;
 		private var directory:File = File.documentsDirectory;
@@ -22,14 +24,12 @@ package glitter
 
 		public function PhotoView()
 		{
-			photoIconsTile = new Tile();
-			photoIconsTile.percentWidth=95;
-			photoIconsTile.percentHeight=100;
-			photoIconsTile.tileHeight=150;
-			photoIconsTile.tileWidth=150;
-			this.addChild(photoIconsTile);
+			photoIconsVBox = new VBox();
+			photoIconsVBox.percentWidth=95;
+			photoIconsVBox.percentHeight=100;
+			this.addChild(photoIconsVBox);
 			photoArray = new ArrayCollection;
-			//loadPhotosFromDirectory();
+			loadPhotosFromDirectory();
 			//loadTestPhotos();
 		}
 
@@ -81,6 +81,7 @@ package glitter
 		    		|| lcpath.indexOf("gif") > 0 
 		    		|| lcpath.indexOf("png") > 0 ) {
 		    			var image:ImageIcon = new ImageIcon( "file://" + files[i].nativePath, i,"test","2008-12-04" );
+						image.setStyle("horizontalAlign","center");
 						photoArray.addItem(image);
 			     }
 		    }
@@ -89,7 +90,24 @@ package glitter
 				
 		public function displayPhotos( thePhotoArray:ArrayCollection ):void {
 			for(var i:uint=0; i<thePhotoArray.length; i++) {
-				photoIconsTile.addChild( thePhotoArray[i] );
+				var vBox:VBox = new VBox();
+				vBox.percentWidth=100;
+				vBox.minHeight = 100;
+	            vBox.setStyle("paddingLeft", 20);
+	            vBox.setStyle("paddingRight", 20);
+	            vBox.setStyle("paddingTop", 20);
+	            vBox.setStyle("paddingBottom", 20);
+				vBox.setStyle("color",0x000000);
+				vBox.setStyle("backgroundColor",0x8EA4BE);
+				vBox.setStyle("horizontalAlign","center");
+//				vBox.setStyle("verticalAlign","top");
+//				vBox.setStyle("margin","10");
+				var label:mx.controls.Label = new mx.controls.Label();
+				label.text = thePhotoArray[i].date + ' by ' + thePhotoArray[i].sender;
+				label.setStyle("verticalAlign","top");
+				photoIconsVBox.addChild( vBox );
+				vBox.addChild( thePhotoArray[i] );
+				vBox.addChild( label );
 			} 			
 		}
 	}

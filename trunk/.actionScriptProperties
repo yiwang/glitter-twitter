@@ -12,7 +12,6 @@
 <application path="main.mxml"/>
 <application path="TinyURL_API_win.mxml"/>
 <application path="test.mxml"/>
-<application path="mainOld.mxml"/>
 </applications>
 <modules/>
 <buildCSSFiles/>
