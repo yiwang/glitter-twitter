@@ -20,6 +20,7 @@ package glitter
 		private var replyTo:mx.controls.Label;
 		public var isReply:Boolean = false;
 		private var text:String;
+		private var status:Status;
 		
 		public function foo(s:String):void {
 			Alert.show(s);
@@ -29,9 +30,14 @@ package glitter
 			htmlLabel.htmlLoader.window.showUserStatuses = getUserUpdates;
 			htmlLabel.htmlLoader.window.showLink = link;
 		}
+		
+		public function getStatus():Status {
+			return status;
+		}
 			
 		public function Tweet(status:Status, display:TweetDisplay)
 		{
+			this.status = status;
 			this.display = display;
 	
 			htmlLabel = new HTML();
