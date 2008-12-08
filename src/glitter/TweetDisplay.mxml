@@ -23,6 +23,10 @@
 			}
 		
 			public function showTweets(statuses:ArrayCollection):void {
+				// this is a strange bug in AIR. you need to pull focus off the html elements
+				// http://www.adobe.com/cfusion/webforums/forum/messageview.cfm?forumid=75&catid=697&threadid=1410638&enterthread=y 
+				stage.assignFocus(this, flash.display.FocusDirection.NONE);
+				
 		 		this.removeAllChildren();
 				this.graphics.clear();
 				
