@@ -57,8 +57,8 @@ package glitter
 				labelsData[labelname] = new Label(labelname);
 			}
 			var label:Label = labelsData[labelname];
-			for each (var item:Object in statuses){
-				label.addStatus(new Status(item));
+			for each (var status:Status in statuses){
+				label.addStatus(status);
 			}
 		}
 		
@@ -122,10 +122,18 @@ package glitter
 			if(testUserVerified() && twitter == null){
 				this.twitter = new Twitter(Twitter.getStoredUserName(),Twitter.getStoredPassword());
 			}
-			getFriendsTimeline();
+			this.twitter.getFriendsTimeline(twitterLoopCallback);
 			//this.save_session();
 		}
 		
+		// callback
+		private function twitterLoopCallback(statuses:Array):void{
+			insertStatusesToLabel(statuses,"Home");
+			if (this.currentTimelineName == "Home") {
+				this.tweetDisplay.addTweets(statuses);
+			}
+		}
+
 		public function settingsButtonClick():void {
 			var settingsWindow:AccountSettings = new AccountSettings();
 			PopUpManager.addPopUp(settingsWindow, appWindow, true);

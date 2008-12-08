@@ -5,9 +5,10 @@ package glitter.twitter
 	import flash.data.EncryptedLocalStore;
 	import flash.utils.ByteArray;
 	
-	import mx.collections.ArrayCollection;
-	import mx.core.Application;
 	import glitter.ApplicationController;
+	import glitter.Status;
+	
+	import mx.collections.ArrayCollection;
 
 	public class Twitter
 	{
@@ -94,7 +95,7 @@ package glitter.twitter
 		 */
 		private function parseGetTimeline(statuses:Array):void{
 			//this.timelineCallback.apply(this, [statuses]);
-			this.timelineCallback.apply(this, [statuses]);
+			this.timelineCallback.apply(this, [statuses.map(function(o:Object, i:int, a:Array):Status {return new Status(o);})]);
 		}
 		
 		public function setLocation(location:String):void {

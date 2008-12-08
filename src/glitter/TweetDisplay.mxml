@@ -27,9 +27,7 @@
 				this.graphics.clear();
 				
 				var tweets:ArrayCollection = statuses;
-				var counter:uint = 2;
 				var i:int;
-				var j:int = 19;
 				
 				for(i =0; i<MAX_TWEET; i++){
 					if(tweets.length <= i) break;
@@ -37,13 +35,31 @@
 						//var item:Object = tweets.getItemAt(i);
 						var st:Status = tweets.getItemAt(i) as Status;
 						var t:Tweet = new Tweet(st, this);
-						t.setStyle("left", 0);
-						t.setStyle("right", 0);
-						t.y = counter;		
 						this.addChild(t);
-						counter += t.getHeight() + 2;
 						t.addEventListener(MouseEvent.CLICK, clicked);
 					}
+				}
+			}
+			
+			public function addTweets(statuses:Array):void {
+				var newStatuses:ArrayCollection = new ArrayCollection();
+				for each(var status:Status in statuses) {
+					var isNew:Boolean = true;
+					for each (var tweet:Tweet in this.getChildren()) {
+						if (status.getId() == tweet.getStatus().getId()) {
+							isNew = false;
+							break;
+						}
+					}
+					if (isNew) {
+						newStatuses.addItem(status);
+					}
+				}
+				for each (var status:Status in newStatuses) {
+					var t:Tweet = new Tweet(status, this);
+					var tweets:Array = this.getChildren();
+					
+					this.addChildAt(t, 0);
 				}
 			}
 		
