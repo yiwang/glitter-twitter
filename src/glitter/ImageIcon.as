@@ -8,9 +8,9 @@ package glitter
 	public class ImageIcon extends Image
 	{
 //		protected var path:String;
-		protected var index:int;
-		protected var sender:String;
-		protected var date:String;
+		public var index:int;
+		public var sender:String;
+		public var date:String;
 		
 		public function ImageIcon( path:String, index:int, sender:String, date:String )
 		{
@@ -31,11 +31,12 @@ package glitter
 		}
 		
 		private function makeIcon( path:String ):void {
+//			this.width = 80;
 			this.percentWidth = 100;
-			this.percentHeight = 100;
-			this.minHeight = 300;
-			this.setStyle("verticalCenter", 0);
-			this.setStyle("horizontalCenter", 0);
+//			this.percentHeight = 100;
+			this.maxHeight = 300;
+//			this.setStyle("verticalCenter", 0);
+//			this.setStyle("horizontalCenter", 0);
 			this.source = path;
 		}
 

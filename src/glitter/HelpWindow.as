@@ -41,6 +41,8 @@ package glitter
 
 		private function buildLayout():void {
 			this.addChild(helpHBox);
+			helpHBox.percentWidth = 100;
+			helpHBox.percentHeight = 100;
 			helpHBox.addChild(helpMenu);
 
 			linksArray["Working with Tweets"] = "<p><b>Working with Tweets</b></p>" +
@@ -62,6 +64,13 @@ package glitter
 			}
 			var defaultBody:Text = new Text();
 			defaultBody.htmlText = "<p><b>Glitter Help</b></p><p>Hopefully using the links to the left will quickly have you up and running.</p>";
+			bodyCanvas.percentWidth = 100;
+			bodyCanvas.percentHeight = 100;
+			bodyCanvas.setStyle("backgroundColor",0xEEEEEE);
+			bodyCanvas.setStyle("paddingTop",20);
+			bodyCanvas.setStyle("paddingRight",20);
+			bodyCanvas.setStyle("paddingBottom",20);
+			bodyCanvas.setStyle("paddingLeft",20);
 			bodyCanvas.addChild( defaultBody );
 			helpHBox.addChild( bodyCanvas );
 		}
