@@ -1,7 +1,6 @@
 package glitter
 {
 	import flash.events.Event;
-	import flash.events.MouseEvent;
 	import flash.filters.*;
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
@@ -41,7 +40,7 @@ package glitter
 			htmlLabel.setStyle("top", 3);
 			htmlLabel.setStyle("bottom", 3);
 			htmlLabel.addEventListener(Event.HTML_DOM_INITIALIZE, domInitialized);
-			text = "<body style='background-color: #91e4f3'><p>";	
+			text = "<body style='background-color: #91e4f3'><p style='word-break: break-all; padding: 2px'>";	
 			setSource(status.getSource());
 			setUserName(status.getUserName());
 			setText(status.getText());
@@ -65,7 +64,21 @@ package glitter
 			//htmlLabel.minHeight = 72;
 			//htmlLabel.percentHeight = 100;
 			//htmlLabel.height = 72;
-			htmlLabel.height = 72;
+//			htmlLabel.height = 72;
+			htmlLabel.width = 260;
+			htmlLabel.verticalScrollPolicy = "off";
+			
+			var length:int = status.getUserName().length + status.getText().length
+			if (length > 135) {
+				htmlLabel.height = 83;
+			}
+			else if (length > 100) {
+				htmlLabel.height = 68;
+			}
+			else {
+				htmlLabel.height = 58;
+			}
+//			htmlLabel.height = htmlLabel.contentHeight;
 			htmlLabel.setStyle("left", 2);
 			htmlLabel.setStyle("right", 2);
 			addChild(htmlLabel);
