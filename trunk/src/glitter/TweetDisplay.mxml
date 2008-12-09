@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="262" height="300" creationComplete="init();">
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" backgroundColor="#c07b74" width="262" height="300" creationComplete="init();" verticalGap="2">
 	<mx:Script>
 		<![CDATA[
 			import flash.events.MouseEvent;
@@ -69,7 +69,7 @@
 		
 			private function clicked(e:MouseEvent):void {
 				var glow:GlowFilter = new GlowFilter();
-	            glow.color = StyleManager.getColorName("lime");
+	            glow.color = StyleManager.getColorName("white");
     	        glow.alpha = 0.8;
         	    glow.blurX = 4;
             	glow.blurY = 4;

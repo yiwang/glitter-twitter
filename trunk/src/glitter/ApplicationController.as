@@ -90,6 +90,14 @@ package glitter
 			this.currentTimelineName = username + "'s Update";
 			this.twitter.getUserTimeline(getTimelineCallback, username);	
 		}
+		
+		////////////////////////////////////////// Search
+		public function search(key:String):void {
+			this.currentTimelineName = key + "'s Update";
+			this.twitter.getUserTimeline(getTimelineCallback, key);	
+			//this.twitter.search(getTimelineCallback, key);
+		}
+		////////////////////////////////////////////
 
 		// callback
 		private function getTimelineCallback(statuses:Array):void{
@@ -138,6 +146,12 @@ package glitter
 			var settingsWindow:AccountSettings = new AccountSettings();
 			PopUpManager.addPopUp(settingsWindow, appWindow, true);
 			PopUpManager.centerPopUp(settingsWindow);			
+		}
+		
+		public function searchButtonClick():void {
+			var searchWindow:Search = new Search();
+			PopUpManager.addPopUp(searchWindow, appWindow, true);
+			PopUpManager.centerPopUp(searchWindow);			
 		}
 		
 		// save and load session data of current user

@@ -89,6 +89,20 @@ package glitter.twitter
 			var ts:TwitterService = new TwitterService(credentials, parseGetTimeline, "statuses", "replies");
 			ts.performGet({since_id:controller.get_lastid()});
 		} 
+		
+		//////////////////////////////
+		public function search(callback:Function, key:String = ""):void {
+			this.timelineCallback = callback;
+			var ts:TwitterService = new TwitterService(credentials, parseSearch, "statuses", "user_timeline", key);
+			//var ts:TwitterSearch = new TwitterSearch(credentials, parseGetTimeline, key);
+			ts.performGet({since_id:controller.get_lastid()});
+		} 
+		
+		private function parseSearch(statuses:Array):void{
+			this.timelineCallback.apply(this, [statuses]);
+			//this.timelineCallback.apply(this, [statuses.map(function(o:Object, i:int, a:Array):Status {return new Status(o);})]);
+		}
+		///////////////////////////////
 	
 		/**
 		 * update the data

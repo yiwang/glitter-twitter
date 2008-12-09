@@ -23,6 +23,10 @@
 				return controller;
 			}
 			
+			public function getNavi():Navi{
+				return navi;
+			}
+			
 			// for testing a_twit
 			private function ShowAll():void{
 				controller.showall();
@@ -52,7 +56,7 @@
 				<mx:Button label="Directs" id="directsButton" />
 				
 				<mx:Button label="User to User" id="userToUserButton" />
-				<mx:Button label="Search" id="searchButton" />
+				<mx:Button label="Search" id="searchButton" click="controller.searchButtonClick()" />
 				<mx:HRule/>
 				<mx:Label text="Labels" fontWeight="bold" textDecoration="underline" fontSize="12"/>
 				<mx:Button id="createLabelsButton" label="Create Label"/>
@@ -63,7 +67,7 @@
 			<mx:Label y="2" text="{controller.currentTimelineName} ({controller.currentTimeLineNum})" color="#FFFFFF" fontWeight="bold" left="10" right="10"/>
 			<ns1:TweetDisplay id="display" bottom="120" width="280" right="10" top="20">
 			</ns1:TweetDisplay>
-			<ns1:Navi x="10" bottom="12">
+			<ns1:Navi x="10" bottom="12" id="navi">
 			</ns1:Navi>
 			
 		</mx:Canvas>
