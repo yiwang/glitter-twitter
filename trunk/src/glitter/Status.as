@@ -1,8 +1,9 @@
 package glitter
 {
+	import com.adobe.serialization.json.JSON;	
 	import mx.formatters.DateFormatter;
 	
-	public class Status
+	dynamic public class Status
 	{
 		private var id:String;
 		private var userId:String;
@@ -15,6 +16,7 @@ package glitter
 		private var flickrPhoto:FlickrPhoto; // not all will have this
 		private var hasPic:Boolean = false;
 		private var photoUrl:String;
+		public var _item:Object;
 		
 		public function Status(item:Object)
 		{
@@ -26,7 +28,8 @@ package glitter
 			text = item.text;
 			createdAt = item.created_at;
 			inReplyToStatusId = item.in_reply_to_status_id;
-			inReplyToUserId = item.in_reply_to_user_id;	
+			inReplyToUserId = item.in_reply_to_user_id;
+			_item = item; 
 		}
 		
 		public function getId():String
@@ -90,6 +93,15 @@ package glitter
 		public function getPhotoUrl():String
 		{
 			return photoUrl;
-		}	
+		}
+		
+		public function toJSON():String{					
+			return JSON.encode(this._item);
+		}
+		
+		static public function fromObj(item:Object):Status{
+			var status:Status = new Status(item);
+			return status;
+		}
 	}
 }

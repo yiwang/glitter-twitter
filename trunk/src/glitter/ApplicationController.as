@@ -3,13 +3,14 @@ package glitter
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	
+	import glitter.data.JsonFile;
 	import glitter.data.Session;
 	import glitter.twitter.Twitter;
 	
 	import mx.collections.ArrayCollection;
 	import mx.core.WindowedApplication;
 	import mx.managers.PopUpManager;
-
+	
 	public class ApplicationController
 	{
 		private var appWindow:WindowedApplication;
@@ -64,7 +65,11 @@ package glitter
 		
 		private function getStatusesFromLabel(labelname:String):ArrayCollection{
 			var label:Label = labelsData[labelname];
-			return label.getStatuses();
+			if(label==null){
+				return null;
+			}else{
+				return label.getStatuses();
+			}
 		}
 		
 		// Home
@@ -161,17 +166,33 @@ package glitter
 //		}
 		
 		// save and load session data of current user
-		private function save_session():void{
-			if(testUserVerified()){
+		public function save_session():void{
+			//if(testUserVerified()){
 				var username:String = Twitter.getStoredUserName();
-				this.session.save(username);
-			}	
+				this.saveToFile(username);
+			//}	
 		}
-		private function load_session():void{
-			if(testUserVerified()){
+		public function load_session():void{
+			//if(testUserVerified()){
 				var username:String = Twitter.getStoredUserName();
-				this.session.load(username);
+				this.loadFromFile(username);
+			//}
+		}
+		
+		private function saveToFile(username:String):void{
+			JsonFile.write(username ,this.labelsData);
+		}
+		
+		private function loadFromFile(username:String):void{
+			this.labelsData = JsonFile.read(username);
+			if(this.labelsData==null){
+				this.labelsData = new Object();
+			}
+			var homeStatues:ArrayCollection = getStatusesFromLabel("Home");
+			if(homeStatues!=null){
+				this.tweetDisplay.showTweets(homeStatues);	
 			}
 		}
+
 	}
 }

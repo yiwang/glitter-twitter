@@ -61,6 +61,8 @@
 				<mx:Label text="Labels" fontWeight="bold" textDecoration="underline" fontSize="12"/>
 				<mx:Button id="createLabelsButton" label="Create Label"/>
 				<mx:HRule/>
+				<mx:Button label="save" click="controller.save_session();"/>
+				<mx:Button label="load" click="controller.load_session();" id="load"/>
 			</mx:VBox>
 		</mx:Canvas>
 		<mx:Canvas x="177" width="300" cornerRadius="15" backgroundColor="#B97272" top="10" bottom="10" id="tweets">
