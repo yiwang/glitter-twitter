@@ -85,6 +85,12 @@ package glitter
 			this.twitter.getReplies(getTimelineCallback);
 		}
 		
+		// Search
+		public function search():void {
+			this.currentTimelineName = "Search";
+			this.twitter.search("twitter", getTimelineCallback);
+		}
+		
 		// Update
 		public function getUserUpdates(username:String):void {
 			this.currentTimelineName = username + "'s Update";
@@ -92,11 +98,11 @@ package glitter
 		}
 		
 		////////////////////////////////////////// Search
-		public function search(key:String):void {
-			this.currentTimelineName = key + "'s Update";
-			this.twitter.getUserTimeline(getTimelineCallback, key);	
-			//this.twitter.search(getTimelineCallback, key);
-		}
+//		public function search(key:String):void {
+//			this.currentTimelineName = key + "'s Update";
+//			this.twitter.getUserTimeline(getTimelineCallback, key);	
+//			//this.twitter.search(getTimelineCallback, key);
+//		}
 		////////////////////////////////////////////
 
 		// callback
@@ -148,11 +154,11 @@ package glitter
 			PopUpManager.centerPopUp(settingsWindow);			
 		}
 		
-		public function searchButtonClick():void {
-			var searchWindow:Search = new Search();
-			PopUpManager.addPopUp(searchWindow, appWindow, true);
-			PopUpManager.centerPopUp(searchWindow);			
-		}
+//		public function searchButtonClick():void {
+//			var searchWindow:Search = new Search();
+//			PopUpManager.addPopUp(searchWindow, appWindow, true);
+//			PopUpManager.centerPopUp(searchWindow);			
+//		}
 		
 		// save and load session data of current user
 		private function save_session():void{
