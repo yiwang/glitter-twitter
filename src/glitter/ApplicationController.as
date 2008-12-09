@@ -62,6 +62,13 @@ package glitter
 				label.addStatus(status);
 			}
 		}
+		private function clearStatusesOfLabel(labelname:String):void{
+			if(labelsData[labelname]==null){
+				labelsData[labelname] = new Label(labelname);
+			}
+			var label:Label = labelsData[labelname];
+			label.clearStatuses();
+		}
 		
 		private function getStatusesFromLabel(labelname:String):ArrayCollection{
 			var label:Label = labelsData[labelname];

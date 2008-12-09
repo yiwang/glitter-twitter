@@ -41,6 +41,10 @@ package glitter
 			return statuses;
 		}
 		
+		public function clearStatuses():void{
+			statuses = new ArrayCollection();
+		}
+		
 		public function getName():String {
 			return name;
 		}
