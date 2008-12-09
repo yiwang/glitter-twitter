@@ -4,6 +4,8 @@ package glitter.data
 	
 	import flash.filesystem.*;
 	
+	import glitter.Label;
+	
 	public class JsonFile
 	{
 		public function JsonFile()
@@ -11,8 +13,13 @@ package glitter.data
 		}
 
 		// File I/O
-	 	static public function write(filename:String,obj:Object):void{
-	 		var str:String = JSON.encode(obj);
+	 	static public function write(filename:String,labelsData:Object):void{
+	 		var str:String = "[";
+	 		for each(var label:Label in labelsData){
+	 			str += label.toJSON() + ",\n"
+	 		}
+	 		str = str.substr(0,str.length-2);
+	 		str += "]";
  			var fs:FileStream = new FileStream();
  			var file:File = new File();
  			file.nativePath = File.applicationDirectory.nativePath + "\\" +filename + ".txt";
@@ -36,8 +43,13 @@ package glitter.data
 				return null;
 			}
 			// successful
-			fs.close();		 		
- 	 		return JSON.decode(str);
+			fs.close();
+			var raw:Object = JSON.decode(str);
+			var labelData:Object = new Object();
+			for each (var label:Object in raw){
+				labelData[label.name] = Label.fromObj(label);  
+			}
+ 	 		return labelData;
  	 	}		
 
 	}
