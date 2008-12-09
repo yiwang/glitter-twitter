@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="412" height="314" backgroundColor="#4A4242" backgroundAlpha="0.9" creationComplete="init();">
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.PopUpManager;
+			import mx.core.Application;
+			private var controller:ApplicationController;
+
+			private function init():void {
+				controller = Application.application.getController();				
+			}
+
+			private function close():void {
+				PopUpManager.removePopUp(this);
+			}
+			
+			private function search():void {
+				controller.search(keywordInput.text);	
+				close();
+			}
+		]]>
+	</mx:Script>	
+	<mx:Text x="78.5" y="29" text="Search Tweets" fontSize="14" fontWeight="bold" textDecoration="underline" color="#17C6EB"/>
+	<mx:Canvas x="78.5" y="72" width="255" height="173" borderStyle="solid">
+		<mx:Label x="10" y="65" text="Enter keyword:" color="#CCF1F9"/>
+		<mx:Label x="10" y="16" text="Search by:" color="#CCF1F9"/>
+		<mx:TextInput x="10" y="93" id="keywordInput" width="233"/>
+		<mx:Button x="178" y="123" label="Search" id="searchButton" click="search()"/>
+		<mx:ComboBox x="83" y="14">
+			<mx:dataProvider>
+				<mx:Array>
+					<mx:Object label="Username"/>
+				</mx:Array>
+			</mx:dataProvider>
+		</mx:ComboBox>
+	</mx:Canvas>
+	<mx:Button x="270.5" y="253" label="Cancel" click="close();" id="cancelButton"/>
+</mx:Canvas>
