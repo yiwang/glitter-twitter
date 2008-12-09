@@ -1,11 +1,11 @@
 package glitter
 {
 	import mx.formatters.DateFormatter;
-	import mx.controls.Alert;
 	
 	public class Status
 	{
 		private var id:String;
+		private var userId:String;
 		private var userName:String;
 		private var source:String;
 		private var text:String;
@@ -18,7 +18,8 @@ package glitter
 		
 		public function Status(item:Object)
 		{
-			id = item.user.id;
+			id = item.id;
+			userId = item.user.id;
 			userName = item.user.screen_name;
 			source = item.user.profile_image_url;
 //			Alert.show(source);
