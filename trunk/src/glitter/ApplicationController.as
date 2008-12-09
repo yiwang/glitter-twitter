@@ -125,6 +125,18 @@ package glitter
 			this.twitter.getReplies(getTimelineCallback);
 		}
 		
+		// Directs
+		public function getDirects():void{
+			this.currentTimelineName = "Directs";
+			this.twitter.getDirects(getTimelineCallback);
+		}
+		
+		// Directs Sent
+		public function getDirectsSent():void{
+			this.currentTimelineName = "Directs Sent";
+			this.twitter.getDirectsSent(getTimelineCallback);
+		}
+		
 		// Search
 		public function search(terms:String, fromUser:String, toUser:String, referencingUser:String, hashTag:String):void {
 			this.currentTimelineName = "Search";
