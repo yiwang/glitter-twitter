@@ -2,6 +2,7 @@ package glitter.twitter
 {
 	import com.adobe.serialization.json.JSON;
 	
+	import mx.collections.ArrayCollection;
 	import mx.rpc.events.FaultEvent;
 	import mx.rpc.events.ResultEvent;
 	import mx.rpc.http.mxml.HTTPService;
@@ -11,6 +12,10 @@ package glitter.twitter
 		private static var TWITTER_SEARCH_URL:String = "http://search.twitter.com/search.json";		
 		private var resultCallback:Function;
 		private var terms:String
+		private var fromUser:String;
+		private var toUser:String;
+		private var referencingUser:String;
+		private var hashTag:String;
 		
 		public function TwitterSearch(credentials:String, resultCallback:Function, terms:String) {
 			super();
@@ -26,8 +31,28 @@ package glitter.twitter
 		}
 		
 		public function performGet():void {
-			this.request = {"q": terms};
+			this.request = constructParams();
 			this.send();
+		}
+		
+		private function constructParams():Object {
+			var queries:ArrayCollection = new ArrayCollection();
+			if (terms != null && terms != "") {
+				queries.addItem(terms);
+			}
+			if (fromUser != null && fromUser != "") {
+				queries.addItem("from:" + fromUser);
+			} 
+			if (toUser != null && toUser != "") {
+				queries.addItem("to:" + toUser);
+			}
+			if (referencingUser != null && referencingUser != "") {
+				queries.addItem("@" + referencingUser);
+			}
+			if (hashTag != null && hashTag != "") {
+				queries.addItem("#" + hashTag);
+			}
+			return {"q": queries.toArray().join("+")};
 		}
 		
 		private function onResult(event:ResultEvent):void {
