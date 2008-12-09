@@ -56,7 +56,7 @@
 				<mx:Button label="Directs" id="directsButton" />
 				
 				<mx:Button label="User to User" id="userToUserButton" />
-				<mx:Button label="Search" id="searchButton" click="controller.search()" />
+				<mx:Button label="Search" id="searchButton" click="controller.searchButtonClick();" />
 				<mx:HRule/>
 				<mx:Label text="Labels" fontWeight="bold" textDecoration="underline" fontSize="12"/>
 				<mx:Button id="createLabelsButton" label="Create Label"/>
