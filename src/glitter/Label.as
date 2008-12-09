@@ -1,7 +1,5 @@
 package glitter
 {
-	import com.adobe.serialization.json.JSON;
-	
 	import mx.collections.ArrayCollection;
 		
 	dynamic public class Label
@@ -24,9 +22,12 @@ package glitter
 			filters.addItem(filter);
 		}
 		
-		public function addStatus(status:Status):void {
-			statuses.addItem(status);
-			var str:String = JSON.encode(status as Object);
+		public function addStatus(newStatus:Status):void {
+			// avoid duplicate
+			for each (var status:Status in statuses){
+				if(newStatus.getId()==status.getId() ) return;
+			}
+			statuses.addItem(newStatus);
 		}
 		
 		public function getStatuses():ArrayCollection {
