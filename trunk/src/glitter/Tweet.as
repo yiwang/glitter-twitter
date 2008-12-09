@@ -24,7 +24,8 @@ package glitter
 		private var text:String;
 		private var status:Status;
 		private var bgColor:String = "'background-color: #d99c96'";
-		private var replyColor:String = "'background-color: #E0A588'";
+		private var replyColor:String = "'background-color: #E0A997'";
+		private var picColor:String = "'background-color: #E9AAA8'"
 		private var linkColor:String = "<font color='#FFFFFF'>";
 		private var timeColor:String = "<font color='#a64855'>";
 		public var uName:String;
@@ -32,10 +33,6 @@ package glitter
 		private var directButton:Button;
 		private var replyButton:Button;
 		private var controller:ApplicationController;
-		
-		public function foo(s:String):void {
-			Alert.show(s);
-		}
 		
 		public function domInitialized(event:Event):void {
 			htmlLabel.htmlLoader.window.showUserStatuses = getUserUpdates;
@@ -145,6 +142,8 @@ package glitter
 				}
 				else if(s.match("http://twitpic.com/")){	// twitpic
 					text += "<a href=\"#\" onClick=\"showLink('" + s + "');\">"+ linkColor + s + "</font></a> ";
+					//text += "<a href=\"#\" onClick=\"showLink('" + s + "');\"><img src=\"camera.png\"/></a> ";
+					text = text.replace(bgColor, picColor);
 				}
 				else if(s.match("http://")){				// other links
 					text += "<a href=\"#\" onClick=\"showLink('" + s + "');\">"+ linkColor + s + "</font></a> ";

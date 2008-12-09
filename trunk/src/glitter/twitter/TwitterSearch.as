@@ -11,17 +11,21 @@ package glitter.twitter
 	{
 		private static var TWITTER_SEARCH_URL:String = "http://search.twitter.com/search.json";		
 		private var resultCallback:Function;
-		private var terms:String
+		private var terms:String;
 		private var fromUser:String;
 		private var toUser:String;
 		private var referencingUser:String;
 		private var hashTag:String;
-		
-		public function TwitterSearch(credentials:String, resultCallback:Function, terms:String) {
+
+		public function TwitterSearch(credentials:String, resultCallback:Function, terms:String, fromUser:String, toUser:String, referencingUser:String, hashTag:String) {
 			super();
 			this.resultCallback = resultCallback;
 			this.url = TWITTER_SEARCH_URL;
 			this.terms = terms;
+			this.fromUser = fromUser;
+			this.toUser = toUser;
+			this.referencingUser = referencingUser;
+			this.hashTag = hashTag;
 
 			this.headers = {Authorization: "Basic " + credentials};
 			this.resultFormat = "text";

@@ -123,9 +123,9 @@ package glitter
 		}
 		
 		// Search
-		public function search():void {
+		public function search(terms:String, fromUser:String, toUser:String, referencingUser:String, hashTag:String):void {
 			this.currentTimelineName = "Search";
-			this.twitter.search("twitter", getTimelineCallback);
+			this.twitter.search(searchCallback, terms, fromUser, toUser, referencingUser, hashTag);
 		}
 		
 		// Update
@@ -133,17 +133,15 @@ package glitter
 			this.currentTimelineName = username + "'s Update";
 			this.twitter.getUserTimeline(getTimelineCallback, username);	
 		}
-		
-		////////////////////////////////////////// Search
-//		public function search(key:String):void {
-//			this.currentTimelineName = key + "'s Update";
-//			this.twitter.getUserTimeline(getTimelineCallback, key);	
-//			//this.twitter.search(getTimelineCallback, key);
-//		}
-		////////////////////////////////////////////
 
 		// callback
 		private function getTimelineCallback(statuses:Array):void{
+			insertStatusesToLabel(statuses,this.currentTimelineName);
+			this.tweetDisplay.showTweets(getStatusesFromLabel(this.currentTimelineName));
+		}
+		
+		private function searchCallback(statuses:Array):void{
+			clearStatusesOfLabel(this.currentTimelineName);
 			insertStatusesToLabel(statuses,this.currentTimelineName);
 			this.tweetDisplay.showTweets(getStatusesFromLabel(this.currentTimelineName));
 		}
@@ -187,11 +185,11 @@ package glitter
 			PopUpManager.centerPopUp(settingsWindow);			
 		}
 		
-//		public function searchButtonClick():void {
-//			var searchWindow:Search = new Search();
-//			PopUpManager.addPopUp(searchWindow, appWindow, true);
-//			PopUpManager.centerPopUp(searchWindow);			
-//		}
+		public function searchButtonClick():void {
+			var searchWindow:Search = new Search();
+			PopUpManager.addPopUp(searchWindow, appWindow, true);
+			PopUpManager.centerPopUp(searchWindow);			
+		}
 		
 		// save and load session data of current user
 		public function save_session():void{
