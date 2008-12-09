@@ -128,12 +128,14 @@ package glitter
 		// Directs
 		public function getDirects():void{
 			this.currentTimelineName = "Directs";
+			appWindow["loadingMessage"].startMessage("loading...");
 			this.twitter.getDirects(getTimelineCallback);
 		}
 		
 		// Directs Sent
 		public function getDirectsSent():void{
 			this.currentTimelineName = "Directs Sent";
+			appWindow["loadingMessage"].startMessage("loading...");
 			this.twitter.getDirectsSent(getTimelineCallback);
 		}
 		
@@ -162,6 +164,7 @@ package glitter
 			clearStatusesOfLabel(this.currentTimelineName);
 			insertStatusesToLabel(statuses,this.currentTimelineName);
 			this.tweetDisplay.showTweets(getStatusesFromLabel(this.currentTimelineName));
+			appWindow["loadingMessage"].stopMessage();
 		}
 				
 		// All
