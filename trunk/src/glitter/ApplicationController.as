@@ -27,7 +27,32 @@ package glitter
 		public var currentTimelineName:String = "";
 		[Bindable]
 		public var currentTimeLineNum:Number = 0;
-				
+						
+		public function addLabel(label:Label):void {
+			labelsData[label.getName()] = label;		
+		}
+		
+		public function labelNameUnique(name:String):Boolean {
+			for (var oldName:String in labelsData){
+				if (oldName==name) return false;
+			} 
+			return true;
+		}
+		
+		public function deleteLabel(label:Label):void {
+			var labelName:String = label.getName();
+			if( labelsData[labelName] == null) return;
+			labelsData[labelName] = null;
+		}
+		
+		public function getLabels():ArrayCollection {
+			var labels:ArrayCollection = new ArrayCollection();
+			for each (var label:Label in labelsData){
+				labels.addItem(label);
+			} 
+			return labels;
+		}		
+
 		// constructor
 		public function ApplicationController(appWindow:WindowedApplication)
 		{
@@ -138,10 +163,6 @@ package glitter
 			return statuses.getItemAt(0).getId();
 		}
 		
-
-		/**
-		 * do nothing if key_func is not in the specific ones
-		 */
 		private function startTwitterLoop(e:TimerEvent):void
 		{
 			testUserVerified();
