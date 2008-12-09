@@ -68,6 +68,12 @@ package glitter.twitter
 			userCallback.apply(this, [user]);
 		}
 		
+		public function search(terms:String, callback:Function):void {
+			this.timelineCallback = callback;
+			var ts:TwitterSearch = new TwitterSearch(credentials, parseSearchResults, "twitter");
+			ts.performGet();
+		}
+		
 		/**
 		 * timeline operations
 		 */
@@ -91,12 +97,12 @@ package glitter.twitter
 		} 
 		
 		//////////////////////////////
-		public function search(callback:Function, key:String = ""):void {
-			this.timelineCallback = callback;
-			var ts:TwitterService = new TwitterService(credentials, parseSearch, "statuses", "user_timeline", key);
-			//var ts:TwitterSearch = new TwitterSearch(credentials, parseGetTimeline, key);
-			ts.performGet({since_id:controller.get_lastid()});
-		} 
+//		public function search(callback:Function, key:String = ""):void {
+//			this.timelineCallback = callback;
+//			var ts:TwitterService = new TwitterService(credentials, parseSearch, "statuses", "user_timeline", key);
+//			//var ts:TwitterSearch = new TwitterSearch(credentials, parseGetTimeline, key);
+//			ts.performGet({since_id:controller.get_lastid()});
+//		} 
 		
 		private function parseSearch(statuses:Array):void{
 			this.timelineCallback.apply(this, [statuses]);
@@ -110,6 +116,27 @@ package glitter.twitter
 		private function parseGetTimeline(statuses:Array):void{
 			//this.timelineCallback.apply(this, [statuses]);
 			this.timelineCallback.apply(this, [statuses.map(function(o:Object, i:int, a:Array):Status {return new Status(o);})]);
+		}
+		
+		private function parseSearchResults(result:Object):void {
+			trace('parsing search results');
+			var results:Array = result.results;
+			var statuses:ArrayCollection = new ArrayCollection();
+			for each (var r:Object in results) {
+				statuses.addItem(new Status({
+					"user": {
+						"id": r.from_user_id,
+						"screen_name": r.from_user,
+						"profile_image_url": r.profile_image_url
+					},
+					"text": r.text,
+					"created_at": r.created_at,
+					"in_reply_to_status_id": "",
+					"in_reply_to_user_id": ""
+				}));
+			} 
+			trace(Status(statuses[0]).getText());
+			this.timelineCallback.apply(this, [statuses.toArray()]);
 		}
 		
 		public function setLocation(location:String):void {
