@@ -107,37 +107,43 @@ package glitter
 		// Home
 		public function getFriendsTimeline():void {
 			this.currentTimelineName = "Home";
+			appWindow["loadingMessage"].startMessage("loading...");
 			this.twitter.getFriendsTimeline(getTimelineCallback);
 		}
 		
 		// Update
 		public function getUserTimeline(): void {
 			this.currentTimelineName = "My Updates";
+			appWindow["loadingMessage"].startMessage("loading...");
 			this.twitter.getUserTimeline(getTimelineCallback);
 		}
 		
 		// @Replies	
 		public function getReplies():void{
 			this.currentTimelineName = "@Replies";
+			appWindow["loadingMessage"].startMessage("loading...");
 			this.twitter.getReplies(getTimelineCallback);
 		}
 		
 		// Search
 		public function search(terms:String, fromUser:String, toUser:String, referencingUser:String, hashTag:String):void {
 			this.currentTimelineName = "Search";
+			appWindow["loadingMessage"].startMessage("loading...");
 			this.twitter.search(searchCallback, terms, fromUser, toUser, referencingUser, hashTag);
 		}
 		
 		// Update
 		public function getUserUpdates(username:String):void {
 			this.currentTimelineName = username + "'s Update";
+			appWindow["loadingMessage"].startMessage("loading...");
 			this.twitter.getUserTimeline(getTimelineCallback, username);	
 		}
 
 		// callback
-		private function getTimelineCallback(statuses:Array):void{
+		private function getTimelineCallback(statuses:Array):void{			
 			insertStatusesToLabel(statuses,this.currentTimelineName);
 			this.tweetDisplay.showTweets(getStatusesFromLabel(this.currentTimelineName));
+			appWindow["loadingMessage"].stopMessage();
 		}
 		
 		private function searchCallback(statuses:Array):void{
