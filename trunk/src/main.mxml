@@ -42,6 +42,8 @@
 	<mx:ApplicationControlBar dock="true" height="25" paddingTop="2" fillAlphas="[1.0, 1.0]" fillColors="[#050505, #050505]" width="100%">
 		<mx:Label text="Glitter" width="60" height="20" id="nameLabel" fontFamily="Verdana" fontSize="12" fontWeight="bold" color="#BBB517"/>
 		<mx:Spacer width="100%" />
+		<ns1:LoadingMessage id="loadingMessage" text="" fontFamily="Verdana" fontSize="12" fontWeight="bold" color="#BBB517" textAlign="center"/>
+		<mx:Spacer width="100%" />
 		<mx:LinkButton label="?" color="#C9BD6C" fontSize="10" id="helpLink" enabled="true" click="launchHelpWindow();"/>
 		<mx:Button height="16" icon="@Embed(source='../images/Settings-16x16.png')" width="16" click="controller.settingsButtonClick();"/>
 	</mx:ApplicationControlBar>
