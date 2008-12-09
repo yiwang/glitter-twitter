@@ -15,7 +15,10 @@ package glitter.twitter
 			super();
 			this.resultCallback = resultCallback;
 			if (id == "") {
-				this.url = TWITTER_URL + type + "/" + method + ".json";
+				if (method == "directs")
+					this.url = TWITTER_URL + type + ".json";
+				else
+					this.url = TWITTER_URL + type + "/" + method + ".json";
 			}
 			else {
 				this.url = TWITTER_URL + type + "/" + method + "/" + id + ".json";
@@ -41,7 +44,6 @@ package glitter.twitter
 		private function onResult(event:ResultEvent):void {
 			resultCallback.apply(this, [JSON.decode(String(event.result))]);
 		}
-
 		private function onFault(event:FaultEvent):void
 		{
 			trace("TwitterService fault: " + event.headers);

@@ -95,20 +95,18 @@ package glitter.twitter
 			var ts:TwitterService = new TwitterService(credentials, parseGetTimeline, "statuses", "replies");
 			ts.performGet({since_id:controller.get_lastid()});
 		} 
-		
-		//////////////////////////////
-//		public function search(callback:Function, key:String = ""):void {
-//			this.timelineCallback = callback;
-//			var ts:TwitterService = new TwitterService(credentials, parseSearch, "statuses", "user_timeline", key);
-//			//var ts:TwitterSearch = new TwitterSearch(credentials, parseGetTimeline, key);
-//			ts.performGet({since_id:controller.get_lastid()});
-//		} 
-		
-		private function parseSearch(statuses:Array):void{
-			this.timelineCallback.apply(this, [statuses]);
-			//this.timelineCallback.apply(this, [statuses.map(function(o:Object, i:int, a:Array):Status {return new Status(o);})]);
+
+		public function getDirects(callback:Function):void {
+			this.timelineCallback = callback;
+			var ts:TwitterService = new TwitterService(credentials, parseGetDirects, "direct_messages", "directs");
+			ts.performGet();
 		}
-		///////////////////////////////
+		
+		public function getDirectsSent(callback:Function):void {
+			this.timelineCallback = callback;
+			var ts:TwitterService = new TwitterService(credentials, parseGetDirects, "direct_messages", "sent");
+			ts.performGet();
+		}
 	
 		/**
 		 * update the data
@@ -116,6 +114,26 @@ package glitter.twitter
 		private function parseGetTimeline(statuses:Array):void{
 			//this.timelineCallback.apply(this, [statuses]);
 			this.timelineCallback.apply(this, [statuses.map(function(o:Object, i:int, a:Array):Status {return new Status(o);})]);
+		}
+		
+		private function parseGetDirects(results:Array):void {
+			var statuses:ArrayCollection = new ArrayCollection();
+			for each (var r:Object in results) {
+				statuses.addItem(new Status({
+					"user": {
+						"id": r.sender_id,
+						"screen_name": r.sender_screen_name,
+						"profile_image_url": r.sender.profile_image_url
+					},
+					"text": r.text,
+					"created_at": r.created_at,
+					"in_reply_to_status_id": "",
+					"in_reply_to_user_id": "",
+					"id": r.id
+				}));
+			} 
+			trace(Status(statuses[0]).getText());
+			this.timelineCallback.apply(this, [statuses.toArray()]);
 		}
 		
 		private function parseSearchResults(result:Object):void {
@@ -132,7 +150,8 @@ package glitter.twitter
 					"text": r.text,
 					"created_at": r.created_at,
 					"in_reply_to_status_id": "",
-					"in_reply_to_user_id": ""
+					"in_reply_to_user_id": "",
+					"id": r.id
 				}));
 			} 
 			trace(Status(statuses[0]).getText());
