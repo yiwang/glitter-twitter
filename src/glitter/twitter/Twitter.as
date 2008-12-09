@@ -68,9 +68,9 @@ package glitter.twitter
 			userCallback.apply(this, [user]);
 		}
 		
-		public function search(terms:String, callback:Function):void {
+		public function search(callback:Function, terms:String, fromUser:String, toUser:String, referencingUser:String, hashTag:String):void {
 			this.timelineCallback = callback;
-			var ts:TwitterSearch = new TwitterSearch(credentials, parseSearchResults, "twitter");
+			var ts:TwitterSearch = new TwitterSearch(credentials, parseSearchResults, terms, fromUser, toUser, referencingUser, hashTag);
 			ts.performGet();
 		}
 		

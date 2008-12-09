@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="412" height="314" backgroundColor="#4A4242" backgroundAlpha="0.9" creationComplete="init();">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="548" height="386" backgroundColor="#4A4242" backgroundAlpha="0.9" creationComplete="init();">
 	<mx:Script>
 		<![CDATA[
 			import mx.managers.PopUpManager;
@@ -15,24 +15,25 @@
 			}
 			
 			private function search():void {
-				controller.search(keywordInput.text);	
+				controller.search(terms.text, fromUser.text, toUser.text, referencingUser.text, hashTag.text);	
 				close();
 			}
 		]]>
 	</mx:Script>	
-	<mx:Text x="78.5" y="29" text="Search Tweets" fontSize="14" fontWeight="bold" textDecoration="underline" color="#17C6EB"/>
-	<mx:Canvas x="78.5" y="72" width="255" height="173" borderStyle="solid">
-		<mx:Label x="10" y="65" text="Enter keyword:" color="#CCF1F9"/>
-		<mx:Label x="10" y="16" text="Search by:" color="#CCF1F9"/>
-		<mx:TextInput x="10" y="93" id="keywordInput" width="233"/>
-		<mx:Button x="178" y="123" label="Search" id="searchButton" click="search()"/>
-		<mx:ComboBox x="83" y="14">
-			<mx:dataProvider>
-				<mx:Array>
-					<mx:Object label="Username"/>
-				</mx:Array>
-			</mx:dataProvider>
-		</mx:ComboBox>
+	<mx:Text x="58.5" y="41" text="Search Tweets" fontSize="14" fontWeight="bold" textDecoration="underline" color="#17C6EB"/>
+	<mx:Canvas x="58.5" y="72" width="431" height="237" borderStyle="solid">
+		<mx:Label x="39.5" y="38" text="containing a word:" color="#CCF1F9"/>
+		<mx:Label x="71.5" y="74" text="from a user:" color="#CCF1F9"/>
+		<mx:Label x="86.5" y="103" text="to a user:" color="#CCF1F9"/>
+		<mx:Label x="35.5" y="135" text="referencing a user:" color="#CCF1F9"/>
+		<mx:Label x="19.5" y="167" text="containing a hashtag:" color="#CCF1F9"/>
+		<mx:Label x="19.5" y="10" text="Find tweets" color="#CCF1F9"/>
+		<mx:TextInput x="176.5" y="36" id="terms" width="233"/>
+		<mx:TextInput x="176.5" y="69" id="fromUser" width="233"/>
+		<mx:TextInput x="176.5" y="101" id="toUser" width="233"/>
+		<mx:TextInput x="176.5" y="133" id="referencingUser" width="233"/>
+		<mx:TextInput x="176.5" y="165" id="hashTag" width="233"/>
+		<mx:Button x="269.5" y="203" label="Search" id="searchButton" click="search()" width="140"/>
 	</mx:Canvas>
-	<mx:Button x="270.5" y="253" label="Cancel" click="close();" id="cancelButton"/>
+	<mx:Button x="426.5" y="317" label="Cancel" click="close();" id="cancelButton"/>
 </mx:Canvas>
