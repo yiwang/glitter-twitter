@@ -28,7 +28,7 @@ package glitter
 			photoIconsVBox.percentHeight=100;
 			this.addChild(photoIconsVBox);
 			photoArray = new ArrayCollection;
-			loadPhotosFromDirectory();
+			//loadPhotosFromDirectory();
 			//loadTestPhotos();
 		}
 
