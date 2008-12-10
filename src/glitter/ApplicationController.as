@@ -89,9 +89,12 @@ package glitter
 				labelsData[labelname] = new Label(labelname);
 			}
 			var label:Label = labelsData[labelname];
-			for each (var status:Status in statuses){
-				label.addStatus(status);
+			for (var i:int = statuses.length - 1; i >= 0; i--) {
+				label.addStatus(statuses[i]);
 			}
+//			for each (var status:Status in statuses.reverse()){
+//				label.addStatus(status);
+//			}
 		}
 		private function clearStatusesOfLabel(labelname:String):void{
 			if(labelsData[labelname]==null){
