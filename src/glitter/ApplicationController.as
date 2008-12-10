@@ -179,49 +179,49 @@ package glitter
 		
 		// Home
 		public function getFriendsTimeline():void {
-			this.currentTimelineName = "Home";
+			this.currentTimelineName = "home";
 			appWindow["loadingMessage"].startMessage("loading...");
 			this.twitter.getFriendsTimeline(getTimelineCallback);
 		}
 		
 		// Update
 		public function getUserTimeline(): void {
-			this.currentTimelineName = "My Updates";
+			this.currentTimelineName = "my updates";
 			appWindow["loadingMessage"].startMessage("loading...");
 			this.twitter.getUserTimeline(getTimelineCallback);
 		}
 		
 		// @Replies	
 		public function getReplies():void{
-			this.currentTimelineName = "@Replies";
+			this.currentTimelineName = "@replies";
 			appWindow["loadingMessage"].startMessage("loading...");
 			this.twitter.getReplies(getTimelineCallback);
 		}
 		
 		// Directs
 		public function getDirects():void{
-			this.currentTimelineName = "Directs";
+			this.currentTimelineName = "directs";
 			appWindow["loadingMessage"].startMessage("loading...");
 			this.twitter.getDirects(getTimelineCallback);
 		}
 		
 		// Directs Sent
 		public function getDirectsSent():void{
-			this.currentTimelineName = "Directs Sent";
+			this.currentTimelineName = "directs sent";
 			appWindow["loadingMessage"].startMessage("loading...");
 			this.twitter.getDirectsSent(getTimelineCallback);
 		}
 		
 		// Search
 		public function search(terms:String, fromUser:String, toUser:String, referencingUser:String, hashTag:String, hasPhoto:Boolean):void {
-			this.currentTimelineName = "Search";
+			this.currentTimelineName = "search";
 			appWindow["loadingMessage"].startMessage("loading...");
 			this.twitter.search(searchCallback, terms, fromUser, toUser, referencingUser, hashTag, hasPhoto);
 		}
 		
 		// Update
 		public function getUserUpdates(username:String):void {
-			this.currentTimelineName = username + "'s Update";
+			this.currentTimelineName = username + "'s update";
 			appWindow["loadingMessage"].startMessage("loading...");
 			this.twitter.getUserTimeline(getTimelineCallback, username);	
 		}
@@ -268,8 +268,8 @@ package glitter
 		
 		// callback
 		private function twitterLoopCallback(statuses:Array):void{
-			insertStatusesToLabel(statuses,"Home");
-			if (this.currentTimelineName == "Home") {
+			insertStatusesToLabel(statuses,"home");
+			if (this.currentTimelineName == "home") {
 				this.tweetDisplay.addTweets(statuses);
 				this.photoView.loadPhotosFromStatuses(getStatusesFromLabel(this.currentTimelineName));
 			}
@@ -310,8 +310,8 @@ package glitter
 			if(this.labelsData==null){
 				this.labelsData = new Object();
 			}
-			this.currentTimelineName = "Home";
-			var homeStatues:ArrayCollection = getStatusesFromLabel("Home");
+			this.currentTimelineName = "home";
+			var homeStatues:ArrayCollection = getStatusesFromLabel("home");
 			if(homeStatues!=null){
 				this.tweetDisplay.showTweets(homeStatues);	
 			}
