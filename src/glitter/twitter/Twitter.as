@@ -104,7 +104,7 @@ package glitter.twitter
 		
 		public function getDirectsSent(callback:Function):void {
 			this.timelineCallback = callback;
-			var ts:TwitterService = new TwitterService(credentials, parseGetDirects, "direct_messages", "sent");
+			var ts:TwitterService = new TwitterService(credentials, parseGetDirectsSent, "direct_messages", "sent");
 			ts.performGet();
 		}
 	
@@ -125,6 +125,26 @@ package glitter.twitter
 						"id": r.sender_id,
 						"screen_name": r.sender_screen_name,
 						"profile_image_url": r.sender.profile_image_url
+					},
+					"text": r.text,
+					"created_at": r.created_at,
+					"in_reply_to_status_id": "",
+					"in_reply_to_user_id": "",
+					"id": r.id
+				}));
+			} 
+			trace(Status(statuses[0]).getText());
+			this.timelineCallback.apply(this, [statuses.toArray()]);
+		}
+		
+		private function parseGetDirectsSent(results:Array):void {
+			var statuses:ArrayCollection = new ArrayCollection();
+			for each (var r:Object in results) {
+				statuses.addItem(new Status({
+					"user": {
+						"id": r.sender_id,
+						"screen_name": r.recipient_screen_name,
+						"profile_image_url": r.recipient.profile_image_url
 					},
 					"text": r.text,
 					"created_at": r.created_at,
