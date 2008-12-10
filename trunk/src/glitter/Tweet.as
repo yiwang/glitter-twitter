@@ -58,6 +58,7 @@ package glitter
 			htmlLabel.setStyle("left", 48);
 			htmlLabel.width = 245;
 			htmlLabel.verticalScrollPolicy = "off";
+			htmlLabel.horizontalScrollPolicy = "off";
 			htmlLabel.addEventListener(Event.HTML_DOM_INITIALIZE, domInitialized);
 			
 			text = "<body style=" + bgColor + "><p style='padding: 2px'>";	
