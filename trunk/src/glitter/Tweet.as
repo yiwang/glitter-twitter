@@ -9,6 +9,7 @@ package glitter
 	import mx.containers.Canvas;
 	import mx.controls.*;
 	import mx.core.Application;
+	import mx.styles.StyleManager;
 	
 	public class Tweet extends Canvas
 	{
@@ -33,6 +34,7 @@ package glitter
 		private var directButton:Button;
 		private var replyButton:Button;
 		private var controller:ApplicationController;
+		private var glow:GlowFilter;
 		
 		public function domInitialized(event:Event):void {
 			htmlLabel.htmlLoader.window.showUserStatuses = getUserUpdates;
@@ -73,6 +75,8 @@ package glitter
 			directButton.height = 16;
 			directButton.toolTip = "send direct msg";
 			directButton.addEventListener(MouseEvent.CLICK, buttonClicked);
+			directButton.addEventListener(MouseEvent.MOUSE_OVER, mouseOver);
+			directButton.addEventListener(MouseEvent.MOUSE_OUT, mouseOut);
 			
 			replyButton = new Button();
 			replyButton.setStyle("bottom", 2);
@@ -81,6 +85,8 @@ package glitter
 			replyButton.height = 16;
 			replyButton.toolTip = "send reply";
 			replyButton.addEventListener(MouseEvent.CLICK, buttonClicked);
+			replyButton.addEventListener(MouseEvent.MOUSE_OVER, mouseOver);
+			replyButton.addEventListener(MouseEvent.MOUSE_OUT, mouseOut);
 						
 			[Embed("../../images/direct.gif")] 
 			var dIcon:Class; 
@@ -89,6 +95,14 @@ package glitter
 			[Embed("../../images/reply.gif")] 
 			var rIcon:Class; 
 			replyButton.setStyle("icon", rIcon);
+			
+			glow = new GlowFilter();
+            glow.color = StyleManager.getColorName("white");
+            glow.alpha = 0.6;
+            glow.blurX = 4;
+            glow.blurY = 4;
+            glow.strength = 5;
+            glow.quality = BitmapFilterQuality.HIGH;
 			
 			var length:int = status.getUserName().length + status.getText().length
 			if (length > 135) {
@@ -117,6 +131,12 @@ package glitter
 				n.setText("@" + uName + " ");	
 			}
 					
+		}
+		private function mouseOver(e:MouseEvent):void {
+            e.currentTarget.filters = [glow];
+		}
+		private function mouseOut(e:MouseEvent):void {
+			e.currentTarget.filters = null;
 		}
 		public function setUserName(name:String):void{
 			this.uName = name;

@@ -140,10 +140,10 @@ package glitter
 		}
 		
 		// Search
-		public function search(terms:String, fromUser:String, toUser:String, referencingUser:String, hashTag:String):void {
+		public function search(terms:String, fromUser:String, toUser:String, referencingUser:String, hashTag:String, hasPhoto:Boolean):void {
 			this.currentTimelineName = "Search";
 			appWindow["loadingMessage"].startMessage("loading...");
-			this.twitter.search(searchCallback, terms, fromUser, toUser, referencingUser, hashTag);
+			this.twitter.search(searchCallback, terms, fromUser, toUser, referencingUser, hashTag, hasPhoto);
 		}
 		
 		// Update

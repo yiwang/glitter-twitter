@@ -16,8 +16,9 @@ package glitter.twitter
 		private var toUser:String;
 		private var referencingUser:String;
 		private var hashTag:String;
+		private var hasPhoto:Boolean;
 
-		public function TwitterSearch(credentials:String, resultCallback:Function, terms:String, fromUser:String, toUser:String, referencingUser:String, hashTag:String) {
+		public function TwitterSearch(credentials:String, resultCallback:Function, terms:String, fromUser:String, toUser:String, referencingUser:String, hashTag:String, hasPhoto:Boolean) {
 			super();
 			this.resultCallback = resultCallback;
 			this.url = TWITTER_SEARCH_URL;
@@ -26,6 +27,7 @@ package glitter.twitter
 			this.toUser = toUser;
 			this.referencingUser = referencingUser;
 			this.hashTag = hashTag;
+			this.hasPhoto = hasPhoto;
 
 			this.headers = {Authorization: "Basic " + credentials};
 			this.resultFormat = "text";
@@ -56,6 +58,10 @@ package glitter.twitter
 			if (hashTag != null && hashTag != "") {
 				queries.addItem("#" + hashTag);
 			}
+			if(hasPhoto) {
+				queries.addItem("http://twitpic.com/");
+			}
+			
 			return {"q": queries.toArray().join("+")};
 		}
 		

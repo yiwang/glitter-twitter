@@ -68,9 +68,9 @@ package glitter.twitter
 			userCallback.apply(this, [user]);
 		}
 		
-		public function search(callback:Function, terms:String, fromUser:String, toUser:String, referencingUser:String, hashTag:String):void {
+		public function search(callback:Function, terms:String, fromUser:String, toUser:String, referencingUser:String, hashTag:String, hasPhoto:Boolean):void {
 			this.timelineCallback = callback;
-			var ts:TwitterSearch = new TwitterSearch(credentials, parseSearchResults, terms, fromUser, toUser, referencingUser, hashTag);
+			var ts:TwitterSearch = new TwitterSearch(credentials, parseSearchResults, terms, fromUser, toUser, referencingUser, hashTag, hasPhoto);
 			ts.performGet();
 		}
 		
@@ -111,6 +111,7 @@ package glitter.twitter
 		/**
 		 * update the data
 		 */
+	
 		private function parseGetTimeline(statuses:Array):void{
 			//this.timelineCallback.apply(this, [statuses]);
 			this.timelineCallback.apply(this, [statuses.map(function(o:Object, i:int, a:Array):Status {return new Status(o);})]);
