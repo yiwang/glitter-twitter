@@ -60,7 +60,7 @@ package glitter
 			htmlLabel.verticalScrollPolicy = "off";
 			htmlLabel.addEventListener(Event.HTML_DOM_INITIALIZE, domInitialized);
 			
-			text = "<body style=" + bgColor + "><p style='word-break: break-all; padding: 2px'>";	
+			text = "<body style=" + bgColor + "><p style='padding: 2px'>";	
 			
 			setSource(status.getSource());
 			setUserName(status.getUserName());
