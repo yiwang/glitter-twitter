@@ -44,6 +44,7 @@ package glitter
 //			sort.fields = [sortField];
 //			statuses.sort = sort;
 //			statuses.refresh();
+			sortStatuses();
 			return statuses;
 		}
 		

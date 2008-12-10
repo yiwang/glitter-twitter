@@ -7,7 +7,7 @@ package glitter
 	
 	dynamic public class Status
 	{
-		private var id:String;
+		public var id:String;
 		private var userId:String;
 		private var userName:String;
 		private var source:String;
