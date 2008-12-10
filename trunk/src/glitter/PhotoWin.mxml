@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="850" height="598" title="ImageView">
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.PopUpManager;
+			
+			
+		]]>
+	</mx:Script>
 	
 	<mx:VBox height="100%" width="100%" x="0" verticalAlign="middle" horizontalAlign="center">
 		
 		<mx:HBox x="132" y="49" width="100%" height="100%" verticalAlign="middle">
-			<mx:Button label="Prev" width="63" height="198"/>
+			<mx:Button label="Prev" width="63" height="198" toolTip="Previous"/>
 			<mx:Canvas width="100%" height="100%">
 				<mx:Image width="100%" height="100%" id="img"/>
 			</mx:Canvas>
-			<mx:Button label="Next" height="183"/>
+			<mx:Button label="Next" height="183" toolTip="Close"/>
 		</mx:HBox>
-		<mx:Button label="Close" width="159" height="38"/>
+		<mx:Button label="Close" width="159" height="38" toolTip="Next" click="PopUpManager.removePopUp(this);"/>
 	</mx:VBox>
 	
 	
