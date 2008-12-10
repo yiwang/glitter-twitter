@@ -34,7 +34,8 @@ package glitter
 //			this.width = 80;
 			//this.percentWidth = 100;
 //			this.percentHeight = 100;
-			this.maxHeight = 250;
+			this.maxWidth = 225;
+			this.maxHeight = 175;
 //			this.setStyle("verticalCenter", 0);
 //			this.setStyle("horizontalCenter", 0);
 
