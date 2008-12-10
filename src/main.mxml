@@ -68,18 +68,18 @@
 		<mx:Canvas width="157" cornerRadius="15" backgroundColor="#C9BD6C" id="folders" label="folders" left="10" top="10" bottom="10">
 			<mx:VBox id="foldersVBox" backgroundColor="#D1D089" right="10" left="10" top="10" bottom="10" horizontalAlign="center">
 				<mx:Spacer height="10" />
-				<mx:Button label="Home" id="home" click="controller.getFriendsTimeline();"/>
-				<mx:Button label="@Replies" id="replies" click="controller.getReplies();"/>
-				<mx:Button label="Updates" id="updates" click="controller.getUserTimeline();"/>
+				<mx:Button label="home" id="home" click="controller.getFriendsTimeline();"/>
+				<mx:Button label="@replies" id="replies" click="controller.getReplies();"/>
+				<mx:Button label="updates" id="updates" click="controller.getUserTimeline();"/>
 
-				<mx:Button label="Directs" id="directsButton" click="controller.getDirects();"/>
-				<mx:Button label="Directs Sent" id="directsSentButton" click="controller.getDirectsSent();"/>
+				<mx:Button label="directs" id="directsButton" click="controller.getDirects();"/>
+				<mx:Button label="directs sent" id="directsSentButton" click="controller.getDirectsSent();"/>
 				
 				<!--<mx:Button label="User to User" id="userToUserButton" />-->
-				<mx:Button label="Search" id="searchButton" click="controller.searchButtonClick();" />
+				<mx:Button label="search" id="searchButton" click="controller.searchButtonClick();" />
 				<mx:HRule/>
-				<mx:Label text="Labels" fontWeight="bold" textDecoration="underline" fontSize="12"/>
-				<mx:Button id="createLabelsButton" label="Create Label" click="controller.createLabelButtonClicked();"/>
+				<mx:Label text="labels" fontWeight="bold" textDecoration="underline" fontSize="12"/>
+				<mx:Button id="createLabelsButton" label="create" click="controller.createLabelButtonClicked();"/>
 				<mx:HRule/>
 				<mx:VBox width="95%" height="100%" id="labelsVBox" horizontalAlign="center">
 				</mx:VBox>
