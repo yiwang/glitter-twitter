@@ -1,9 +1,9 @@
 A:
 
-start up Glitter
+- start up Glitter 
 show the account settings
 post update (go to B)
-DM B's reply (go to B)
+B's reply (go to B)
 Post Twitpic 1 (through file select)
 Post twitpic 2 (through drag/drop) (go to B)
 
@@ -15,6 +15,7 @@ Create Label
 Show Twitpic view
 Filter to only photo tweets
 Drag Twitpic to created label
+Click on username to view only user
 Show @replies
 Show updates
 Show directs
