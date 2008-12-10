@@ -31,7 +31,8 @@ package glitter
 			for each (var status:Status in statuses){
 				if(newStatus.getId()==status.getId() ) return;
 			}
-			statuses.addItem(newStatus);
+			statuses.addItemAt(newStatus, 0);
+//			sortStatuses();
 		}
 		
 		public function getStatuses():ArrayCollection {
