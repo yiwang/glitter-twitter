@@ -1,6 +1,7 @@
 package glitter
 {
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	
@@ -152,9 +153,10 @@ package glitter
 			}
 		}
 		
-		public function showTweetsForLabel(label:Label):void {
-			this.selectedLabel = label;
-			this.currentTimelineName = label.getName();
+		public function showTweetsForLabel(event:MouseEvent):void {
+			var l:LinkButton = event.target as LinkButton;
+			this.selectedLabel = labelsData[l.label];
+			this.currentTimelineName = selectedLabel.getName();
 			this.refreshCurrentDisplay();
 		}
 		

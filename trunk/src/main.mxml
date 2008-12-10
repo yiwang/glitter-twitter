@@ -36,7 +36,7 @@
 				for each (var label:glitter.Label in labels) {
 					var l:LinkButton =  new LinkButton;
 					l.label = label.getName();
-					l.addEventListener(MouseEvent.CLICK, function():void {controller.showTweetsForLabel(label)});
+					l.addEventListener(MouseEvent.CLICK, controller.showTweetsForLabel);
 					l.addEventListener(DragEvent.DRAG_DROP, controller.labelDragDropHandler);
 					l.addEventListener(DragEvent.DRAG_ENTER, controller.labelDragEnterHander);
 					l.addEventListener(DragEvent.DRAG_EXIT, controller.labelDragExitHandler);
