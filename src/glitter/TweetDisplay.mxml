@@ -13,12 +13,14 @@
 			static private var MAX_TWEET:Number = 200;
 			private var selected:Object;
 			private var controller:ApplicationController;
+			private var showOnlyPhotos:Boolean;
 			
 			[Bindable]
 			public var currentTimeLineNum:Number = 0;
 		
 			public function init():void {
-				controller = Application.application.getController();				
+				controller = Application.application.getController();
+				showOnlyPhotos = false;				
 			}
 
 			public function getUserUpdates(username:String):void {
@@ -42,9 +44,11 @@
 					else{
 						//var item:Object = tweets.getItemAt(i);
 						var st:Status = tweets.getItemAt(i) as Status;
-						var t:Tweet = new Tweet(st, this);
-						this.addChild(t);
-						t.addEventListener(MouseEvent.CLICK, clicked);
+						if (matchesFilter(st)) {
+							var t:Tweet = new Tweet(st, this);
+							this.addChild(t);
+							t.addEventListener(MouseEvent.CLICK, clicked);
+						}
 					}
 				}
 			}
@@ -59,7 +63,7 @@
 							break;
 						}
 					}
-					if (isNew) {
+					if (isNew && matchesFilter(status)) {
 						newStatuses.addItem(status);
 					}
 				}
@@ -70,6 +74,15 @@
 					this.addChildAt(t, 0);
 				}
 				this.currentTimeLineNum = newStatuses.length + this.getChildren().length;
+			}
+			
+			private function matchesFilter(status:Status) {
+				if (showOnlyPhotos) {
+					return status.hasPhoto();
+				}
+				else {
+					return true;
+				}
 			}
 		
 			private function clicked(e:MouseEvent):void {
