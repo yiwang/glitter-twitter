@@ -108,7 +108,7 @@
 		]]>
 	</mx:Script>
 		<mx:Button id="addImageButton" bottom="7" x="152" label="Add Image" click="addImageClicked()" toolTip="Add a TwitPic image. You can also add by dragging an image to the send text area." />
-		<mx:Button label="send" click="update()" bottom="7" right="10"/>
+		<mx:Button label="send" click="update()" bottom="7" right="10" toolTip="Click to update your status."/>
 		<mx:TextInput id="textInput" height="55" left="10" right="10" top="10"  maxChars="140"/>
     <mx:Glow id="glowImage" duration="1000"
         alphaFrom="0.0" alphaTo=".7" 
