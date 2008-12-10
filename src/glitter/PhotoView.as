@@ -1,6 +1,8 @@
 package glitter
 {
+	import flash.display.DisplayObject;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.filesystem.File;
 	
 	import mx.collections.ArrayCollection;
@@ -8,9 +10,10 @@ package glitter
 	import mx.containers.HBox;
 	import mx.containers.VBox;
 	import mx.controls.Label;
+	import mx.core.Application;
 	import mx.events.*;
-
-
+	import mx.managers.PopUpManager;
+	
 	public class PhotoView extends Canvas
 	{
 		private var photoAreasHBox:HBox;
@@ -19,6 +22,7 @@ package glitter
 		private var photoArray:ArrayCollection;
 		private var directory:File = File.documentsDirectory;
 		private var curIndex:int;
+		private var photoWin:PhotoWin = new PhotoWin();
 		
 		private var photoCache:Object = new Object();
 
@@ -129,6 +133,7 @@ package glitter
 				label.text = photo.date + ' by ' + photo.sender;
 				v.addChild(label);
 				this.photoIconsVBox.addChild(v);
+				photo.addEventListener("click",onPhotoClick);
 			}
 //			for(var i:uint=0; i<thePhotoArray.length; i++) {
 //				var vBox:VBox = new VBox();
@@ -150,6 +155,12 @@ package glitter
 //				vBox.addChild( thePhotoArray[i] );
 //				vBox.addChild( label );
 //			} 			
+		}
+		
+		private function onPhotoClick(e:MouseEvent):void{
+			PopUpManager.addPopUp(photoWin, Application.application as DisplayObject, true);
+			PopUpManager.centerPopUp(photoWin);
+			photoWin.img.source = (e.currentTarget as ImageIcon).source;
 		}
 	}
 }
