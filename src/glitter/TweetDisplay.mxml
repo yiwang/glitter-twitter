@@ -12,19 +12,17 @@
 			
 			static private var MAX_TWEET:Number = 200;
 			private var selected:Object;
-			private var controller:ApplicationController;
 			private var showOnlyPhotos:Boolean;
 			
 			[Bindable]
 			public var currentTimeLineNum:Number = 0;
 		
 			public function init():void {
-				controller = Application.application.getController();
 				showOnlyPhotos = false;				
 			}
 
 			public function getUserUpdates(username:String):void {
-				controller.getUserUpdates(username);
+				Application.application.getController().getUserUpdates(username);
 			}
 		
 			public function showTweets(statuses:ArrayCollection):void {
