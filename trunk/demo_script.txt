@@ -2,13 +2,15 @@ A:
 
 start up Glitter
 show the account settings
-post update
-DM B's reply
+post update (go to B)
+DM B's reply (go to B)
 Post Twitpic 1 (through file select)
-Post twitpic 2 (through drag/drop)
+Post twitpic 2 (through drag/drop) (go to B)
 
 B:
-reply to A's update
+reply to A's update (go to A)
+click Directs
+click on Home (go to A)
 Create Label
 Show Twitpic view
 Filter to only photo tweets
