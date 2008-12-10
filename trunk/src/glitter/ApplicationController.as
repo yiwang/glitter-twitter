@@ -29,7 +29,7 @@ package glitter
 		private var photoView:PhotoView;
 				
 		private var labelsData:Object = new Object();
-		private var reservedTimeLineNameArray:Array = new Array("Home","My Updates","@Replies","Directs","Directs Sent","Search");
+		private var reservedTimeLineNameArray:Array = new Array("home","my updates","@replies","directs","directs sent","search");
 		//private var 
 
 		[Bindable]
@@ -58,7 +58,7 @@ package glitter
 		
 		// update display
 		private function onTimerLoad(e:TimerEvent):void{
-			var homeStatues:ArrayCollection = getStatusesFromLabel("Home");
+			var homeStatues:ArrayCollection = getStatusesFromLabel("home");
 			if(homeStatues!=null){
 				refreshCurrentDisplay();
 			}
@@ -132,7 +132,7 @@ package glitter
 			for each (var label:Label in labelsData){
 				var isReservedLabel:Boolean = false;
 				for each(var reservedTimeLineName:String in this.reservedTimeLineNameArray){
-					if ( reservedTimeLineName==label.getName() || label.getName().search("'s Update")!= -1){
+					if ( reservedTimeLineName==label.getName() || label.getName().search("'s update")!= -1){
 						isReservedLabel = true;
 					}
 				}
@@ -325,7 +325,7 @@ package glitter
 				this.labelsData = new Object();
 			}
 			
-			this.currentTimelineName = "Home";
+			this.currentTimelineName = "home";
 
 		}
 
