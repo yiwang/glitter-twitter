@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="222" height="350" backgroundColor="#4A4242" backgroundAlpha="0.9" creationComplete="init();">
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.PopUpManager;
+			import mx.core.Application;
+
+			private var controller:ApplicationController;
+
+			private function close():void {
+				PopUpManager.removePopUp(this);
+			}
+			
+			private function init():void {
+				controller = Application.application.getController();
+//				nameInput.text = controller.currentLabel().get				
+			}
+			
+			private function checkLabelName():void {
+				if (controller.labelNameUnique(nameInput.text)) {
+					saveButton.enabled = true;
+					uniqueWarning.visible = false;
+				}
+				else {
+					saveButton.enabled = false;
+					uniqueWarning.visible = true;
+				}
+			}
+			
+			private function save():void {
+				var label:glitter.Label = controller.getSelectedLabel();
+				label.setName(nameInput.text);
+				controller.saveLabel(label);
+				close();
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:Label x="10" y="10" text="Label Settings" textDecoration="underline" fontWeight="bold"/>
+	<mx:Label x="10" y="36" text="Name"/>
+	<mx:Label x="10" y="82" text="Include all Tweets from Users"/>
+	<mx:Button x="147" y="315" label="Cancel" id="cancelButton" click="close();"/>
+	<mx:Button x="85" y="315" label="Save" id="saveButton" enabled="false" click="save();"/>
+	<mx:ComboBox x="10" y="108" width="143" id="usersDropDown"></mx:ComboBox>
+	<mx:Button x="161" y="108" label="Add" id="addButton"/>
+	<mx:VBox x="10" y="138" width="200" height="169" id="usersBox">
+	</mx:VBox>
+	<mx:TextInput x="10" y="52" id="nameInput" change="checkLabelName();"/>
+	<mx:Label x="67" y="36" text="(must be unique)" color="#FF0000" id="uniqueWarning" visible="false"/>
+	
+</mx:Canvas>

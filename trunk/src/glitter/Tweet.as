@@ -9,6 +9,8 @@ package glitter
 	import mx.containers.Canvas;
 	import mx.controls.*;
 	import mx.core.Application;
+	import mx.core.DragSource;
+	import mx.managers.DragManager;
 	import mx.styles.StyleManager;
 	
 	public class Tweet extends Canvas
@@ -53,8 +55,8 @@ package glitter
 
 			htmlLabel = new HTML();
 			htmlLabel.setStyle("right", 2);
-			htmlLabel.setStyle("left", 2);
-			htmlLabel.width = 260;
+			htmlLabel.setStyle("left", 48);
+			htmlLabel.width = 245;
 			htmlLabel.verticalScrollPolicy = "off";
 			htmlLabel.addEventListener(Event.HTML_DOM_INITIALIZE, domInitialized);
 			
@@ -67,34 +69,18 @@ package glitter
 
 			text += "</p></body>";
 			htmlLabel.htmlText = text;
-
-			directButton = new Button();
-			directButton.setStyle("bottom", 2);
-			directButton.setStyle("right", 5);
-			directButton.width = 15;
-			directButton.height = 16;
-			directButton.toolTip = "send direct msg";
-			directButton.addEventListener(MouseEvent.CLICK, buttonClicked);
-			directButton.addEventListener(MouseEvent.MOUSE_OVER, mouseOver);
-			directButton.addEventListener(MouseEvent.MOUSE_OUT, mouseOut);
-			
-			replyButton = new Button();
-			replyButton.setStyle("bottom", 2);
-			replyButton.setStyle("right", 23);
-			replyButton.width = 15;
-			replyButton.height = 16;
-			replyButton.toolTip = "send reply";
-			replyButton.addEventListener(MouseEvent.CLICK, buttonClicked);
-			replyButton.addEventListener(MouseEvent.MOUSE_OVER, mouseOver);
-			replyButton.addEventListener(MouseEvent.MOUSE_OUT, mouseOut);
-						
-			[Embed("../../images/direct.gif")] 
-			var dIcon:Class; 
-			directButton.setStyle("icon", dIcon);
-			
-			[Embed("../../images/reply.gif")] 
-			var rIcon:Class; 
-			replyButton.setStyle("icon", rIcon);
+									
+//			var length:int = status.getUserName().length + status.getText().length
+//			if (length > 135) {
+//				htmlLabel.height = 83;
+//			}
+//			else if (length > 100) {
+//				htmlLabel.height = 68;
+//			}
+//			else {
+//				htmlLabel.height = 58;
+//			}
+			htmlLabel.percentHeight = 100;
 			
 			glow = new GlowFilter();
             glow.color = StyleManager.getColorName("white");
@@ -104,22 +90,7 @@ package glitter
             glow.strength = 5;
             glow.quality = BitmapFilterQuality.HIGH;
 			
-			var length:int = status.getUserName().length + status.getText().length
-			if (length > 135) {
-				htmlLabel.height = 83;
-			}
-			else if (length > 100) {
-				htmlLabel.height = 68;
-			}
-			else {
-				htmlLabel.height = 58;
-			}
-			
 			addChild(htmlLabel);
-			addChild(replyButton);
-			addChild(directButton);
-			
-			//cvs.addEventListener(MouseEvent.MOUSE_DOWN, mouseDownHandler);
 		}
 		
 		private function buttonClicked(e:MouseEvent):void {
@@ -143,7 +114,47 @@ package glitter
 			text += "<a href=\"#\" onClick=\"showUserStatuses('" + name + "');\">" + linkColor + name + "</font></a>&nbsp;&nbsp;&nbsp;";			
 		}
 		public function setSource(src:String):void{
-			text += "<img src='" + src + "' style='float:left; margin-right:5px;' />";
+			profileImage = new mx.controls.Image();
+			profileImage.source = src;
+			profileImage.width = 48;
+			profileImage.setStyle("left", 0);
+			profileImage.setStyle("top", 0);
+			profileImage.percentHeight = 100;
+			profileImage.addEventListener(MouseEvent.MOUSE_MOVE, dragIt);
+
+			
+			directButton = new Button();
+			directButton.setStyle("top", 52);
+			directButton.setStyle("left", 30);
+			directButton.width = 15;
+			directButton.height = 16;
+			directButton.toolTip = "send direct msg";
+			directButton.addEventListener(MouseEvent.CLICK, buttonClicked);
+			directButton.addEventListener(MouseEvent.MOUSE_OVER, mouseOver);
+			directButton.addEventListener(MouseEvent.MOUSE_OUT, mouseOut);
+			
+			replyButton = new Button();
+			replyButton.setStyle("top", 52);
+			replyButton.setStyle("left", 11);
+			replyButton.width = 15;
+			replyButton.height = 16;
+			replyButton.toolTip = "send reply";
+			replyButton.addEventListener(MouseEvent.CLICK, buttonClicked);
+			replyButton.addEventListener(MouseEvent.MOUSE_OVER, mouseOver);
+			replyButton.addEventListener(MouseEvent.MOUSE_OUT, mouseOut);			
+
+			[Embed("../../images/direct.gif")] 
+			var dIcon:Class; 
+			directButton.setStyle("icon", dIcon);
+			
+			[Embed("../../images/reply.gif")] 
+			var rIcon:Class; 
+			replyButton.setStyle("icon", rIcon);
+			
+			this.addChild(profileImage);
+			this.addChild(replyButton);
+			this.addChild(directButton);
+//			text += "<img src='" + src + "' style='float:left; margin-right:5px;' />";
 		}
 		public function setText(status:String):void{ 
 			var a:Array = status.split(" ");
@@ -189,6 +200,27 @@ package glitter
 		
 	 	public function getUserUpdates(name:String):void {
 	 		display.getUserUpdates(name);
+		}
+		
+		public function dragIt(event:MouseEvent):void {
+			var dragInitiator:Tweet = event.currentTarget.parent as Tweet;
+			var dragSource:DragSource = new DragSource();
+			var i:Image = new Image()
+			i.source = Image(event.currentTarget).source;
+			i.width = 48;
+			i.height = 48;
+			
+			
+			dragSource.addData(this.status, 'status');
+			var dragProxy:Canvas = new Canvas();
+			dragProxy.addChild(i);
+			var message:Text = new Text();
+			message.setStyle("left", 50);
+			message.height = dragInitiator.height;
+			message.width = dragInitiator.width - 48;
+			message.text = dragInitiator.getStatus().getText();
+			dragProxy.addChild(message);
+			DragManager.doDrag(dragInitiator, dragSource, event, dragProxy);
 		} 
 		
 		/* private function mouseDownHandler(event:MouseEvent):void{
