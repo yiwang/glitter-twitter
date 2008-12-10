@@ -13,12 +13,14 @@
 			static private var MAX_TWEET:Number = 200;
 			private var selected:Object;
 			private var showOnlyPhotos:Boolean;
+			private var allTweets:ArrayCollection
 			
 			[Bindable]
 			public var currentTimeLineNum:Number = 0;
 		
 			public function init():void {
-				showOnlyPhotos = false;				
+				showOnlyPhotos = false;			
+				allTweets = new ArrayCollection();	
 			}
 
 			public function getUserUpdates(username:String):void {
@@ -42,12 +44,33 @@
 					else{
 						//var item:Object = tweets.getItemAt(i);
 						var st:Status = tweets.getItemAt(i) as Status;
+						var t:Tweet = new Tweet(st, this);
+						allTweets.addItemAt(t, 0);
 						if (matchesFilter(st)) {
-							var t:Tweet = new Tweet(st, this);
 							this.addChild(t);
 							t.addEventListener(MouseEvent.CLICK, clicked);
 						}
 					}
+				}
+			}
+			
+			public function photoFilter():void {
+				if (showOnlyPhotos) {
+					showOnlyPhotos = false;
+					this.removeAllChildren();
+					
+					for each (var tweet:Tweet in allTweets) {
+						this.addChild(tweet);
+					}
+				}
+				else {
+					showOnlyPhotos = true;
+					
+					for each (var tweet:Tweet in this.getChildren()) {
+						if (!matchesFilter(tweet.getStatus())) {
+							this.removeChild(tweet);
+						}
+					}										
 				}
 			}
 			
@@ -61,15 +84,16 @@
 							break;
 						}
 					}
-					if (isNew && matchesFilter(status)) {
+					if (isNew) {
 						newStatuses.addItem(status);
 					}
 				}
 				for each (var status:Status in newStatuses) {
 					var t:Tweet = new Tweet(status, this);
-					var tweets:Array = this.getChildren();
-					
-					this.addChildAt(t, 0);
+					allTweets.addItemAt(t, 0);
+					if (matchesFilter(status)) {
+						this.addChildAt(t, 0);
+					}
 				}
 				this.currentTimeLineNum = newStatuses.length + this.getChildren().length;
 			}
