@@ -87,7 +87,7 @@
 			</ns1:TweetDisplay>
 			<ns1:Navi x="10" bottom="12" id="navi" width="313">
 			</ns1:Navi>
-			
+			<mx:CheckBox x="166" y="0" label="show Photo Tweets only" selected="false" click="display.photoFilter();" color="#FFFFFF"/>	
 		</mx:Canvas>
 		<mx:Canvas cornerRadius="15" backgroundColor="#6485AE" top="10" bottom="10" id="photos" label="photos" right="10" left="518">
 <!--			<mx:VBox backgroundColor="#8EA4BE" top="20" left="10" bottom="10" right="10">
