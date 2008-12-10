@@ -59,9 +59,8 @@ package glitter.twitter
 				queries.addItem("#" + hashTag);
 			}
 			if(hasPhoto) {
-				queries.addItem("http://twitpic.com/");
+				queries.addItem("twitpic.com -\"http://twitpic.com\"");
 			}
-			
 			return {"q": queries.toArray().join("+")};
 		}
 		
