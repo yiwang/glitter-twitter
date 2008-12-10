@@ -1,0 +1,20 @@
+A:
+
+start up Glitter
+enter account settings
+post update
+DM B's reply
+Post Twitpic 1 (through file select)
+Post twitpic 2 (through drag/drop)
+
+B:
+reply to A's update
+Create Label
+Show Twitpic view
+Filter to only photo tweets
+Drag Twitpic to created label
+Show @replies
+Show updates
+Show directs
+
+Show search, be sure to demo pics only feature.
