@@ -42,6 +42,10 @@ package glitter
 			return statuses;
 		}
 		
+		private function sortStatuses():void{
+			statuses = new ArrayCollection(statuses.toArray().sortOn("id",Array.DESCENDING));
+		}
+		
 		public function clearStatuses():void{
 			statuses = new ArrayCollection();
 		}
@@ -58,6 +62,7 @@ package glitter
 					}
 				}
 			}
+			sortStatuses();
 		}
 		
 		public function toJSON():String{

@@ -20,6 +20,7 @@ package glitter
 		private var twitter:Twitter;
 		private var isVerifiedCredentials:Boolean = false;
 		private var tweetDisplay:TweetDisplay;
+		private var photoView:PhotoView;
 				
 		private var labelsData:Object = new Object();
 
@@ -59,12 +60,22 @@ package glitter
 			this.twitter = new Twitter(Twitter.getStoredUserName(),Twitter.getStoredPassword(),this);
 			this.appWindow = appWindow;
 			this.tweetDisplay = appWindow["display"];
+			this.photoView = appWindow["photoView"];
 			//this.load_session();
 			// timer for twitterloop
 			timer = new Timer(INTERVAL*1000, 0);
             timer.addEventListener("timer", startTwitterLoop);
             timer.start();
+            
+            // for load_session to work
+            var timerLoad:Timer = new Timer(1500,1);
+            timerLoad.addEventListener("timer",onTimerLoad);
+            timerLoad.start();
 		}
+		private function onTimerLoad(e:TimerEvent):void{
+			this.load_session();
+		}
+		
 		public function confirmVerifiedCredentials():void{
 			isVerifiedCredentials = true;
 		}
@@ -157,6 +168,7 @@ package glitter
 		private function getTimelineCallback(statuses:Array):void{			
 			insertStatusesToLabel(statuses,this.currentTimelineName);
 			this.tweetDisplay.showTweets(getStatusesFromLabel(this.currentTimelineName));
+			this.photoView.loadPhotosFromStatuses(getStatusesFromLabel(this.currentTimelineName));
 			appWindow["loadingMessage"].stopMessage();
 		}
 		
@@ -189,7 +201,7 @@ package glitter
 				this.twitter = new Twitter(Twitter.getStoredUserName(),Twitter.getStoredPassword());
 			}
 			this.twitter.getFriendsTimeline(twitterLoopCallback);
-			//this.save_session();
+			this.save_session();
 		}
 		
 		// callback
@@ -197,6 +209,7 @@ package glitter
 			insertStatusesToLabel(statuses,"Home");
 			if (this.currentTimelineName == "Home") {
 				this.tweetDisplay.addTweets(statuses);
+				this.photoView.loadPhotosFromStatuses(getStatusesFromLabel(this.currentTimelineName));
 			}
 		}
 
@@ -235,6 +248,7 @@ package glitter
 			if(this.labelsData==null){
 				this.labelsData = new Object();
 			}
+			this.currentTimelineName = "Home";
 			var homeStatues:ArrayCollection = getStatusesFromLabel("Home");
 			if(homeStatues!=null){
 				this.tweetDisplay.showTweets(homeStatues);	

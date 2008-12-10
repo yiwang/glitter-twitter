@@ -13,7 +13,10 @@
 			static private var MAX_TWEET:Number = 200;
 			private var selected:Object;
 			private var controller:ApplicationController;
-
+			
+			[Bindable]
+			public var currentTimeLineNum:Number = 0;
+		
 			public function init():void {
 				controller = Application.application.getController();				
 			}
@@ -23,6 +26,7 @@
 			}
 		
 			public function showTweets(statuses:ArrayCollection):void {
+				this.currentTimeLineNum = statuses.length;
 				// this is a strange bug in AIR. you need to pull focus off the html elements
 				// http://www.adobe.com/cfusion/webforums/forum/messageview.cfm?forumid=75&catid=697&threadid=1410638&enterthread=y 
 				stage.assignFocus(this, flash.display.FocusDirection.NONE);
@@ -65,6 +69,7 @@
 					
 					this.addChildAt(t, 0);
 				}
+				this.currentTimeLineNum = newStatuses.length + this.getChildren().length;
 			}
 		
 			private function clicked(e:MouseEvent):void {

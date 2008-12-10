@@ -1,6 +1,8 @@
 package glitter
 {
-	import com.adobe.serialization.json.JSON;	
+	import com.adobe.serialization.json.JSON;
+	
+	import mx.controls.Image;
 	import mx.formatters.DateFormatter;
 	
 	dynamic public class Status
@@ -14,6 +16,7 @@ package glitter
 		private var inReplyToStatusId:String;
 		private var inReplyToUserId:String;
 		private var flickrPhoto:FlickrPhoto; // not all will have this
+		private var image:Image;
 		private var hasPic:Boolean = false;
 		private var photoUrl:String;
 		public var _item:Object;
@@ -83,6 +86,7 @@ package glitter
 				if(s.match("http://twitpic.com/")){
 					hasPic = true;
 					photoUrl = s;
+					TwitPic.getPic(photoUrl,setImage);
 					break;
 				}
 			}	
@@ -93,6 +97,13 @@ package glitter
 		public function getPhotoUrl():String
 		{
 			return photoUrl;
+		}
+		
+		private function setImage(img:Image):void{
+			this.image = img;
+		}
+		public function getImage():Image{
+			return image;
 		}
 		
 		public function toJSON():String{					

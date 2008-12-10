@@ -19,12 +19,13 @@ package glitter
 		private var photoArray:ArrayCollection;
 		private var directory:File = File.documentsDirectory;
 		private var curIndex:int;
-
+		
+		private var photoCache:Object = new Object();
 
 		public function PhotoView()
 		{
 			photoIconsVBox = new VBox();
-			photoIconsVBox.percentWidth=95;
+			photoIconsVBox.percentWidth=100;
 			photoIconsVBox.percentHeight=100;
 			this.addChild(photoIconsVBox);
 			photoArray = new ArrayCollection;
@@ -44,6 +45,8 @@ package glitter
 
 
 		public function loadPhotosFromStatuses( statusArray:ArrayCollection ):void {
+			photoIconsVBox.removeAllChildren();
+			this.photoArray = new ArrayCollection(); 
 			var hasAtLeastOnePhoto:Boolean = new Boolean();
 			hasAtLeastOnePhoto = false;
 			for ( var i:uint = 0; i<statusArray.length; i++ ) {
@@ -56,9 +59,12 @@ package glitter
 					var date:String = new String();
 					date = statusArray[i].getFormattedDate();
 	//				var text:String = new String();
-	//				text = statusArray[i].get				
-					var image:ImageIcon = new ImageIcon( url, i, sender, date );
-					photoArray.addItem( image );
+	//				text = statusArray[i].get
+					var imageCached:ImageIcon = photoCache[url];
+					if(imageCached==null){
+						photoCache[url] = new ImageIcon( url, i, sender, date );
+					}
+					photoArray.addItem( photoCache[url] );
 				}
 			}
 			if ( hasAtLeastOnePhoto ) {
