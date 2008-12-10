@@ -45,14 +45,11 @@ package glitter
 			helpHBox.percentHeight = 100;
 			helpHBox.addChild(helpMenu);
 
-			linksArray["Working with Tweets"] = "<p><b>Working with Tweets</b></p>" +
-			"<p class='helpText'>Here is some help text.</p>";
-			linksArray["the next button"] = "<p style='font-weight:bold'><b>the next button</b></p>" +
-			"<p class='helpText'>Here is some help text.</p>";
-			linksArray["another button"] = "<p style='font-weight:bold'><b>another button</b></p>" +
-			"<p class='helpText'>Here is some help text.</p>";
-			linksArray["one more"] = "<p style='font-weight:bold'><b>one more</b></p>" +
-			"<p class='helpText'>Here is some help text.</p>";
+			linksArray["Basic Twitter Usage"] = "Acres of webpage real estate have been written " +
+			"on basic Twitter functionality and we include most of it in Glitter. See http://help.twitter.com/index.php?pg=kb.page&id=26 from the Twitter folks for more info on these basic commands and features. These features can be found in our control panel.";
+			linksArray["Basic Glitter Usage"] = "Clicking each button is like invoking the corresponding Twitter command. The results of each command are then displayed in the red Tweets window. If some of the Tweets also have photos attached, (a.k.a. glitter), the change will cascade over to the blue photos display, where all the photos present in the list of tweets can be seen in order.";
+			linksArray["Sending"] = "Tweets can also be sent from the interface by typing the text of your tweet in the white box below your list of tweets. Furthermore, you can add images to a tweet by dragging the image from your desktop to the tweet editing window, or by clicking 'Add Image'.";
+			linksArray["Labels"] = "<p>An advanced feature of Glitter is that you can select specific tweets that strike your fancy (or those that get your goat) and give them a label. Lists of these tweets will then be displayed under their organizing labels.</p><p>Create a label by clicking the 'create' button. Once the label is created you can save tweets to it by dragging the tweet's photo icon over the label name. To view the tweets under one label, click that label name.</p>";
 
 			//loop through links and add to vbox
 			for (var linkName:String in linksArray) {
@@ -63,6 +60,7 @@ package glitter
 				helpMenu.addChild(lb);
 			}
 			var defaultBody:Text = new Text();
+			defaultBody.width = 500;
 			defaultBody.htmlText = "<p><b>Glitter Help</b></p><p>Hopefully using the links to the left will quickly have you up and running.</p>";
 			bodyCanvas.percentWidth = 100;
 			bodyCanvas.percentHeight = 100;
