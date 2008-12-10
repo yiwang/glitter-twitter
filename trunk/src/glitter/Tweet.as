@@ -37,6 +37,7 @@ package glitter
 		private var replyButton:Button;
 		private var controller:ApplicationController;
 		private var glow:GlowFilter;
+		private static var TWITPIC_URL:String = "http://twitpic.com/";
 		
 		public function domInitialized(event:Event):void {
 			htmlLabel.htmlLoader.window.showUserStatuses = getUserUpdates;
@@ -172,7 +173,7 @@ package glitter
 					text += "<a href=\"#\" onClick=\"showUserStatuses('" + rName + "');\">" + linkColor + s + "</font></a>&nbsp;&nbsp;";
 					text = text.replace(bgColor, replyColor);
 				}
-				else if(s.match("http://twitpic.com/")){	// twitpic
+				else if(s.match(TWITPIC_URL) && s.length>TWITPIC_URL.length){	// twitpic
 					text += "<a href=\"#\" onClick=\"showLink('" + s + "');\">"+ linkColor + s + "</font></a> ";
 					//text += "<a href=\"#\" onClick=\"showLink('" + s + "');\"><img src=\"camera.png\"/></a> ";
 					text = text.replace(bgColor, picColor);

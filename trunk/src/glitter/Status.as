@@ -20,6 +20,7 @@ package glitter
 		private var hasPic:Boolean = false;
 		private var photoUrl:String;
 		public var _item:Object;
+		private static var TWITPIC_URL:String = "http://twitpic.com/";
 		
 		public function Status(item:Object)
 		{
@@ -27,7 +28,6 @@ package glitter
 			userId = item.user.id;
 			userName = item.user.screen_name;
 			source = item.user.profile_image_url;
-//			Alert.show(source);
 			text = item.text;
 			createdAt = item.created_at;
 			inReplyToStatusId = item.in_reply_to_status_id;
@@ -83,7 +83,7 @@ package glitter
 			a.reverse();
 			
 			for each(var s:String in a){
-				if(s.match("http://twitpic.com/")){
+				if(s.match(TWITPIC_URL) && s.length>TWITPIC_URL.length){
 					hasPic = true;
 					photoUrl = s;
 					TwitPic.getPic(photoUrl,setImage);
