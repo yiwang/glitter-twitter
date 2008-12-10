@@ -18,6 +18,10 @@ package glitter
 			this.addFilter(new Filter());
 		}
 		
+		public function setName(name:String):void {
+			this.name = name;
+		}
+		
 		public function addFilter(filter:Filter):void{
 			filters.addItem(filter);
 		}

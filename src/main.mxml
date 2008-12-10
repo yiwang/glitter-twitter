@@ -2,6 +2,8 @@
 <mx:WindowedApplication name="glitterApp" initialize="init()" resizing="true" dropShadowEnabled="true" height="700" width="1000" xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:GlitterComp="*" layout="absolute" cornerRadius="15" xmlns:ns1="glitter.*">
 	<mx:Script>
 		<![CDATA[
+			import mx.events.DragEvent;
+			import mx.collections.ArrayCollection;
 			import glitter.*;
 			import glitter.twitter.*;
 			import mx.containers.TitleWindow;
@@ -13,6 +15,7 @@
 			
 			private function init():void {
 				controller = new ApplicationController(this);
+				loadLabels(controller.getLabels());
 			}
 			
 			private function launchHelpWindow():void {
@@ -30,6 +33,20 @@
 			// for testing a_twit
 			private function ShowAll():void{
 				controller.showall();
+			}
+			
+			public function loadLabels(labels:ArrayCollection):void {
+				labelsVBox.removeAllChildren();
+				
+				for each (var label:glitter.Label in labels) {
+					var l:LinkButton =  new LinkButton;
+					l.label = label.getName();
+					l.addEventListener(MouseEvent.CLICK, function():void {controller.showTweetsForLabel(label)});
+					l.addEventListener(DragEvent.DRAG_DROP, controller.labelDragDropHandler);
+					l.addEventListener(DragEvent.DRAG_ENTER, controller.labelDragEnterHander);
+					l.addEventListener(DragEvent.DRAG_EXIT, controller.labelDragExitHandler);
+					labelsVBox.addChild(l);
+				}
 			}
 			
 		]]>
@@ -62,21 +79,21 @@
 				<mx:Button label="Search" id="searchButton" click="controller.searchButtonClick();" />
 				<mx:HRule/>
 				<mx:Label text="Labels" fontWeight="bold" textDecoration="underline" fontSize="12"/>
-				<mx:Button id="createLabelsButton" label="Create Label"/>
+				<mx:Button id="createLabelsButton" label="Create Label" click="controller.createLabelButtonClicked();"/>
 				<mx:HRule/>
-				<mx:Button label="save" click="controller.save_session();"/>
-				<mx:Button label="load" click="controller.load_session();" id="load"/>
+				<mx:VBox width="95%" height="100%" id="labelsVBox" horizontalAlign="center">
+				</mx:VBox>
 			</mx:VBox>
 		</mx:Canvas>
-		<mx:Canvas x="177" width="300" cornerRadius="15" backgroundColor="#B97272" top="10" bottom="10" id="tweets">
+		<mx:Canvas x="177" width="333" cornerRadius="15" backgroundColor="#B97272" top="10" bottom="10" id="tweets">
 			<mx:Label y="2" text="{controller.currentTimelineName} ({display.currentTimeLineNum})" color="#FFFFFF" fontWeight="bold" left="10" right="10"/>
-			<ns1:TweetDisplay id="display" bottom="120" width="280" right="10" top="20">
+			<ns1:TweetDisplay id="display" bottom="120" width="313" right="10" top="20">
 			</ns1:TweetDisplay>
-			<ns1:Navi x="10" bottom="12" id="navi">
+			<ns1:Navi x="10" bottom="12" id="navi" width="313">
 			</ns1:Navi>
 			
 		</mx:Canvas>
-		<mx:Canvas cornerRadius="15" backgroundColor="#6485AE" top="10" bottom="10" id="photos" label="photos" right="10" left="487">
+		<mx:Canvas cornerRadius="15" backgroundColor="#6485AE" top="10" bottom="10" id="photos" label="photos" right="10" left="518">
 <!--			<mx:VBox backgroundColor="#8EA4BE" top="20" left="10" bottom="10" right="10">
 			</mx:VBox>
 -->			<ns1:PhotoView id="photoView" backgroundColor="#6485AE" width="100%" height="100%" top="20" left="10" bottom="10" right="10">

@@ -1,5 +1,6 @@
 package glitter
 {
+	import flash.events.Event;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	
@@ -8,7 +9,10 @@ package glitter
 	import glitter.twitter.Twitter;
 	
 	import mx.collections.ArrayCollection;
+	import mx.controls.LinkButton;
 	import mx.core.WindowedApplication;
+	import mx.events.DragEvent;
+	import mx.managers.DragManager;
 	import mx.managers.PopUpManager;
 	
 	public class ApplicationController
@@ -20,6 +24,8 @@ package glitter
 		private var twitter:Twitter;
 		private var isVerifiedCredentials:Boolean = false;
 		private var tweetDisplay:TweetDisplay;
+		private var newLabel:Boolean;
+		private var selectedLabel:Label;
 		private var photoView:PhotoView;
 				
 		private var labelsData:Object = new Object();
@@ -29,31 +35,6 @@ package glitter
 		[Bindable]
 		public var currentTimeLineNum:Number = 0;
 						
-		public function addLabel(label:Label):void {
-			labelsData[label.getName()] = label;		
-		}
-		
-		public function labelNameUnique(name:String):Boolean {
-			for (var oldName:String in labelsData){
-				if (oldName==name) return false;
-			} 
-			return true;
-		}
-		
-		public function deleteLabel(label:Label):void {
-			var labelName:String = label.getName();
-			if( labelsData[labelName] == null) return;
-			labelsData[labelName] = null;
-		}
-		
-		public function getLabels():ArrayCollection {
-			var labels:ArrayCollection = new ArrayCollection();
-			for each (var label:Label in labelsData){
-				labels.addItem(label);
-			} 
-			return labels;
-		}		
-
 		// constructor
 		public function ApplicationController(appWindow:WindowedApplication)
 		{
@@ -113,6 +94,87 @@ package glitter
 			}else{
 				return label.getStatuses();
 			}
+		}
+		
+		// label functions
+		public function addLabel(label:Label):void {
+			labelsData[label.getName()] = label;		
+		}
+		
+		public function labelNameUnique(name:String):Boolean {
+			for (var oldName:String in labelsData){
+				if (oldName==name) return false;
+			} 
+			return true;
+		}
+		
+		public function deleteLabel(label:Label):void {
+			var labelName:String = label.getName();
+			if( labelsData[labelName] == null) return;
+			labelsData[labelName] = null;
+		}
+		
+		public function getLabels():ArrayCollection {
+			var labels:ArrayCollection = new ArrayCollection();
+			for each (var label:Label in labelsData){
+				labels.addItem(label);
+			} 
+			return labels;
+		}
+		
+		public function getSelectedLabel():Label {
+			if (newLabel) {
+				return new Label("");
+			}
+			else {
+				return selectedLabel;
+			}
+		}
+		
+		public function showTweetsForLabel(label:Label):void {
+			this.selectedLabel = label;
+			this.currentTimelineName = label.getName();
+			this.tweetDisplay.showTweets(getStatusesFromLabel(this.currentTimelineName));
+		}
+		
+		public function createLabelButtonClicked():void {
+			this.newLabel = true;
+			var newLabelWindow:EditLabel = new EditLabel();
+			PopUpManager.addPopUp(newLabelWindow, appWindow, true);
+			PopUpManager.centerPopUp(newLabelWindow);			
+		}
+		
+		public function editLabelButtonClicked(event:Event):void {
+			
+		}
+		
+		public function saveLabel(label:Label):void {
+			labelsData[label.getName()] = label;
+			
+			main(appWindow).loadLabels(getLabels());
+		}
+		
+		public function labelDragEnterHander(event:DragEvent):void {
+			var dropTarget:LinkButton = event.currentTarget as LinkButton;
+			if (event.dragSource.hasFormat("status")) {
+				dropTarget.drawFocus(true);
+				DragManager.acceptDragDrop(dropTarget);
+			}
+		}
+		
+		public function labelDragExitHandler(event:DragEvent):void {
+			var dropTarget:LinkButton = event.currentTarget as LinkButton;
+			if (event.dragSource.hasFormat("status")) {
+				dropTarget.drawFocus(false);
+				DragManager.acceptDragDrop(dropTarget);
+			}
+		}
+		
+		public function labelDragDropHandler(event:DragEvent):void {
+			var dropTarget:LinkButton = event.currentTarget as LinkButton;
+			dropTarget.drawFocus(false);
+			var dropLabel:Label = labelsData[dropTarget.label];
+			dropLabel.addStatus(event.dragSource.dataForFormat("status") as Status); 
 		}
 		
 		// Home
