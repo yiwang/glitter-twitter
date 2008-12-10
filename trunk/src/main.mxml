@@ -30,11 +30,6 @@
 				return navi;
 			}
 			
-			// for testing a_twit
-			private function ShowAll():void{
-				controller.showall();
-			}
-			
 			public function loadLabels(labels:ArrayCollection):void {
 				labelsVBox.removeAllChildren();
 				

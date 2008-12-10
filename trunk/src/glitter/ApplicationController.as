@@ -18,7 +18,7 @@ package glitter
 	public class ApplicationController
 	{
 		private var appWindow:WindowedApplication;
-		static private var INTERVAL:Number = 8; // seconds to refresh
+		static private var INTERVAL:Number = 10; // seconds to refresh
 		private var timer:Timer;
 		private var session:Session = new Session();
 		private var twitter:Twitter;
@@ -29,6 +29,8 @@ package glitter
 		private var photoView:PhotoView;
 				
 		private var labelsData:Object = new Object();
+		private var reservedTimeLineNameArray:Array = new Array("Home","My Updates","@Replies","Directs","Directs Sent","Search");
+		//private var 
 
 		[Bindable]
 		public var currentTimelineName:String = "";
@@ -42,7 +44,7 @@ package glitter
 			this.appWindow = appWindow;
 			this.tweetDisplay = appWindow["display"];
 			this.photoView = appWindow["photoView"];
-			//this.load_session();
+			this.load_session();
 			// timer for twitterloop
 			timer = new Timer(INTERVAL*1000, 0);
             timer.addEventListener("timer", startTwitterLoop);
@@ -53,8 +55,19 @@ package glitter
             timerLoad.addEventListener("timer",onTimerLoad);
             timerLoad.start();
 		}
+		
+		// update display
 		private function onTimerLoad(e:TimerEvent):void{
-			this.load_session();
+			var homeStatues:ArrayCollection = getStatusesFromLabel("Home");
+			if(homeStatues!=null){
+				refreshCurrentDisplay();
+			}
+		}
+		
+		// refresh both timeline and photos
+		private function refreshCurrentDisplay():void{
+			this.tweetDisplay.showTweets(getStatusesFromLabel(this.currentTimelineName));
+			this.photoView.loadPhotosFromStatuses(getStatusesFromLabel(this.currentTimelineName));			
 		}
 		
 		public function confirmVerifiedCredentials():void{
@@ -117,7 +130,15 @@ package glitter
 		public function getLabels():ArrayCollection {
 			var labels:ArrayCollection = new ArrayCollection();
 			for each (var label:Label in labelsData){
-				labels.addItem(label);
+				var isReservedLabel:Boolean = false;
+				for each(var reservedTimeLineName:String in this.reservedTimeLineNameArray){
+					if ( reservedTimeLineName==label.getName() || label.getName().search("'s Update")!= -1){
+						isReservedLabel = true;
+					}
+				}
+				if (!isReservedLabel){
+					labels.addItem(label);
+				}
 			} 
 			return labels;
 		}
@@ -134,7 +155,7 @@ package glitter
 		public function showTweetsForLabel(label:Label):void {
 			this.selectedLabel = label;
 			this.currentTimelineName = label.getName();
-			this.tweetDisplay.showTweets(getStatusesFromLabel(this.currentTimelineName));
+			this.refreshCurrentDisplay();
 		}
 		
 		public function createLabelButtonClicked():void {
@@ -229,22 +250,15 @@ package glitter
 		// callback
 		private function getTimelineCallback(statuses:Array):void{			
 			insertStatusesToLabel(statuses,this.currentTimelineName);
-			this.tweetDisplay.showTweets(getStatusesFromLabel(this.currentTimelineName));
-			this.photoView.loadPhotosFromStatuses(getStatusesFromLabel(this.currentTimelineName));
+			this.refreshCurrentDisplay();
 			appWindow["loadingMessage"].stopMessage();
 		}
 		
 		private function searchCallback(statuses:Array):void{
 			clearStatusesOfLabel(this.currentTimelineName);
 			insertStatusesToLabel(statuses,this.currentTimelineName);
-			this.tweetDisplay.showTweets(getStatusesFromLabel(this.currentTimelineName));
+			this.refreshCurrentDisplay();
 			appWindow["loadingMessage"].stopMessage();
-		}
-				
-		// All
-		public function showall():void{
-			//this.tweetDisplay.showTweets(statuses);
-			
 		}
 		
 		public function get_lastid():String
@@ -310,11 +324,9 @@ package glitter
 			if(this.labelsData==null){
 				this.labelsData = new Object();
 			}
-			this.currentTimelineName = "home";
-			var homeStatues:ArrayCollection = getStatusesFromLabel("home");
-			if(homeStatues!=null){
-				this.tweetDisplay.showTweets(homeStatues);	
-			}
+			
+			this.currentTimelineName = "Home";
+
 		}
 
 	}
