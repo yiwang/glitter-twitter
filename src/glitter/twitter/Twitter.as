@@ -133,7 +133,7 @@ package glitter.twitter
 					"id": r.id
 				}));
 			} 
-			trace(Status(statuses[0]).getText());
+			//trace(Status(statuses[0]).getText());
 			this.timelineCallback.apply(this, [statuses.toArray()]);
 		}
 		

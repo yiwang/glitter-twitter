@@ -32,14 +32,18 @@ package glitter
 		
 		private function makeIcon( path:String ):void {
 //			this.width = 80;
-			this.percentWidth = 100;
+			//this.percentWidth = 100;
 //			this.percentHeight = 100;
-			this.maxHeight = 300;
+			//this.maxHeight = 300;
 //			this.setStyle("verticalCenter", 0);
 //			this.setStyle("horizontalCenter", 0);
-			this.source = path;
+
+			TwitPic.getPic(path,setImage);
+			//this.source = path;
 		}
-
-
+		
+		private function setImage(img:Image):void{
+			this.source = img.source;
+		}
 	}
 }
