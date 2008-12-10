@@ -64,20 +64,20 @@
 			<mx:Label y="2" text="control panel" color="#FFFFFF" fontWeight="bold" left="10" right="10"/>
 			<mx:VBox id="foldersVBox" backgroundColor="#D1D089" right="10" left="10" top="20" bottom="10" horizontalAlign="center">
 				<mx:Spacer height="10" />
-				<mx:Button label="home" id="home" click="controller.getFriendsTimeline();"/>
-				<mx:Button label="@replies" id="replies" click="controller.getReplies();"/>
-				<mx:Button label="updates" id="updates" click="controller.getUserTimeline();"/>
+				<mx:Button label="home" id="home" click="controller.getFriendsTimeline();" toolTip="Display all your friends and your recent tweets."/>
+				<mx:Button label="@replies" id="replies" click="controller.getReplies();" toolTip="Display all the @replies sent to you."/>
+				<mx:Button label="updates" id="updates" click="controller.getUserTimeline();" toolTip="Display your recent tweet updates."/>
 
-				<mx:Button label="directs" id="directsButton" click="controller.getDirects();"/>
-				<mx:Button label="directs sent" id="directsSentButton" click="controller.getDirectsSent();"/>
+				<mx:Button label="directs" id="directsButton" click="controller.getDirects();" toolTip="Display direct messages sent to you."/>
+				<mx:Button label="directs sent" id="directsSentButton" click="controller.getDirectsSent();" toolTip="Display direct messages you've sent to your friends."/>
 				
 				<!--<mx:Button label="User to User" id="userToUserButton" />-->
-				<mx:Button label="search" id="searchButton" click="controller.searchButtonClick();" />
+				<mx:Button label="search" id="searchButton" click="controller.searchButtonClick();" toolTip="Search tweets by keywords in different categories. You can check box to view only photo tweets." />
 				<mx:Spacer height="10" />
 				<mx:Canvas width="100%" height="20" backgroundColor="#C9BD6C">
 					<mx:Label y="2" text="labels" color="#FFFFFF" fontWeight="bold" left="5" right="0"/>
 				</mx:Canvas>
-				<mx:Button id="createLabelsButton" label="create" click="controller.createLabelButtonClicked();"/>
+				<mx:Button id="createLabelsButton" label="create" click="controller.createLabelButtonClicked();" toolTip="Create a new label. You can drag and drop each tweet to the labels created."/>
 				<mx:VBox width="95%" height="100%" id="labelsVBox" horizontalAlign="center">
 				</mx:VBox>
 			</mx:VBox>
@@ -88,7 +88,7 @@
 			</ns1:TweetDisplay>
 			<ns1:Navi x="10" bottom="12" id="navi" width="313">
 			</ns1:Navi>
-			<mx:CheckBox x="166" y="0" label="show Photo Tweets only" selected="false" click="display.photoFilter();" color="#FFFFFF"/>	
+			<mx:CheckBox x="166" y="0" label="show Photo Tweets only" selected="false" click="display.photoFilter();" color="#FFFFFF" toolTip="Check box to display only tweets that contain Twitpic photo."/>	
 		</mx:Canvas>
 		<mx:Canvas cornerRadius="15" backgroundColor="#6485AE" top="10" bottom="10" id="photos" label="photos" right="10" left="518">
 <!--			<mx:VBox backgroundColor="#8EA4BE" top="20" left="10" bottom="10" right="10">
