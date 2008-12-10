@@ -1,7 +1,7 @@
 A:
 
 start up Glitter
-enter account settings
+show the account settings
 post update
 DM B's reply
 Post Twitpic 1 (through file select)
