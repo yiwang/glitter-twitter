@@ -57,11 +57,19 @@ package glitter
 				lb.addEventListener(MouseEvent.CLICK,linkButtonHandler);
 				lb.label = linkName;
 				lb.targetText.htmlText = linksArray[linkName];
-				lb.targetText.width = 400;
+				lb.targetText.width = 500;
+				lb.targetText.setStyle("paddingTop",10);
+				lb.targetText.setStyle("paddingLeft",10);
+				lb.targetText.setStyle("paddingRight",10);
+				lb.targetText.setStyle("paddingBottom",10);
 				helpMenu.addChild(lb);
 			}
 			var defaultBody:Text = new Text();
-			defaultBody.width = 300;
+			defaultBody.width = 500;
+			defaultBody.setStyle("paddingTop",10);
+			defaultBody.setStyle("paddingLeft",10);
+			defaultBody.setStyle("paddingRight",10);
+			defaultBody.setStyle("paddingBottom",10);
 			defaultBody.htmlText = "<p><b>Glitter Help</b></p><p>Hopefully using the links to the left will quickly have you up and running.</p>";
 			bodyCanvas.percentWidth = 100;
 			bodyCanvas.percentHeight = 100;

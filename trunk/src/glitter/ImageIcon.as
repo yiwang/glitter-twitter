@@ -25,7 +25,7 @@ package glitter
 		
 		private function hndlMouseClick ( event:Event ):void {
 			var myGlowFilter:GlowFilter = new GlowFilter (0xFFFFFF,.8,5,5,4,4);
-			event.target.filters = [myGlowFilter];
+			//event.target.filters = [myGlowFilter];
 //			Alert.show( this.parent.parent.getCurrentImage( index ));			
 //			Alert.show( this.parent.parent.parent.toString());			
 		}
