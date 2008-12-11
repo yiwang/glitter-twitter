@@ -11,11 +11,11 @@
 	<mx:VBox height="100%" width="100%" x="0" verticalAlign="middle" backgroundColor="#000000" horizontalAlign="center">
 		
 		<mx:HBox x="132" y="49" width="100%" height="100%" verticalAlign="middle" backgroundColor="#000000">
-			<mx:Button label="Prev" width="63" height="198" toolTip="Previous"/>
+			<!--<mx:Button label="Prev" width="63" height="198" toolTip="Previous"/>-->
 			<mx:Canvas width="100%" height="100%">
-				<mx:Image width="100%" height="100%" id="img"/>
+				<mx:Image width="100%" height="100%" id="img" horizontalAlign="center" verticalAlign="middle"/>
 			</mx:Canvas>
-			<mx:Button label="Next" height="183" toolTip="Close"/>
+			<!--<mx:Button label="Next" height="183" toolTip="Close"/>-->
 		</mx:HBox>
 		<mx:Button label="Close" width="159" height="38" toolTip="Next" click="PopUpManager.removePopUp(this);"/>
 	</mx:VBox>
