@@ -1,0 +1,1 @@
+A twitter client with the usual functionality and the ability to send pictures through Flickr. This is a project for the fall 2008 User Interface Design course at Columbia University.
